@@ -214,14 +214,14 @@ def generate_property_code(input_name, input_shape, output_name, output_shape, e
         # This assertion checks an impossible condition (output > 2.0 AND output < -1.0)
         # Since neural network outputs are typically in [0,1] range, this is always false
         # Therefore, the negation is always true, making the assertion always pass
-        lines.append(f'\t// Expected result: SAT - assertion should always hold')
+        lines.append(f'\t// Expected result: SAT')
         lines.append(f'\t__VERIFIER_assert(!({output_name}[0][0] >= 1.0f && {output_name}[0][1] <= 0.0f));')
     else:  # UNSAT
         # For UNSAT files: Create an assertion that can be violated
         # This assertion requires both outputs to be negative (< 0.0)
         # Since neural network outputs are typically non-negative, this can be violated
         # When violated, the verifier will find a counterexample (UNSAT result)
-        lines.append(f'\t// Expected result: UNSAT - assertion can be violated')
+        lines.append(f'\t// Expected result: UNSAT')
         lines.append(f'\t__VERIFIER_assert(!({output_name}[0][0] >= 1.0f || {output_name}[0][1] <= 0.0f));')
     
     # End main function
