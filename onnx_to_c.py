@@ -92,8 +92,11 @@ def validate_onnx_model(onnx_path):
         print(f"  - IR version: {model.ir_version}")
         print(f"  - Producer: {model.producer_name} {model.producer_version}")
         print(f"  - Graph inputs: {len(model.graph.input)}")
+        print(f"  - Graph inputs: {model.graph.input}")
         print(f"  - Graph outputs: {len(model.graph.output)}")
+        print(f"  - Graph outputs: {model.graph.output}")
         print(f"  - Graph nodes: {len(model.graph.node)}")
+        print(f"  - Graph nodes: {model.graph.node}")
         
         return True
         
