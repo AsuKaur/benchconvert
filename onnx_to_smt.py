@@ -29,7 +29,6 @@ import argparse
 from pathlib import Path
 import onnx
 from onnx import numpy_helper
-import re
 import numpy as np
 import z3
 

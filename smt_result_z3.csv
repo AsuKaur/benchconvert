@@ -1,0 +1,13 @@
+Solver: z3
+Version: Z3 version 4.15.1 - 64 bit
+File Name,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33.smt2,SAT,TIMEOUT,60.0s,z3 smt/sat_v10_c33.smt2
+sat_v10_c45.smt2,SAT,TIMEOUT,60.0s,z3 smt/sat_v10_c45.smt2
+sat_v2_c1.smt2,SAT,SAT,0.5606s,z3 smt/sat_v2_c1.smt2
+sat_v4_c7.smt2,SAT,SAT,8.7614s,z3 smt/sat_v4_c7.smt2
+sat_v7_c30.smt2,SAT,TIMEOUT,60.0s,z3 smt/sat_v7_c30.smt2
+unsat_v10_c33.smt2,UNSAT,TIMEOUT,60.0s,z3 smt/unsat_v10_c33.smt2
+unsat_v10_c45.smt2,UNSAT,TIMEOUT,60.0s,z3 smt/unsat_v10_c45.smt2
+unsat_v2_c3.smt2,UNSAT,UNSAT,2.1579s,z3 smt/unsat_v2_c3.smt2
+unsat_v4_c8.smt2,UNSAT,TIMEOUT,60.0s,z3 smt/unsat_v4_c8.smt2
+unsat_v7_c33.smt2,UNSAT,TIMEOUT,60.0s,z3 smt/unsat_v7_c33.smt2

@@ -1,0 +1,47 @@
+Solver: cvc5
+"Version: This is cvc5 version 1.3.1-dev.16.e900af3059 [git e900af3059 on branch main]
+compiled with GCC version Apple LLVM 17.0.0 (clang-1700.0.13.3)
+on Jul  7 2025 14:17:31
+
+Copyright (c) 2009-2025 by the authors and their institutional
+affiliations listed at https://cvc5.github.io/people.html
+
+cvc5 is open-source and is covered by the BSD license (modified).
+
+THIS SOFTWARE IS PROVIDED AS-IS, WITHOUT ANY WARRANTIES.
+USE AT YOUR OWN RISK.
+
+This version of cvc5 is linked against the following non-(L)GPL'ed
+third party libraries.
+
+  CaDiCaL - Simplified Satisfiability Solver
+  See https://github.com/arminbiere/cadical for copyright information.
+
+  SymFPU - The Symbolic Floating Point Unit
+  See https://github.com/martin-cs/symfpu/tree/CVC4 for copyright information.
+
+This version of cvc5 is linked against the following third party
+libraries covered by the LGPLv3 license.
+See licenses/lgpl-3.0.txt for more information.
+
+  GMP - Gnu Multi Precision Arithmetic Library
+  See http://gmplib.org for copyright information.
+
+  LibPoly polynomial library
+  See https://github.com/SRI-CSL/libpoly for copyright and
+  licensing information.
+
+See the file COPYING (distributed with the source code, and with
+all binaries) for the full cvc5 copyright, licensing, and (lack of)
+warranty information."
+File Name,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33.smt2,SAT,TIMEOUT,60.0s,cvc5 smt/sat_v10_c33.smt2
+sat_v10_c45.smt2,SAT,TIMEOUT,60.0s,cvc5 smt/sat_v10_c45.smt2
+sat_v2_c1.smt2,SAT,SAT,0.2937s,cvc5 smt/sat_v2_c1.smt2
+sat_v4_c7.smt2,SAT,SAT,10.4029s,cvc5 smt/sat_v4_c7.smt2
+sat_v7_c30.smt2,SAT,TIMEOUT,60.0s,cvc5 smt/sat_v7_c30.smt2
+unsat_v10_c33.smt2,UNSAT,TIMEOUT,60.0s,cvc5 smt/unsat_v10_c33.smt2
+unsat_v10_c45.smt2,UNSAT,TIMEOUT,60.0s,cvc5 smt/unsat_v10_c45.smt2
+unsat_v2_c3.smt2,UNSAT,UNSAT,0.7695s,cvc5 smt/unsat_v2_c3.smt2
+unsat_v4_c8.smt2,UNSAT,TIMEOUT,60.0s,cvc5 smt/unsat_v4_c8.smt2
+unsat_v7_c33.smt2,UNSAT,TIMEOUT,60.0s,cvc5 smt/unsat_v7_c33.smt2
