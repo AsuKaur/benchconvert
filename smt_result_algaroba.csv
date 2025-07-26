@@ -1,0 +1,31 @@
+Solver: algaroba
+"Version: algaroba: unknown option '--version'.
+algaroba <query> [options]
+  -o Write to an output file
+  -t Set a timeout for solving (in milliseconds)
+  --z3-simplifier Use a Z3 simplifier.
+  --dont-depth-based-acyclicality-pause Normally, we do unrolling at half of the average depth. If set to true we don't do this
+  --acyclicality-pause Point in depth to pause and check
+  --measure Measure time spent in each step
+  --global-z3-parameter Use a Z3 global parameter.
+  --set-z3-solver-flag Set a Z3 solver flag to true.
+  --clear-z3-solver-flag Set a Z3 solver flag to false.
+  --assert-conjunctions Rewrite top-level conjunctions to assertions (default: false)
+  --simplify-ite Rewrite if-then-else statements to use normal boolean operations  (default: false)
+  --constant-prop Does propagation for variables set to symbolic constants  (default: false)
+  --inline-constants Decides whether to inline constants (WARNING: choosing true is not sound as currently implemented) (default: false)
+  --use-enum-test-axioms Decides whether to use the enum tester axioms or not (default: true)
+  --print-depths Decides whether to print depths to stderr (default: false)
+  -help  Display this list of options
+  --help  Display this list of options"
+File Name,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33.smt2,SAT,SAT,0.0477s,algaroba smt/sat_v10_c33.smt2
+sat_v10_c45.smt2,SAT,SAT,0.0103s,algaroba smt/sat_v10_c45.smt2
+sat_v2_c1.smt2,SAT,SAT,0.0105s,algaroba smt/sat_v2_c1.smt2
+sat_v4_c7.smt2,SAT,SAT,0.01s,algaroba smt/sat_v4_c7.smt2
+sat_v7_c30.smt2,SAT,SAT,0.0097s,algaroba smt/sat_v7_c30.smt2
+unsat_v10_c33.smt2,UNSAT,SAT,0.01s,algaroba smt/unsat_v10_c33.smt2
+unsat_v10_c45.smt2,UNSAT,SAT,0.0099s,algaroba smt/unsat_v10_c45.smt2
+unsat_v2_c3.smt2,UNSAT,SAT,0.0096s,algaroba smt/unsat_v2_c3.smt2
+unsat_v4_c8.smt2,UNSAT,SAT,0.0092s,algaroba smt/unsat_v4_c8.smt2
+unsat_v7_c33.smt2,UNSAT,SAT,0.0091s,algaroba smt/unsat_v7_c33.smt2

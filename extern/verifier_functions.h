@@ -7,7 +7,7 @@
 
 float __VERIFIER_nondet_float();
 void __VERIFIER_assume(int cond);
-void reach_error();
+void reach_error() {}
 
 #define __VERIFIER_assert(cond) if(!(cond)) reach_error()
 

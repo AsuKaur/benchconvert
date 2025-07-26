@@ -4,7 +4,7 @@ import csv
 import time
 
 
-SOLVER = "cvc5" # "z3" or "cvc5"
+SOLVER = "algaroba" # "z3" or "cvc5"
 SMT_FOLDER = "smt"
 CSV_FILE = "smt_result_" + SOLVER + ".csv"
 
