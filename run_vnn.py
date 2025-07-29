@@ -3,7 +3,7 @@ import subprocess
 import csv
 import time
 
-VERIFIER = "Marabou"
+VERIFIER = "marabou"
 ONNX_DIR = "onnx"
 VNNLIB_DIR = "vnnlib"
 CSV_FILE = "vnn_result_" + VERIFIER + ".csv"
