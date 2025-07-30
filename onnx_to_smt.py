@@ -69,8 +69,8 @@ def parse_vnnlib(vnnlib_path):
     
     # This enhanced parser separates input and output constraints for better
     # organization and more accurate constraint handling. It distinguishes between:
-    # - Input constraints: bounds on network inputs (e.g., pixel value ranges)
-    # - Output constraints: properties to verify on network outputs (e.g., classification results)
+    # - Input constraints: bounds on network inputs 
+    # - Output constraints: properties to verify on network outputs
     
     # vnnlib format uses S-expressions:
     # - (declare-const X_0 Real) declares an input variable
@@ -90,8 +90,8 @@ def parse_vnnlib(vnnlib_path):
 
     input_vars = []
     output_vars = []
-    input_constraints = []   # Constraints on input variables (bounds, ranges)
-    output_constraints = []  # Constraints on output variables (verification properties)
+    input_constraints = []   # Constraints on input variables 
+    output_constraints = []  # Constraints on output variables 
 
     with open(vnnlib_path, "r") as f:
         for line in f:
@@ -128,9 +128,9 @@ def parse_vnnlib(vnnlib_path):
                 if expr[0] == "assert":
                     # Check if constraint applies to input or output variable
                     variable_in_constraint = expr[2]  # Usually the variable name
-                    if variable_in_constraint.startswith("X"):
+                    if variable_in_constraint in input_vars:
                         input_constraints.append(line)
-                    elif variable_in_constraint.startswith("Y"):
+                    elif variable_in_constraint in output_vars:
                         output_constraints.append(line)
 
     return input_vars, output_vars, input_constraints, output_constraints
@@ -204,7 +204,12 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
             smt.append(f"(assert (fp.leq {var_fp.sexpr()} {float_to_bv32(value).sexpr()}))")
         elif op == ">=":
             smt.append(f"(assert (fp.geq {var_fp.sexpr()} {float_to_bv32(value).sexpr()}))")
-        # Additional operators (==, <, >) could be added here
+        elif op == "<":
+            smt.append(f"(assert (fp.lt {var_fp.sexpr()} {float_to_bv32(value).sexpr()}))")
+        elif op == ">":
+            smt.append(f"(assert (fp.gt {var_fp.sexpr()} {float_to_bv32(value).sexpr()}))")
+        elif op == "==":
+            smt.append(f"(assert (fp.eq {var_fp.sexpr()} {float_to_bv32(value).sexpr()}))")
 
     # Process ONNX computational graph node by node
     # Track intermediate variables and current layer outputs
@@ -239,9 +244,9 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
 
             # Determine output dimension
             out_dim = W.shape[1] if len(W.shape) > 1 else 1
-            
             # Create output variables for this layer
             y = [z3.FP(f"H_{node_count}_{i}", z3.Float32()) for i in range(out_dim)]
+            
             for var in y:
                 smt.append(f"(declare-fun {var.decl().name()} () (_ FloatingPoint 8 24))")
 
@@ -258,8 +263,8 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
                     # Floating-point multiplication and addition with rounding
                     # RNE = Round to Nearest Even (IEEE 754 default rounding mode)
                     sum_expr = z3.fpAdd(z3.RNE(), sum_expr, 
-                                       z3.fpMul(z3.RNE(), float_to_bv32(w_ij), current_input[j]))
-                
+                                       z3.fpMul(z3.RNE(), float_to_bv32(w_ij), current_input[j]))                    
+
                 # Assert that output variable equals computed expression
                 smt.append(f"(assert (= {y[i].sexpr()} {sum_expr.sexpr()}))")
 
@@ -321,7 +326,17 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
         value = float(expr[3].replace(')', ''))  # Constraint value
         
         # Generate floating-point constraint
-        fp_op = 'fp.geq' if op == '>=' else 'fp.leq'  # Map to FP operations
+        if op == "<=":
+            fp_op = 'fp.leq'
+        elif op == ">=":
+            fp_op = 'fp.geq'
+        elif op == "<":
+            fp_op = 'fp.lt'
+        elif op == ">":
+            fp_op = 'fp.gt'
+        elif op == "==":
+            fp_op = 'fp.eq'
+        
         smt.append(f"(assert ({fp_op} {var} {float_to_bv32(value).sexpr()}))")
 
     # Add SMT solver commands
