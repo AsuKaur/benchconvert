@@ -1,0 +1,13 @@
+Solver: bitwuzla
+Version: 0.8.1-dev-main@79229315
+File Name,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33.smt2,SAT,SAT,30.6196s,bitwuzla smt/sat_v10_c33.smt2
+sat_v10_c45.smt2,SAT,SAT,35.5424s,bitwuzla smt/sat_v10_c45.smt2
+sat_v2_c1.smt2,SAT,SAT,0.1195s,bitwuzla smt/sat_v2_c1.smt2
+sat_v4_c7.smt2,SAT,SAT,2.983s,bitwuzla smt/sat_v4_c7.smt2
+sat_v7_c30.smt2,SAT,TIMEOUT,60.0s,bitwuzla smt/sat_v7_c30.smt2
+unsat_v10_c33.smt2,UNSAT,TIMEOUT,60.0s,bitwuzla smt/unsat_v10_c33.smt2
+unsat_v10_c45.smt2,UNSAT,TIMEOUT,60.0s,bitwuzla smt/unsat_v10_c45.smt2
+unsat_v2_c3.smt2,UNSAT,UNSAT,0.2136s,bitwuzla smt/unsat_v2_c3.smt2
+unsat_v4_c8.smt2,UNSAT,UNSAT,7.9609s,bitwuzla smt/unsat_v4_c8.smt2
+unsat_v7_c33.smt2,UNSAT,TIMEOUT,60.0s,bitwuzla smt/unsat_v7_c33.smt2

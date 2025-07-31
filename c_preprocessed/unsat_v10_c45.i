@@ -1,16 +1,67 @@
-# 1 "c_network/unsat_v10_c45.c"
+# 1 "c/unsat_v10_c45.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 465 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "c_network/unsat_v10_c45.c" 2
-# 13 "c_network/unsat_v10_c45.c"
+# 1 "c/unsat_v10_c45.c" 2
+
+
+# 1 "extern/verifier_functions.h" 1
+
+
+
+
+
+
+
+float __VERIFIER_nondet_float();
+void __VERIFIER_assume(int cond);
+void reach_error() {}
+# 4 "c/unsat_v10_c45.c" 2
+
+void entry(const float tensor_onnx__Gemm_0[1][10], float tensor_7[1][2]);
+
+int main()
+{
+ float tensor_onnx__Gemm_0[1][10];
+ float tensor_7[1][2];
+
+ tensor_onnx__Gemm_0[0][0] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][1] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][2] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][3] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][4] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][5] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][6] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][7] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][8] = __VERIFIER_nondet_float();
+ tensor_onnx__Gemm_0[0][9] = __VERIFIER_nondet_float();
+
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][0] >= 0.0f && tensor_onnx__Gemm_0[0][0] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][1] >= 0.0f && tensor_onnx__Gemm_0[0][1] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][2] >= 0.0f && tensor_onnx__Gemm_0[0][2] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][3] >= 0.0f && tensor_onnx__Gemm_0[0][3] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][4] >= 0.0f && tensor_onnx__Gemm_0[0][4] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][5] >= 0.0f && tensor_onnx__Gemm_0[0][5] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][6] >= 0.0f && tensor_onnx__Gemm_0[0][6] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][7] >= 0.0f && tensor_onnx__Gemm_0[0][7] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][8] >= 0.0f && tensor_onnx__Gemm_0[0][8] <= 1.0f);
+ __VERIFIER_assume(tensor_onnx__Gemm_0[0][9] >= 0.0f && tensor_onnx__Gemm_0[0][9] <= 1.0f);
+
+ entry(tensor_onnx__Gemm_0, tensor_7);
+
+
+ if(!(!(tensor_7[0][0] >= 1.0f || tensor_7[0][1] <= 0.0f))) reach_error();
+
+ return 0;
+}
+# 56 "c/unsat_v10_c45.c"
 # 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h" 1 3
 # 32 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h" 3
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/float.h" 1 3 4
 # 33 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h" 2 3
-# 14 "c_network/unsat_v10_c45.c" 2
+# 57 "c/unsat_v10_c45.c" 2
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h" 1 3 4
 # 31 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h" 3 4
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h" 1 3 4
@@ -444,9 +495,9 @@ struct exception {
     double arg2;
     double retval;
 };
-# 15 "c_network/unsat_v10_c45.c" 2
+# 58 "c/unsat_v10_c45.c" 2
 # 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdbool.h" 1 3
-# 16 "c_network/unsat_v10_c45.c" 2
+# 59 "c/unsat_v10_c45.c" 2
 # 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h" 1 3
 # 56 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h" 3
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h" 1 3 4
@@ -697,7 +748,7 @@ typedef long int intmax_t;
 typedef long unsigned int uintmax_t;
 # 60 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h" 2 3 4
 # 57 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h" 2 3
-# 17 "c_network/unsat_v10_c45.c" 2
+# 60 "c/unsat_v10_c45.c" 2
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/string.h" 1 3 4
 # 58 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/string.h" 3 4
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_string.h" 1 3 4
@@ -944,8 +995,8 @@ int flsll(long long) __attribute__((availability(macosx,introduced=10.9)));
 # 33 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_string.h" 2 3 4
 # 229 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_string.h" 2 3 4
 # 59 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/string.h" 2 3 4
-# 18 "c_network/unsat_v10_c45.c" 2
-# 29 "c_network/unsat_v10_c45.c"
+# 61 "c/unsat_v10_c45.c" 2
+# 72 "c/unsat_v10_c45.c"
 static const float tensor_0_weight[65][10] =
 {
   {-1.00000000000000000000f, 0.00000000000000000000f, -1.00000000000000000000f, -1.00000000000000000000f, -1.00000000000000000000f, -1.00000000000000000000f, 0.00000000000000000000f, 0.00000000000000000000f, 0.00000000000000000000f, -1.00000000000000000000f},

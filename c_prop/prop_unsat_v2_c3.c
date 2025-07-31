@@ -20,17 +20,3 @@ int main()
 
 	return 0;
 }
-
-// OUTPUT 
-
-// State 149 file c_prop/prop_unsat_v2_c3.c line 19 column 2 function main thread 0
-// ----------------------------------------------------
-// Violated property:
-//   file c_prop/prop_unsat_v2_c3.c line 19 column 2 function main
-//   assertion
-//   !(tensor_7[0][0] >= 1.000000f || tensor_7[0][1] <= 0.000000f)
-
-
-// VERIFICATION FAILED
-
-// Bug found (k = 8)
