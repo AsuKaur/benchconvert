@@ -47,7 +47,7 @@ def run_vnn_verifier():
         print(f"🔍 Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
             end = time.time()
 
             output = result.stdout + result.stderr

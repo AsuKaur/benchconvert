@@ -83,7 +83,7 @@ def run_verifier():
 
         try:
             start_time = time.time()  # Start timer
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
             elapsed_time = time.time() - start_time  # In seconds
             output = result.stdout + result.stderr
             actual_result, runtime, solver = parse_verifier_output(output)

@@ -41,7 +41,7 @@ def run_solver_on_smt_files():
         print(f"🔍 Running {SOLVER} on: {smt_file}")
         try:
             start = time.time()
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
             end = time.time()
 
             output = result.stdout + result.stderr
