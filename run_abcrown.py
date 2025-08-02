@@ -3,12 +3,14 @@ import subprocess
 import csv
 import time
 import tempfile
+import onnx  # Make sure to install this package
 
 # === Config ===
 VERIFIER = "abcrown"
 ONNX_DIR = "onnx"
 VNNLIB_DIR = "vnnlib"
 CSV_FILE = f"vnn_result_{VERIFIER}.csv"
+TIMEOUT = 900
 
 ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
@@ -28,7 +30,6 @@ def parse_output(output):
     decision = "UNKNOWN"
     runtime = "N/A"
 
-    # Try to find "Result:" line or "verified_status"
     for line in output.splitlines():
         l = line.lower()
         if "result:" in l:
@@ -45,11 +46,8 @@ def parse_output(output):
                 decision = "UNSAT"
             elif "false" in l:
                 decision = "SAT"
-
-        # Extract runtime from lines with "Time:" or "time:"
         if "time:" in l:
             import re
-            # Search for something like 0.123 or 0.1234 seconds
             match = re.search(r"time:\s*([0-9.]+)", l)
             if match:
                 runtime = f"{match.group(1)}s"
@@ -71,9 +69,25 @@ def make_temp_yaml(onnx_path, vnnlib_path):
     tmpf.close()
     return tmpf.name
 
+# Count parameters of ONNX model
+def count_parameters(onnx_path):
+    try:
+        model = onnx.load(onnx_path)
+        param_count = 0
+        for tensor in model.graph.initializer:
+            dims = tensor.dims
+            count = 1
+            for d in dims:
+                count *= d
+            param_count += count
+        return param_count
+    except Exception as e:
+        print(f"⚠️ Warning: Failed to count parameters for {onnx_path}: {e}")
+        return "N/A"
+
 def get_verifier_version():
     try:
-        result = subprocess.run([VENV_PYTHON, ABCROWN_PY, "--version"], capture_output=True, text=True, timeout=10)
+        result = subprocess.run([VENV_PYTHON, ABCROWN_PY, "--version"], capture_output=True, text=True, timeout=TIMEOUT)
         return result.stdout.strip() or result.stderr.strip()
     except Exception:
         return "Version info not available"
@@ -94,6 +108,9 @@ def run_vnn_verifier():
             print(f"⚠️ Skipping {onnx_file} – matching VNNLIB file not found.")
             continue
 
+        # Count parameters for this ONNX model
+        param_count = count_parameters(onnx_path)
+
         temp_yaml = make_temp_yaml(onnx_path, vnnlib_path)
 
         cmd = [VENV_PYTHON, ABCROWN_PY, "--config", temp_yaml]
@@ -101,7 +118,7 @@ def run_vnn_verifier():
         print(f"🔍 Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
             end = time.time()
 
             output = proc.stdout + proc.stderr
@@ -115,6 +132,7 @@ def run_vnn_verifier():
 
             results.append([
                 base,
+                param_count,         
                 expected,
                 decision,
                 runtime_str,
@@ -123,10 +141,10 @@ def run_vnn_verifier():
 
         except subprocess.TimeoutExpired:
             print(f"⏳ Timeout: {onnx_file}")
-            results.append([base, get_expected_result(base), "TIMEOUT", "300.0s", " ".join(cmd)])
+            results.append([base, param_count, get_expected_result(base), "TIMEOUT", f"{TIMEOUT}s", " ".join(cmd)])
         except Exception as e:
             print(f"❌ Error running {onnx_file}: {e}")
-            results.append([base, get_expected_result(base), f"ERROR: {e}", "N/A", " ".join(cmd)])
+            results.append([base, param_count, get_expected_result(base), f"ERROR: {e}", "N/A", " ".join(cmd)])
 
         finally:
             os.remove(temp_yaml)
@@ -136,7 +154,7 @@ def run_vnn_verifier():
         writer = csv.writer(f)
         writer.writerow([f"Verifier: {VERIFIER}"])
         writer.writerow([f"Version: {version_info}"])
-        writer.writerow(["File Name", "Expected Result", "Actual Result", "Runtime", "Command"])
+        writer.writerow(["File Name", "Parameter Count", "Expected Result", "Actual Result", "Runtime", "Command"])
         writer.writerows(results)
 
     print(f"\n✅ Results saved to {CSV_FILE}")

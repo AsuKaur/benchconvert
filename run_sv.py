@@ -2,13 +2,14 @@ import os
 import subprocess
 import csv
 import time
-
+import re
 # === CONFIGURATION ===
 VERIFIER = "cbmc"  # Changed from "esbmc" to "cbmc"
 
 PROP_DIR = "c_prop"
 NET_DIR = "c_network"
 OUTPUT_CSV = "sv_result_" + VERIFIER + ".csv"
+TIMEOUT = 900
 
 FLAGS = [
     "--no-bounds-check",
@@ -23,7 +24,7 @@ FLAGS = [
     "--k-induction",
     "--unwind", "10",
     "-Iextern"
-] 
+]
 
 # === FUNCTIONS ===
 
@@ -62,6 +63,38 @@ def parse_verifier_output(output):
         result += f" ({bug_trace})"
     return result, runtime, solver
 
+# Count parameters from corresponding network C file 
+def count_parameters(file_path):
+    weight_pattern = re.compile(r'static\s+const\s+float\s+(\w*weight\w*)\s*\[(.*?)\]\s*=')
+    bias_pattern = re.compile(r'static\s+const\s+float\s+(\w*bias\w*)\s*\[(.*?)\]\s*=')
+
+    total_params = 0
+
+    with open(file_path, "r") as f:
+        data = f.read()
+
+    # Find all weight arrays
+    weights = weight_pattern.findall(data)
+    for name, dims in weights:
+        count = 1
+        for dim in dims.split("]["):
+            dim_clean = dim.replace("[","").replace("]","").strip()
+            count *= int(dim_clean)
+        print(f"Found weight {name} with {count} parameters")
+        total_params += count
+
+    # Find all bias arrays
+    biases = bias_pattern.findall(data)
+    for name, dims in biases:
+        count = 1
+        for dim in dims.split("]["):
+            dim_clean = dim.replace("[","").replace("]","").strip()
+            count *= int(dim_clean)
+        print(f"Found bias {name} with {count} parameters")
+        total_params += count
+
+    return total_params
+
 def run_verifier():
     results = []
     for prop_file in sorted(os.listdir(PROP_DIR)):
@@ -78,21 +111,23 @@ def run_verifier():
             print(f"⚠️ Skipping {prop_file} – network file not found.")
             continue
 
+        param_count = count_parameters(net_path)
+
         cmd = [VERIFIER, prop_path, net_path] + FLAGS
         print(f"🔍 Running {VERIFIER} on: {prop_file} + {net_file}")
 
         try:
-            start_time = time.time()  # Start timer
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
-            elapsed_time = time.time() - start_time  # In seconds
+            start_time = time.time()
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
+            elapsed_time = time.time() - start_time
             output = result.stdout + result.stderr
             actual_result, runtime, solver = parse_verifier_output(output)
 
-            # Decide expected result based on prop filename
             expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
 
             results.append([
                 prop_file,
+                param_count,           # Parameter count as second column
                 expected_result,
                 actual_result,
                 runtime if VERIFIER != "cbmc" else f"{elapsed_time:.4f}s",
@@ -103,9 +138,10 @@ def run_verifier():
             print(f"⏳ Timeout: {prop_file}")
             results.append([
                 prop_file,
+                param_count,
                 "UNSAT" if "unsat" in prop_file.lower() else "SAT",
                 "TIMEOUT",
-                "TIMEOUT",
+                f"{TIMEOUT}s",
                 "UNKNOWN",
                 " ".join(FLAGS)
             ])
@@ -113,6 +149,7 @@ def run_verifier():
             print(f"❌ Error running {prop_file}: {e}")
             results.append([
                 prop_file,
+                param_count,
                 "UNSAT" if "unsat" in prop_file.lower() else "SAT",
                 f"ERROR: {e}",
                 "ERROR",
@@ -127,6 +164,7 @@ def run_verifier():
         writer.writerow([f"Version: {verifier_version}"])
         writer.writerow([
             "File Name",
+            "Parameter Count",
             "Expected Result",
             "Actual Result",
             "Runtime decision procedure" if VERIFIER == "esbmc" else "Runtime",

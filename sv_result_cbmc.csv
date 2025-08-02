@@ -1,13 +1,13 @@
 Verifier: cbmc
 Version: 6.7.1 (cbmc-6.7.1)
-File Name,Expected Result,Actual Result,Runtime,Solver Used,Flags Used
-prop_sat_v10_c33.c,SAT,VERIFICATION FAILED (SAT),0.3090s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_sat_v10_c45.c,SAT,VERIFICATION FAILED (SAT),0.1640s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_sat_v2_c1.c,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.0723s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_sat_v4_c7.c,SAT,VERIFICATION FAILED (SAT),0.4358s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_sat_v7_c30.c,SAT,VERIFICATION FAILED (SAT),0.7700s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_unsat_v10_c33.c,UNSAT,VERIFICATION FAILED (SAT),0.1812s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_unsat_v10_c45.c,UNSAT,VERIFICATION FAILED (SAT),0.1689s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_unsat_v2_c3.c,UNSAT,VERIFICATION SUCCESSFUL (UNSAT),0.0807s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_unsat_v4_c8.c,UNSAT,VERIFICATION FAILED (SAT),0.5219s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
-prop_unsat_v7_c33.c,UNSAT,VERIFICATION FAILED (SAT),1.0398s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Solver Used,Flags Used
+prop_sat_v10_c33.c,691,SAT,VERIFICATION FAILED (SAT),0.2492s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_sat_v10_c45.c,847,SAT,VERIFICATION FAILED (SAT),0.2020s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_sat_v2_c1.c,27,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.0907s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_sat_v4_c7.c,107,SAT,VERIFICATION FAILED (SAT),0.5045s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_sat_v7_c30.c,442,SAT,VERIFICATION FAILED (SAT),0.9133s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_unsat_v10_c33.c,691,UNSAT,VERIFICATION FAILED (SAT),0.2125s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_unsat_v10_c45.c,847,UNSAT,VERIFICATION FAILED (SAT),0.2088s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_unsat_v2_c3.c,37,UNSAT,VERIFICATION SUCCESSFUL (UNSAT),0.0987s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_unsat_v4_c8.c,114,UNSAT,VERIFICATION FAILED (SAT),0.5294s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern
+prop_unsat_v7_c33.c,472,UNSAT,VERIFICATION FAILED (SAT),0.9006s,UNKNOWN,--no-bounds-check --no-pointer-check --unwind 10 -Iextern

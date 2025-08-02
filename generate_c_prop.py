@@ -19,7 +19,6 @@
 import argparse
 import re
 from pathlib import Path
-import onnx
 
 # Directory containing the C network files
 C_NETWORK_DIR = Path("c_network")
