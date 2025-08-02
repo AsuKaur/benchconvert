@@ -1,2 +1,4 @@
 .venv
 *.compiled
+test.py
+test

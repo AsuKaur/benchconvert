@@ -228,7 +228,7 @@ def generate_property_code(input_name, input_shape, output_name, output_shape, e
     
     return "\n".join(lines)
 
-def write_property_file(c_file_path):
+def write_property_file(c_file_path, output_dir):
     # Generate a property file for a given C neural network file.
     
     # This function processes a single C file containing a neural network
@@ -237,6 +237,7 @@ def write_property_file(c_file_path):
     
     # Args:
     #     c_file_path (Path): Path to the C file containing the neural network
+    #     output_dir  (Path): Path to storing the C file prop file
         
     # The function:
     # 1. Determines expected result from filename
@@ -263,7 +264,7 @@ def write_property_file(c_file_path):
         prop_code = generate_property_code(input_name, in_shape, output_name, out_shape, expected_result)
         
         # Write property file with "prop_" prefix
-        prop_path = C_PROP_DIR / f"prop_{c_file_path.stem}.c"
+        prop_path = output_dir / f"prop_{c_file_path.stem}.c"
         prop_path.write_text(prop_code)
         
         # Print success message with expected result
@@ -292,8 +293,13 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("c_file", nargs="?", help="Single model C file in c_network/ (e.g., model.c)")
     group.add_argument("--all", action="store_true", help="Process all .c files in c_network/")
-    
+    parser.add_argument("--o", "--output", dest='output_dir', type=str, help="Directory to store generated property files (default: c_prop/)")
+
     args = parser.parse_args()
+
+    # Use user-defined output directory or default
+    c_prop_dir = Path(args.output_dir) if args.output_dir else C_PROP_DIR
+    c_prop_dir.mkdir(parents=True, exist_ok=True)
 
     if args.all:
         # Process all C files in the directory (original behavior)
@@ -306,27 +312,19 @@ def main():
             return
             
         print(f"Converting {len(model_files)} files...\n")
-
-        # Create directories if they don't exist
-        c_prop_dir = C_PROP_DIR
-        c_prop_dir.mkdir(exist_ok=True)
         
         # Process each model file
         for c_file in model_files:
-            write_property_file(c_file)
+            write_property_file(c_file,c_prop_dir)
     else:
         # Process single specified file
-        c_file = C_NETWORK_DIR / args.c_file
+        c_file = C_NETWORK_DIR / args.c_file if c_prop_dir == 'test' else Path(args.c_file)
         
         if not c_file.exists():
             print(f"Error: {c_file} not found.")
             return
-        
-        # Create directories if they don't exist
-        c_prop_dir = C_PROP_DIR
-        c_prop_dir.mkdir(exist_ok=True)
             
-        write_property_file(c_file)
+        write_property_file(c_file,c_prop_dir)
 
 if __name__ == "__main__":
     main()

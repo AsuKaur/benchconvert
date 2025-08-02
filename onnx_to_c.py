@@ -92,11 +92,8 @@ def validate_onnx_model(onnx_path):
         print(f"  - IR version: {model.ir_version}")
         print(f"  - Producer: {model.producer_name} {model.producer_version}")
         print(f"  - Graph inputs: {len(model.graph.input)}")
-        print(f"  - Graph inputs: {model.graph.input}")
         print(f"  - Graph outputs: {len(model.graph.output)}")
-        print(f"  - Graph outputs: {model.graph.output}")
         print(f"  - Graph nodes: {len(model.graph.node)}")
-        print(f"  - Graph nodes: {model.graph.node}")
         
         return True
         
@@ -118,7 +115,7 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
     #     bool: True if conversion successful, False otherwise
 
     # Construct full paths
-    onnx_path = onnx_dir / onnx_filename
+    onnx_path = onnx_dir /  f"{onnx_filename}.onnx"
     
     # Validate input file exists
     if not onnx_path.exists():
@@ -291,11 +288,21 @@ Examples:
         type=str,
         help='Path to onnx2c executable (if not in current directory or PATH)'
     )
-    
+
+    parser.add_argument(
+    '--o', '--output',
+    dest='output_dir',
+    type=str,
+    help='Directory to save the generated C source files (overrides default c_network/)'
+    )
     args = parser.parse_args()
     
     # Setup directories
-    onnx_dir, c_network_dir = setup_directories()
+    onnx_dir, _ = setup_directories()
+
+    # Use custom output directory if provided
+    c_network_dir = Path(args.output_dir) if args.output_dir else C_NETWORK_DIR
+    c_network_dir.mkdir(exist_ok=True)
     
     # Set verbosity
     if args.verbose:

@@ -349,7 +349,7 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
 
     print(f" - SMT-LIB saved to: {smt_path}")
 
-def process_single(name):
+def process_single(name, smt_dir):
     # Process a single ONNX+vnnlib pair by base name.
     
     # Locates the corresponding .onnx and .vnnlib files, validates their
@@ -360,7 +360,7 @@ def process_single(name):
 
     onnx_path = ONNX_DIR / f"{name}.onnx"
     vnnlib_path = VNNLIB_DIR / f"{name}.vnnlib"
-    smt_path = SMT_DIR / f"{name}.smt2"
+    smt_path = smt_dir / f"{name}.smt2"
 
     # Verify required input files exist
     if not onnx_path.exists() or not vnnlib_path.exists():
@@ -370,7 +370,7 @@ def process_single(name):
     # Perform the conversion
     onnx_to_smt(onnx_path, vnnlib_path, smt_path)
 
-def process_all():
+def process_all(smt_dir):
     # Batch process all matching ONNX and vnnlib file pairs.
     
     # Discovers all .onnx files in the onnx/ directory and .vnnlib files
@@ -393,13 +393,13 @@ def process_all():
     for name in sorted(common_names):
         onnx_path = onnx_files[name]
         vnnlib_path = vnnlib_files[name]
-        smt_path = SMT_DIR / f"{name}.smt2"
+        smt_path = smt_dir / f"{name}.smt2"
         onnx_to_smt(onnx_path, vnnlib_path, smt_path)
 
     # Provide batch conversion summary
     print(f"\nConversion Summary:")
     print(f"  📊 Total pairs processed: {total_count}")
-    print(f"  📁 Output directory: {SMT_DIR}")
+    print(f"  📁 Output directory: {smt_dir}")
 
 def main():
     # Main entry point with enhanced command line interface.
@@ -444,22 +444,34 @@ Examples:
         help='Enable verbose output during conversion'
     )
 
+    parser.add_argument(
+    '--o', '--output',
+    dest='output_dir',
+    type=str,
+    help='Directory to save the generated SMT-LIB files (overrides default smt/)'
+    )
+
+
     args = parser.parse_args()
     
     # Initialize directory structure
     setup_directories()
 
+    # Use provided output directory if specified
+    smt_dir = Path(args.output_dir) if args.output_dir else SMT_DIR
+    smt_dir.mkdir(exist_ok=True)
+
     # Handle batch processing mode
     if args.all:
         print("Converting all matching ONNX+vnnlib pairs...")
-        process_all()
+        process_all(smt_dir)
         return 0
 
     # Handle single file processing mode
     if args.model_name:
-        process_single(args.model_name)
+        process_single(args.model_name, smt_dir)
         print("\n✓ Conversion completed successfully!")
-        print(f"Generated SMT-LIB file: smt/{args.model_name}.smt2")
+        print(f"Generated SMT-LIB file: {smt_dir}/{args.model_name}.smt2")
         return 0
 
     # No arguments provided - show help

@@ -15,10 +15,8 @@ int main()
 
 	entry(tensor_onnx__Gemm_0, tensor_7);
 
-	// Expected result: SAT - assertion should always hold
+	// Expected result: SAT
 	__VERIFIER_assert(!(tensor_7[0][0] >= 1.0f && tensor_7[0][1] <= 0.0f));
 
 	return 0;
 }
-
-

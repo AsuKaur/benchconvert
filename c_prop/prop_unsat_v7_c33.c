@@ -25,7 +25,7 @@ int main()
 
 	entry(tensor_onnx__Gemm_0, tensor_7);
 
-	// Expected result: UNSAT - assertion can be violated
+	// Expected result: UNSAT
 	__VERIFIER_assert(!(tensor_7[0][0] >= 1.0f || tensor_7[0][1] <= 0.0f));
 
 	return 0;
