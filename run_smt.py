@@ -32,34 +32,41 @@ def get_expected_result(filename):
     return "UNKNOWN"
 
 
-def count_parameters_in_smt(path):
-    with open(path, 'r') as file:
+def count_parameters_in_smt(smt_file_path):
+    """
+    Counts the number of trainable parameters in a neural network
+    encoded in an SMT-LIB file with a structure similar to the provided example.
+    Assumes a feedforward network with one hidden layer (ReLU activation)
+    and linear output.
+    """
+    with open(smt_file_path, 'r') as file:
         content = file.read()
 
-    # Count weights: fp.mul with a neuron or input as second argument
-    weight_matches = re.findall(
-        r'\(fp\.mul\s+roundNearestTiesToEven\s+\([^)]+\)\s+(X_\d+|H_\d+_\d+)\)',
-        content
-    )
-    weight_count = len(weight_matches)
+    # Count input features (X_i)
+    input_matches = re.findall(r'\(declare-fun X_(\d+) ', content)
+    num_inputs = len(set(input_matches))  # Use set for unique indices
 
-    # Counting wrong bias
-    bias_exprs = re.findall(
-    r'\(assert\s+\(=\s+(H_\d+_\d+)\s+(\(let\s+\(\([^)]+\)\)\s+)?(.+?)\)\)', 
-    content, 
-    re.DOTALL)
+    # Count hidden units (from H_0_j declarations)
+    hidden_matches = re.findall(r'\(declare-fun H_0_(\d+) ', content)
+    num_hidden = len(set(hidden_matches))
 
-    bias_count = len(set(bias_exprs))
+    # Count output units (from Y_k declarations)
+    output_matches = re.findall(r'\(declare-fun Y_(\d+) ', content)
+    num_outputs = len(set(output_matches))
 
-    print(f"Weights: {weight_count}, Biases: {bias_count}")
-    return weight_count + bias_count
+    # Calculate parameters
+    # Input to hidden: weights + biases
+    input_to_hidden = (num_inputs * num_hidden) + num_hidden
+    # Hidden to output: weights + biases
+    hidden_to_output = (num_hidden * num_outputs) + num_outputs
+    total_parameters = input_to_hidden + hidden_to_output
+
+    return total_parameters
 
 def run_solver_on_smt_files():
     results = []
 
     smt_files = sorted([f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")])
-    # smt_files=["sat_v2_c1.smt2"]
-
 
     for smt_file in smt_files:
         smt_path = os.path.join(SMT_FOLDER, smt_file)
