@@ -12,14 +12,40 @@ VNNLIB_DIR = "vnnlib"
 CSV_FILE = f"vnn_result_{VERIFIER}.csv"
 TIMEOUT = 900
 
-# ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
-# VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
-# YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
+VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
+YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
 
 
-ABCROWN_PY = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
-VENV_PYTHON = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/envs/alpha-beta-crown/bin/python"
-YAML_TEMPLATE = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+# ABCROWN_PY = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
+# VENV_PYTHON = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/envs/alpha-beta-crown/bin/python"
+# YAML_TEMPLATE = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+
+import sys
+
+def run_with_live_output(cmd, timeout):
+    """Run cmd, stream stdout/stderr live, and return combined output string."""
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1  # line-buffered
+    )
+    output_lines = []
+    start = time.time()
+    try:
+        for line in proc.stdout:
+            print(line, end="")        # print to console immediately
+            sys.stdout.flush()
+            output_lines.append(line)  # save for later
+        proc.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        print(f"⏳ Timeout after {timeout}s")
+    end = time.time()
+    return "".join(output_lines), round(end - start, 4)
+
 
 # === Helper to get expected result from filename ===
 def get_expected_result(filename):
@@ -120,13 +146,16 @@ def run_vnn_verifier():
 
         cmd = [VENV_PYTHON, ABCROWN_PY, "--config", temp_yaml]
 
+
         print(f"🔍 Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
+            # proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
+            # output = proc.stdout + proc.stderr
+            output, elapsed = run_with_live_output(cmd, TIMEOUT)
+
             end = time.time()
 
-            output = proc.stdout + proc.stderr
 
             decision, runtime_str = parse_output(output)
             # fallback to measured time if parsing fails
