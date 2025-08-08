@@ -141,11 +141,12 @@ def run_smt_model(smt_content, inputs, input_size, output_size):
         return None, "unknown", f"SMT constraint setup failed: {str(e)}"
     
     sat_result = solver.check()
+    print(f"SMT: Solver check result={sat_result}")
     if sat_result == sat:
         model = solver.model()
         output_vars = [FP(f'Y_{i}', Float32()) for i in range(output_size)]
         outputs = [fp_to_float(model[var]) for var in output_vars]
-        print(f"SMT: model={model}")
+        # print(f"SMT: model={model}")
         solver.pop()
         return outputs, str(sat_result), None
     else:
@@ -217,7 +218,7 @@ def run_c_model(c_file_path, inputs, output_size):
             f.write(modified_content)
         
         # For debugging: Print the modified C content
-        print("Temporary C File Content:\n", modified_content)
+        # print("Temporary C File Content:\n", modified_content)
         
         compile_cmd = ['gcc', temp_c_path, '-o', temp_exe_path, '-Iextern', '-lm']
         try:
