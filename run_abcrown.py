@@ -12,9 +12,14 @@ VNNLIB_DIR = "vnnlib"
 CSV_FILE = f"vnn_result_{VERIFIER}.csv"
 TIMEOUT = 900
 
-ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
-VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
-YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+# ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
+# VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
+# YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+
+
+ABCROWN_PY = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
+VENV_PYTHON = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/envs/alpha-beta-crown/bin/python"
+YAML_TEMPLATE = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
 
 # === Helper to get expected result from filename ===
 def get_expected_result(filename):
