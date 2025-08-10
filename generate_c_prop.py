@@ -11,9 +11,8 @@
 # - Assertions that determine SAT/UNSAT results based on filename patterns
 
 # Usage:
-#     python write_property_file.py model.c               # Generates prop_model.c
-#     python write_property_file.py --all                 # Generates property files for all .c models
-#     python write_property_file.py --all --onnx models/  # Use ONNX files for shape info
+#     python genrate_c_prop.py model.c               # Generates prop_model.c
+#     python genrate_c_prop.py --all                 # Generates property files for all .c models
 
 
 import argparse
@@ -39,12 +38,6 @@ def extract_entry_signature(c_path):
         
     # Raises:
     #     ValueError: If no entry function is found in the file
-    
-    #  Example:
-    #     For a C file containing:
-    #     void entry(const float input[1][784], float output[1][10]) { ... }
-        
-    #     Returns: ["const float input[1][784]", "float output[1][10]"] 
 
     content = c_path.read_text()
     # Use regex to find the entry function signature
@@ -60,8 +53,7 @@ def parse_tensor_dec(decl):
     # Parse a tensor declaration string to extract name and dimensions.
     
     # This function parses C array declarations to extract the tensor name and its
-    # dimensions. Currently supports 2D arrays (matrices) which are common in
-    # neural network implementations.
+    # dimensions.
     
     # Args:
     #     decl (str): C array declaration string (e.g., "const float input[1][784]")
@@ -71,10 +63,6 @@ def parse_tensor_dec(decl):
         
     # Raises:
     #     ValueError: If the declaration format is not supported
-        
-    # Example:
-    #     parse_tensor_dec("const float input[1][784]") 
-    #     Returns: ("input", 1, 784)
     
     # Match pattern: [const] float name[dim1][dim2]
     match = re.match(r'(?:const\s+)?float\s+(\w+)\[(\d+)\]\[(\d+)\]', decl)
@@ -87,42 +75,11 @@ def parse_tensor_dec(decl):
     
     return tensor_name, dim1, dim2
 
-# def extract_io_shapes_from_onnx(onnx_path):
-#     # Extract input and output tensor shapes from an ONNX model file.
-    
-#     # This function loads an ONNX model and extracts the shapes of the first
-#     # input and output tensors. This is used as an alternative to parsing
-#     # the C file signatures when ONNX files are available.
-    
-#     # Args:
-#     #     onnx_path (Path): Path to the ONNX model file
-        
-#     # Returns:
-#     #     tuple: ((input_name, input_shape), (output_name, output_shape))
-        
-#     # Example:
-#     #     Returns: (("input", [1, 784]), ("output", [1, 10]))
-
-#     # Load the ONNX model
-#     model = onnx.load(onnx_path)
-#     graph = model.graph
-
-#     def get_shape(info):
-#         """Extract shape from ONNX tensor info, defaulting unknown dims to 1."""
-#         return [int(d.dim_value or 1) for d in info.type.tensor_type.shape.dim]
-
-#     # Get first input and output tensors
-#     input_tensor = graph.input[0]
-#     output_tensor = graph.output[0]
-    
-#     return (input_tensor.name, get_shape(input_tensor)), (output_tensor.name, get_shape(output_tensor))
 
 def determine_expected_result(filename):
     # Determine if a file should produce SAT or UNSAT based on filename patterns.
     
     # This function analyzes the filename to determine the expected verification result.
-    # It uses common naming conventions to infer whether the property should be
-    # satisfiable (SAT) or unsatisfiable (UNSAT).
     
     # Args:
     #     filename (str): The name of the C file
@@ -146,7 +103,6 @@ def determine_expected_result(filename):
         return 'UNSAT'
     
     # Check for other common patterns that indicate expected results
-    # These patterns are based on common verification benchmarking conventions
     if any(pattern in filename_lower for pattern in ['safe', 'holds', 'valid']):
         return 'SAT'
     elif any(pattern in filename_lower for pattern in ['unsafe', 'violation', 'invalid']):
@@ -210,16 +166,10 @@ def generate_property_code(input_name, input_shape, output_name, output_shape, e
     # Generate assertion based on expected result
     if expected_result == 'SAT':
         # For SAT files: Create an assertion that should always hold
-        # This assertion checks an impossible condition (output > 2.0 AND output < -1.0)
-        # Since neural network outputs are typically in [0,1] range, this is always false
-        # Therefore, the negation is always true, making the assertion always pass
         lines.append(f'\t// Expected result: SAT')
         lines.append(f'\t__VERIFIER_assert(!({output_name}[0][0] >= 1.0f && {output_name}[0][1] <= 0.0f));')
     else:  # UNSAT
         # For UNSAT files: Create an assertion that can be violated
-        # This assertion requires both outputs to be negative (< 0.0)
-        # Since neural network outputs are typically non-negative, this can be violated
-        # When violated, the verifier will find a counterexample (UNSAT result)
         lines.append(f'\t// Expected result: UNSAT')
         lines.append(f'\t__VERIFIER_assert(!({output_name}[0][0] >= 1.0f || {output_name}[0][1] <= 0.0f));')
     
@@ -228,7 +178,7 @@ def generate_property_code(input_name, input_shape, output_name, output_shape, e
     
     return "\n".join(lines)
 
-def write_property_file(c_file_path, output_dir):
+def genrate_c_prop(c_file_path, output_dir):
     # Generate a property file for a given C neural network file.
     
     # This function processes a single C file containing a neural network
@@ -277,23 +227,28 @@ def write_property_file(c_file_path, output_dir):
 def main():
     # Main function that handles command-line arguments and orchestrates the file generation.
     
-    # This function:
-    # 1. Parses command-line arguments
-    # 2. Determines which files to process (single file or all files)
-    # 3. Calls write_property_file() for each target file
-    
     # Command-line options:
     # - Single file: python script.py model.c
     # - All files: python script.py --all
 
     # Set up argument parser
-    parser = argparse.ArgumentParser(description="Generate property C files from onnx2c C files.")
+    parser = argparse.ArgumentParser(description="Generate property C files from onnx2c C files.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=""" 
+Examples:
+     python genrate_c_prop.py model.c               # Generates prop_model.c
+     python genrate_c_prop.py --all                 # Generates property files for all .c models
+        """)
     
     # Create mutually exclusive group for file selection
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("c_file", nargs="?", help="Single model C file in c_network/ (e.g., model.c)")
-    group.add_argument("--all", action="store_true", help="Process all .c files in c_network/")
-    parser.add_argument("--o", "--output", dest='output_dir', type=str, help="Directory to store generated property files (default: c_prop/)")
+    group.add_argument("c_file", 
+        nargs="?", help="Single model C file in c_network/ (e.g., model.c)")
+    group.add_argument("--all", 
+        action="store_true", help="Process all .c files in c_network/")
+    parser.add_argument("--o", "--output", 
+        dest='output_dir', type=str, 
+        help="Directory to store generated property files (default: c_prop/)")
 
     args = parser.parse_args()
 
@@ -315,7 +270,7 @@ def main():
         
         # Process each model file
         for c_file in model_files:
-            write_property_file(c_file,c_prop_dir)
+            genrate_c_prop(c_file,c_prop_dir)
     else:
         # Process single specified file
         c_file = C_NETWORK_DIR / args.c_file if c_prop_dir == 'test' else Path(args.c_file)
@@ -323,8 +278,7 @@ def main():
         if not c_file.exists():
             print(f"Error: {c_file} not found.")
             return
-            
-        write_property_file(c_file,c_prop_dir)
+        genrate_c_prop(c_file,c_prop_dir)
 
 if __name__ == "__main__":
     main()

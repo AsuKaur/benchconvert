@@ -40,12 +40,12 @@ int main()
 
  return 0;
 }
-# 43 "c/sat_v2_c1.c"
+# 40 "c/sat_v2_c1.c"
 # 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h" 1 3
 # 32 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h" 3
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/float.h" 1 3 4
 # 33 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h" 2 3
-# 44 "c/sat_v2_c1.c" 2
+# 41 "c/sat_v2_c1.c" 2
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h" 1 3 4
 # 31 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h" 3 4
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h" 1 3 4
@@ -479,9 +479,9 @@ struct exception {
     double arg2;
     double retval;
 };
-# 45 "c/sat_v2_c1.c" 2
+# 42 "c/sat_v2_c1.c" 2
 # 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdbool.h" 1 3
-# 46 "c/sat_v2_c1.c" 2
+# 43 "c/sat_v2_c1.c" 2
 # 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h" 1 3
 # 56 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h" 3
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h" 1 3 4
@@ -732,7 +732,7 @@ typedef long int intmax_t;
 typedef long unsigned int uintmax_t;
 # 60 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h" 2 3 4
 # 57 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h" 2 3
-# 47 "c/sat_v2_c1.c" 2
+# 44 "c/sat_v2_c1.c" 2
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/string.h" 1 3 4
 # 58 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/string.h" 3 4
 # 1 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_string.h" 1 3 4
@@ -979,8 +979,8 @@ int flsll(long long) __attribute__((availability(macosx,introduced=10.9)));
 # 33 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_string.h" 2 3 4
 # 229 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_string.h" 2 3 4
 # 59 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/string.h" 2 3 4
-# 48 "c/sat_v2_c1.c" 2
-# 59 "c/sat_v2_c1.c"
+# 45 "c/sat_v2_c1.c" 2
+# 56 "c/sat_v2_c1.c"
 static const float tensor_0_weight[5][2] =
 {
   {-1.00000000000000000000f, 0.00000000000000000000f},

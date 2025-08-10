@@ -82,19 +82,10 @@ def validate_onnx_model(onnx_path):
     try:
         # Load the ONNX model
         model = onnx.load(onnx_path)
-        
         # Check if the model is valid
         onnx.checker.check_model(model)
-        
         print(f"✓ ONNX model validation passed: {onnx_path}")
-        
-        # Print model info
-        print(f"  - IR version: {model.ir_version}")
-        print(f"  - Producer: {model.producer_name} {model.producer_version}")
-        print(f"  - Graph inputs: {len(model.graph.input)}")
-        print(f"  - Graph outputs: {len(model.graph.output)}")
-        print(f"  - Graph nodes: {len(model.graph.node)}")
-        
+
         return True
         
     except Exception as e:
@@ -115,7 +106,7 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
     #     bool: True if conversion successful, False otherwise
 
     # Construct full paths
-    onnx_path = onnx_dir /  f"{onnx_filename}.onnx"
+    onnx_path = onnx_dir /  f"{onnx_filename}"
     
     # Validate input file exists
     if not onnx_path.exists():
@@ -132,7 +123,6 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
     
     try:
         print(f"Converting {onnx_path} to {output_path}...")
-        
         # Run onnx2c command
         # Usage: ./onnx2c [options] model.onnx > output.c
         with open(output_path, 'w') as output_file:
@@ -203,32 +193,8 @@ def convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path):
         print(f"Processing {onnx_file.name}...")
         if convert_onnx_to_c(onnx_file.name, onnx_dir, c_network_dir, onnx2c_path):
             success_count += 1
-            print("Moving on....")
     
     return success_count, total_count
-
-
-def list_files_in_directories():
-    # List files in both onnx and c_network directories.
-    onnx_dir, c_network_dir = setup_directories()
-    
-    print("Current directory structure:")
-    print(f"\n📁 {onnx_dir}/ (ONNX input files):")
-    onnx_files = list(onnx_dir.glob("*.onnx"))
-    if onnx_files:
-        for f in onnx_files:
-            print(f"  📄 {f.name}")
-    else:
-        print("  (empty - place your .onnx files here)")
-    
-    print(f"\n📁 {c_network_dir}/ (C output files):")
-    c_files = list(c_network_dir.glob("*.c"))
-    if c_files:
-        for f in c_files:
-            print(f"  📄 {f.name}")
-    else:
-        print("  (empty - converted files will appear here)")
-    print()
 
 
 def main():
@@ -245,8 +211,6 @@ Directory Structure:
 Examples:
   python onnx_to_c.py model.onnx        # Convert onnx/model.onnx -> c_network/model.c
   python onnx_to_c.py --all             # Convert all ONNX files in onnx/ folder
-  python onnx_to_c.py --list            # List files in both directories
-  python onnx_to_c.py --validate model.onnx  # Only validate model
         """
     )
     
@@ -265,18 +229,6 @@ Examples:
         help='Convert all ONNX files in onnx/ directory'
     )
     
-    group.add_argument(
-        '--list',
-        action='store_true',
-        help='List files in onnx/ and c_network/ directories'
-    )
-    
-    parser.add_argument(
-        '--validate',
-        action='store_true',
-        help='Only validate the ONNX model without converting'
-    )
-    
     parser.add_argument(
         '--verbose',
         action='store_true',
@@ -290,10 +242,10 @@ Examples:
     )
 
     parser.add_argument(
-    '--o', '--output',
-    dest='output_dir',
-    type=str,
-    help='Directory to save the generated C source files (overrides default c_network/)'
+        '--o', '--output',
+        dest='output_dir',
+        type=str,
+        help='Directory to save the generated C source files (overrides default c_network/)'
     )
     args = parser.parse_args()
     
@@ -308,11 +260,6 @@ Examples:
     if args.verbose:
         print("Verbose mode enabled")
     
-    # List files mode
-    if args.list:
-        list_files_in_directories()
-        return 0
-    
     # Check for onnx2c executable
     onnx2c_path = args.onnx2c_path or check_onnx2c_executable()
     if not onnx2c_path:
@@ -321,16 +268,6 @@ Examples:
         return 1
     
     print(f"Using onnx2c: {onnx2c_path}")
-    
-    # Validate only mode
-    if args.validate and args.onnx_file:
-        onnx_path = onnx_dir / args.onnx_file
-        if validate_onnx_model(str(onnx_path)):
-            print("Model validation completed successfully")
-            return 0
-        else:
-            print("Model validation failed")
-            return 1
     
     # Convert all files mode
     if args.all:

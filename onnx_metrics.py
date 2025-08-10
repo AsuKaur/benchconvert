@@ -18,9 +18,21 @@ def analyze_onnx_model(model_path):
     file_size = os.path.getsize(model_path)
     print(f"File size: {file_size} bytes ({human_size(file_size)})")
 
-    # Load ONNX model
+    # Load the ONNX model
     model = onnx.load(model_path)
+        
+    # Check if the model is valid
+    onnx.checker.check_model(model)
     graph = model.graph
+
+    print(f"✓ ONNX model validation passed: {model_path}")
+        
+    # Print model info
+    print(f"  - IR version: {model.ir_version}")
+    print(f"  - Producer: {model.producer_name} {model.producer_version}")
+    print(f"  - Graph inputs: {len(model.graph.input)}")
+    print(f"  - Graph outputs: {len(model.graph.output)}")
+    print(f"  - Graph nodes: {len(model.graph.node)}")
 
     # Input/Output
     input_names = [i.name for i in graph.input]
