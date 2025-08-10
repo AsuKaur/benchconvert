@@ -1,11 +1,12 @@
 # The file is taken from https://github.com/emanino/neurocodebench
+# The file is unchanged from the original repository, just detailed comments have been added
+# for understanding the code and its functionality.
+
+# This script generates VNNLIB format lines for a neural network verification problem.
 
 def vnnlib_lines(n_var, verdict):
     # Generate VNNLIB format lines for neural network verification.
-    
-    # VNNLIB is a standard format used for specifying neural network verification
-    # problems. It uses SMT-LIB syntax to define input/output variables and constraints.
-    
+
     # Args:
     #     n_var (int): Number of input variables (X_0, X_1, ..., X_{n_var-1})
     #     verdict (str): Expected satisfiability result, either "SAT" or "UNSAT"

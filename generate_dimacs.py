@@ -1,4 +1,9 @@
 # The file is taken from https://github.com/emanino/neurocodebench
+# The file is unchanged from the original repository, just detailed comments have been added
+# for understanding the code and its functionality.
+
+# This script generates CNF formulas in DIMACS format for SAT and UNSAT problems.
+
 import csv
 import random
 import numpy as np
@@ -18,15 +23,13 @@ def print_dimacs(filepath, info, cnf, verdict="Unsat"):
     #     info (dict): Dictionary containing 'vars' and 'clauses' counts
     #     cnf (list): List of clauses, where each clause is a list of literals
     #     verdict (str): Expected satisfiability verdict ("Sat" or "Unsat")
-
     
     with open(filepath, "w", newline='') as csvfile:
         # Using csv.writer with space delimiter to properly format DIMACS output
         csvwriter = csv.writer(csvfile, delimiter=' ')
         
         # Write comment line with metadata about the formula
-        csvwriter.writerow(["c", "NeuroCodeBench", "2.0",
-                            "CNF", "formula", "with", "verdict", verdict])
+        csvwriter.writerow(["c", "NeuroCodeBench", "2.0", "CNF", "formula", "with", "verdict", verdict])
         
         # Write problem specification line: p cnf <variables> <clauses>
         csvwriter.writerow(["p", "cnf", str(info["vars"]), str(info["clauses"])])
@@ -50,7 +53,6 @@ def generate_sat(n_var, n_clause, max_fail = 100):
     # Returns:
     #     tuple: (info_dict, cnf_list) where info_dict contains metadata
     #            and cnf_list contains the clauses
-
     
     cnf = []  # List to store generated clauses
     n_fail = 0  # Counter for consecutive generation failures
@@ -58,7 +60,6 @@ def generate_sat(n_var, n_clause, max_fail = 100):
     # Generate a random truth assignment for all variables
     truth = np.random.rand(n_var) < 0.5  # True/False for each variable
     while len(cnf) < n_clause and n_fail < max_fail:
-        
         # Randomly select a subset of variables for this clause
         v = np.random.choice(n_var, size=np.random.randint(0, n_var), replace=False)
         
@@ -68,7 +69,6 @@ def generate_sat(n_var, n_clause, max_fail = 100):
         # Check if this clause would be satisfied by our truth assignment
         # A clause is satisfied if at least one literal matches the truth assignment
         if (truth[v] == t).any():
-            
             # Convert to DIMACS format (1-based indexing)
             # Positive literals: variable indices + 1
             pos_v = v[t] + 1
@@ -78,7 +78,6 @@ def generate_sat(n_var, n_clause, max_fail = 100):
             # Combine positive and negative literals into a single clause
             cnf.append(list(np.concatenate([pos_v, neg_v])))
             n_fail = 0  # Reset failure counter on success
-        
         else:
             # This clause would not be satisfied by our truth assignment
             # Increment failure counter and try again
@@ -112,7 +111,6 @@ def generate_unsat(n_var, n_clause, max_fail = 100):
     # Returns:
     #     tuple: (info_dict, cnf_list) where info_dict contains metadata
     #            and cnf_list contains the clauses
-
     
     cnf = []  # List to store generated clauses
     n_fail = 0  # Counter for consecutive generation failures
@@ -126,7 +124,6 @@ def generate_unsat(n_var, n_clause, max_fail = 100):
     cnf.append([-1])  # ¬x1
     
     while len(cnf) < n_clause and n_fail < max_fail:
-        
         # Select an existing clause to expand, with bias toward shorter clauses
         freq = 1 / np.array([len(clause) for clause in cnf])
         i = int(np.random.choice(len(cnf), size=1, p=freq / np.sum(freq))[0])
@@ -144,7 +141,6 @@ def generate_unsat(n_var, n_clause, max_fail = 100):
             # Add a new clause C ∨ ¬x_new
             cnf.append(clause + [-new_var])
             n_fail = 0  # Reset failure counter on success
-        
         else:
             # No available variables to add to this clause
             # Increment failure counter and try a different clause

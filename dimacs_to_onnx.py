@@ -1,6 +1,8 @@
 # The file is taken from https://github.com/emanino/neurocodebench
+# The file is unchanged from the original repository, just detailed comments have been added
+# for understanding the code and its functionality.
 
-# This module converts CNF (Conjunctive Normal Form) boolean satisfiability problems 
+# This script converts CNF (Conjunctive Normal Form) boolean satisfiability problems 
 # into neural networks. The networks are designed to work with pre-segregated DIMACS files
 # that are already classified as SAT or UNSAT.
 
@@ -306,7 +308,6 @@ def write_torch_to_onnx_file(net, filepath):
     # Args:
     #     net (torch.nn.Sequential): The trained neural network to export
     #     filepath (str): Output path for the ONNX file (should end in .onnx)
- 
     
     # Create a dummy input tensor for tracing the network computation graph
     # Shape: (batch_size, n_variables) where batch_size=1 for example
