@@ -9,7 +9,7 @@ import onnx  # Make sure to install this package
 VERIFIER = "abcrown"
 ONNX_DIR = "onnx"
 VNNLIB_DIR = "vnnlib"
-CSV_FILE = f"vnn_result_{VERIFIER}.csv"
+CSV_FILE = f"results/vnn_result_{VERIFIER}.csv"
 TIMEOUT = 900
 
 ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"

@@ -8,7 +8,7 @@ VERIFIER = "cbmc"  # Changed from "esbmc" to "cbmc"
 
 PROP_DIR = "c_prop"
 NET_DIR = "c_network"
-OUTPUT_CSV = "sv_result_" + VERIFIER + ".csv"
+OUTPUT_CSV = "results/sv_result_" + VERIFIER + ".csv"
 TIMEOUT = 900
 
 FLAGS = [

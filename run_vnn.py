@@ -7,7 +7,7 @@ import onnx
 VERIFIER = "marabou"
 ONNX_DIR = "onnx"
 VNNLIB_DIR = "vnnlib"
-CSV_FILE = "vnn_result_" + VERIFIER + ".csv"
+CSV_FILE = "results/vnn_result_" + VERIFIER + ".csv"
 TIMEOUT = 900
 
 # === Get verifier version ===

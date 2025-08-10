@@ -7,7 +7,7 @@ import re
 
 SOLVER = "bitwuzla"  # "z3" or "cvc5" or "algaroba"
 SMT_FOLDER = "smt"
-CSV_FILE = "smt_result_" + SOLVER + ".csv"
+CSV_FILE = "results/smt_result_" + SOLVER + ".csv"
 TIMEOUT = 900
 
 def get_solver_version(solver):

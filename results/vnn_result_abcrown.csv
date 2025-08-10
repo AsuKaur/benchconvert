@@ -1,0 +1,16 @@
+Verifier: abcrown
+"Version: Traceback (most recent call last):
+  File ""/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"", line 29, in <module>
+    from auto_LiRPA import BoundedTensor
+ImportError: cannot import name 'BoundedTensor' from 'auto_LiRPA' (unknown location)"
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33,691,SAT,UNKNOWN,1.2574s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpqyncn4tx.yaml
+sat_v10_c45,847,SAT,UNKNOWN,0.6717s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpb310upq8.yaml
+sat_v2_c1,27,SAT,UNKNOWN,0.6608s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpayr8hczj.yaml
+sat_v4_c7,107,SAT,UNKNOWN,0.6849s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpys385vnj.yaml
+sat_v7_c30,442,SAT,UNKNOWN,0.6857s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpf9b6dwj7.yaml
+unsat_v10_c33,691,UNSAT,UNKNOWN,0.6774s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpe_40gkyi.yaml
+unsat_v10_c45,847,UNSAT,UNKNOWN,0.6836s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpli9c8kpe.yaml
+unsat_v2_c3,37,UNSAT,UNKNOWN,0.6859s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpghph2gon.yaml
+unsat_v4_c8,114,UNSAT,UNKNOWN,0.6955s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmpj1p2a_zn.yaml
+unsat_v7_c33,472,UNSAT,UNKNOWN,0.6829s,/Users/asukaur/myenv311/bin/python /Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py --config /var/folders/pq/1bq0d2nn4fq5dxbsmhx9mkch0000gn/T/tmp7auzwcih.yaml
