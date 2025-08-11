@@ -1,0 +1,10 @@
+onnx/sat_v2_c1.onnx,vnnlib/sat_v2_c1.vnnlib,100
+onnx/unsat_v2_c3.onnx,vnnlib/unsat_v2_c3.vnnlib,100
+onnx/sat_v7_c30.onnx,vnnlib/sat_v7_c30.vnnlib,100
+onnx/unsat_v7_c33.onnx,vnnlib/unsat_v7_c33.vnnlib,100
+onnx/sat_v4_c7.onnx,vnnlib/sat_v4_c7.vnnlib,100
+onnx/unsat_v4_c8.onnx,vnnlib/unsat_v4_c8.vnnlib,100
+onnx/sat_v10_c33.onnx,vnnlib/sat_v10_c33.vnnlib,100
+onnx/unsat_v10_c33.onnx,vnnlib/unsat_v10_c33.vnnlib,100
+onnx/sat_v10_c45.onnx,vnnlib/sat_v10_c45.vnnlib,100
+onnx/unsat_v10_c45.onnx,vnnlib/unsat_v10_c45.vnnlib,100

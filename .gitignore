@@ -3,6 +3,7 @@
 test.py
 test
 myenv*
+__pycache__
 
 # Auto-generated files
 c
