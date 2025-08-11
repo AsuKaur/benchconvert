@@ -4,9 +4,11 @@ import csv
 import time
 import re
 import sys
+from pathlib import Path
 
 SMT_FOLDER = "smt"
 TIMEOUT = 900
+RESULT_DIR = Path("results")
 
 def get_solver_version(solver):
     try:
@@ -124,9 +126,10 @@ def run_solver_on_smt_files(solver):
     print(f"\nSaved to {CSV_FILE}")
 
 if __name__ == "__main__":
+    RESULT_DIR.mkdir(exist_ok=True)
     if len(sys.argv) < 2:
-        print("Usage: python script.py <solver_name>")
-        print("Example: python script.py bitwuzla")
+        print("Usage: python run_smt.py <solver_name>")
+        print("Example: python run_smt.py bitwuzla")
         sys.exit(1)
     
     solver = sys.argv[1]

@@ -3,28 +3,14 @@ import subprocess
 import csv
 import time
 import re
+import sys
+from pathlib import Path
 
-VERIFIER = "cbmc"  # Changed from "esbmc" to "cbmc"
 
+RESULT_DIR = Path("results")
 PROP_DIR = "c_prop"
 NET_DIR = "c_network"
-OUTPUT_CSV = "results/sv_result_" + VERIFIER + ".csv"
 TIMEOUT = 900
-
-FLAGS = [
-    "--no-bounds-check",
-    "--no-pointer-check",
-    "--unwind", "10",
-    "-Iextern"
-] if  VERIFIER == "cbmc" else [
-    "--floatbv",
-    "--no-bounds-check",
-    "--no-pointer-check",
-    "--no-div-by-zero-check",
-    "--k-induction",
-    "--unwind", "10",
-    "-Iextern"
-]
 
 
 def get_verifier_version(verifier):
@@ -94,8 +80,24 @@ def count_parameters(file_path):
 
     return total_params
 
-def run_verifier():
+def run_verifier(verifier):
     results = []
+    output_csv = "results/sv_result_" + verifier + ".csv"
+
+    flags = [
+    "--no-bounds-check",
+    "--no-pointer-check",
+    "--unwind", "10",
+    "-Iextern"
+    ] if  verifier == "cbmc" else [
+    "--floatbv",
+    "--no-bounds-check",
+    "--no-pointer-check",
+    "--no-div-by-zero-check",
+    "--k-induction",
+    "--unwind", "10",
+    "-Iextern"
+    ]
     for prop_file in sorted(os.listdir(PROP_DIR)):
         if not prop_file.endswith(".c"):
             continue
@@ -112,8 +114,8 @@ def run_verifier():
 
         param_count = count_parameters(net_path)
 
-        cmd = [VERIFIER, prop_path, net_path] + FLAGS
-        print(f"Running {VERIFIER} on: {prop_file} + {net_file}")
+        cmd = [verifier, prop_path, net_path] + flags
+        print(f"Running {verifier} on: {prop_file} + {net_file}")
 
         try:
             start_time = time.time()
@@ -129,9 +131,9 @@ def run_verifier():
                 param_count,          
                 expected_result,
                 actual_result,
-                runtime if VERIFIER != "cbmc" else f"{elapsed_time:.4f}s",
+                runtime if verifier != "cbmc" else f"{elapsed_time:.4f}s",
                 solver,
-                " ".join(FLAGS)
+                " ".join(flags)
             ])
         except subprocess.TimeoutExpired:
             print(f"Timeout: {prop_file}")
@@ -142,7 +144,7 @@ def run_verifier():
                 "TIMEOUT",
                 f"{TIMEOUT}s",
                 "UNKNOWN",
-                " ".join(FLAGS)
+                " ".join(flags)
             ])
         except Exception as e:
             print(f"Error running {prop_file}: {e}")
@@ -153,27 +155,34 @@ def run_verifier():
                 f"ERROR: {e}",
                 "ERROR",
                 "UNKNOWN",
-                " ".join(FLAGS)
+                " ".join(flags)
             ])
 
-    verifier_version = get_verifier_version(VERIFIER)
-    with open(OUTPUT_CSV, mode="w", newline="") as f:
+    verifier_version = get_verifier_version(verifier)
+    with open(output_csv, mode="w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([f"Verifier: {VERIFIER}"])
+        writer.writerow([f"Verifier: {verifier}"])
         writer.writerow([f"Version: {verifier_version}"])
         writer.writerow([
             "File Name",
             "Parameter Count",
             "Expected Result",
             "Actual Result",
-            "Runtime decision procedure" if VERIFIER == "esbmc" else "Runtime",
+            "Runtime decision procedure" if verifier == "esbmc" else "Runtime",
             "Solver Used",
             "Flags Used"
         ])
         writer.writerows(results)
 
-    print(f"\nSsaved to {OUTPUT_CSV}")
+    print(f"\nSaved to {output_csv}")
 
 
 if __name__ == "__main__":
-    run_verifier()
+    RESULT_DIR.mkdir(exist_ok=True)
+    if len(sys.argv) < 2:
+        print("Usage: python run_sv.py <verifier_name>")
+        print("Example: python run_sv.py cbmc")
+        sys.exit(1)
+    
+    verifier = sys.argv[1]
+    run_verifier(verifier)
