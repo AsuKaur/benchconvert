@@ -1,0 +1,13 @@
+Verifier: marabou
+Version: Version info not available
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33,691,SAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/sat_v10_c33.onnx vnnlib/sat_v10_c33.vnnlib
+sat_v10_c45,847,SAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/sat_v10_c45.onnx vnnlib/sat_v10_c45.vnnlib
+sat_v2_c1,27,SAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/sat_v2_c1.onnx vnnlib/sat_v2_c1.vnnlib
+sat_v4_c7,107,SAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/sat_v4_c7.onnx vnnlib/sat_v4_c7.vnnlib
+sat_v7_c30,442,SAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/sat_v7_c30.onnx vnnlib/sat_v7_c30.vnnlib
+unsat_v10_c33,691,UNSAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/unsat_v10_c33.onnx vnnlib/unsat_v10_c33.vnnlib
+unsat_v10_c45,847,UNSAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/unsat_v10_c45.onnx vnnlib/unsat_v10_c45.vnnlib
+unsat_v2_c3,37,UNSAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/unsat_v2_c3.onnx vnnlib/unsat_v2_c3.vnnlib
+unsat_v4_c8,114,UNSAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/unsat_v4_c8.onnx vnnlib/unsat_v4_c8.vnnlib
+unsat_v7_c33,472,UNSAT,ERROR: [Errno 2] No such file or directory: 'marabou',N/A,marabou onnx/unsat_v7_c33.onnx vnnlib/unsat_v7_c33.vnnlib
