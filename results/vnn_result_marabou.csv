@@ -1,0 +1,15 @@
+Verifier: Marabou
+"Version: Marabou version 2.0.0 [master a1195f63]
+compiled with GCC version 11.4.1 20231218 (Red Hat 11.4.1-3)
+on Aug  8 2025 13:30:43"
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
+sat_v10_c33,691,SAT,SAT,0.0977s,Marabou onnx/sat_v10_c33.onnx vnnlib/sat_v10_c33.vnnlib
+sat_v10_c45,847,SAT,SAT,0.0271s,Marabou onnx/sat_v10_c45.onnx vnnlib/sat_v10_c45.vnnlib
+sat_v2_c1,27,SAT,SAT,0.023s,Marabou onnx/sat_v2_c1.onnx vnnlib/sat_v2_c1.vnnlib
+sat_v4_c7,107,SAT,SAT,0.0176s,Marabou onnx/sat_v4_c7.onnx vnnlib/sat_v4_c7.vnnlib
+sat_v7_c30,442,SAT,SAT,0.0231s,Marabou onnx/sat_v7_c30.onnx vnnlib/sat_v7_c30.vnnlib
+unsat_v10_c33,691,UNSAT,TIMEOUT,900s,Marabou onnx/unsat_v10_c33.onnx vnnlib/unsat_v10_c33.vnnlib
+unsat_v10_c45,847,UNSAT,TIMEOUT,900s,Marabou onnx/unsat_v10_c45.onnx vnnlib/unsat_v10_c45.vnnlib
+unsat_v2_c3,37,UNSAT,SAT,0.0138s,Marabou onnx/unsat_v2_c3.onnx vnnlib/unsat_v2_c3.vnnlib
+unsat_v4_c8,114,UNSAT,TIMEOUT,900s,Marabou onnx/unsat_v4_c8.onnx vnnlib/unsat_v4_c8.vnnlib
+unsat_v7_c33,472,UNSAT,TIMEOUT,900s,Marabou onnx/unsat_v7_c33.onnx vnnlib/unsat_v7_c33.vnnlib

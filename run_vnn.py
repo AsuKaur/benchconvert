@@ -48,7 +48,7 @@ def count_parameters(onnx_path):
 
 def run_vnn_verifier(verifier):
     results = []
-    csv_file = RESULT_DIR / f"{verifier}_results.csv"
+    csv_file = RESULT_DIR / f"vnn_result_{verifier.lower()}.csv"
     onnx_files = sorted([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
 
     for onnx_file in onnx_files:
