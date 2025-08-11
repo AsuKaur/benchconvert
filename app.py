@@ -1,5 +1,5 @@
 # This script executes other Python scripts in sequence to generate
-# dimac properties, ONNX and VNNLIB files, ONNX to C conversion and it's 
+# dimacs files, ONNX and VNNLIB files, ONNX to C conversion and it's 
 # corresponding files, and ONNX to SMT conversion.
 
 import subprocess
