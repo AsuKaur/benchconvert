@@ -3,11 +3,13 @@ import subprocess
 import csv
 import time
 import onnx
+import sys
+from pathlib import Path
 
-VERIFIER = "marabou"
+
+RESULT_DIR = Path("results")
 ONNX_DIR = "onnx"
 VNNLIB_DIR = "vnnlib"
-CSV_FILE = "results/vnn_result_" + VERIFIER + ".csv"
 TIMEOUT = 900
 
 
@@ -44,9 +46,9 @@ def count_parameters(onnx_path):
         return "N/A"
 
 
-def run_vnn_verifier():
+def run_vnn_verifier(verifier):
     results = []
-
+    csv_file = RESULT_DIR / f"{verifier}_results.csv"
     onnx_files = sorted([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
 
     for onnx_file in onnx_files:
@@ -62,9 +64,9 @@ def run_vnn_verifier():
 
         param_count = count_parameters(onnx_path)
 
-        cmd = [VERIFIER, onnx_path, vnnlib_path]
+        cmd = [verifier, onnx_path, vnnlib_path]
 
-        print(f"Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
+        print(f"Running {verifier} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
@@ -99,16 +101,23 @@ def run_vnn_verifier():
             print(f"Error running {onnx_file}: {e}")
             results.append([base, param_count, get_expected_result(base), f"ERROR: {e}", "N/A", " ".join(cmd)])
 
-    version_info = get_verifier_version(VERIFIER)
-    with open(CSV_FILE, mode="w", newline="") as f:
+    version_info = get_verifier_version(verifier)
+    with open(csv_file, mode="w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([f"Verifier: {VERIFIER}"])
+        writer.writerow([f"Verifier: {verifier}"])
         writer.writerow([f"Version: {version_info}"])
         writer.writerow(["File Name", "Parameter Count", "Expected Result", "Actual Result", "Runtime", "Command"])
         writer.writerows(results)
 
-    print(f"\nSaved to {CSV_FILE}")
+    print(f"\nSaved to {csv_file}")
 
 
 if __name__ == "__main__":
-    run_vnn_verifier()
+    RESULT_DIR.mkdir(exist_ok=True)
+    if len(sys.argv) < 2:
+        print("Usage: python run_vnn.py <verifier_name>")
+        print("Example: python run_vnn.py marabou")
+        sys.exit(1)
+    
+    verifier = sys.argv[1]
+    run_vnn_verifier(verifier)
