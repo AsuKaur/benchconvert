@@ -3,11 +3,9 @@ import subprocess
 import csv
 import time
 import re
+import sys
 
-
-SOLVER = "bitwuzla"  # "z3" or "cvc5" or "algaroba"
 SMT_FOLDER = "smt"
-CSV_FILE = "results/smt_result_" + SOLVER + ".csv"
 TIMEOUT = 900
 
 def get_solver_version(solver):
@@ -30,7 +28,6 @@ def get_expected_result(filename):
     elif "sat" in filename.lower():
         return "SAT"
     return "UNKNOWN"
-
 
 def count_parameters_in_smt(smt_file_path):
     with open(smt_file_path, 'r') as file:
@@ -57,7 +54,9 @@ def count_parameters_in_smt(smt_file_path):
 
     return total_parameters
 
-def run_solver_on_smt_files():
+def run_solver_on_smt_files(solver):
+    CSV_FILE = "results/smt_result_" + solver + ".csv"
+    
     results = []
 
     smt_files = sorted([f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")])
@@ -66,9 +65,9 @@ def run_solver_on_smt_files():
         smt_path = os.path.join(SMT_FOLDER, smt_file)
         param_count = count_parameters_in_smt(smt_path) 
 
-        cmd = [SOLVER, smt_path]
+        cmd = [solver, smt_path]
 
-        print(f"Running {SOLVER} on: {smt_file}")
+        print(f"Running {solver} on: {smt_file}")
         try:
             start = time.time()
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
@@ -109,10 +108,10 @@ def run_solver_on_smt_files():
                 " ".join(cmd)
             ])
 
-    solver_version = get_solver_version(SOLVER)
+    solver_version = get_solver_version(solver)
     with open(CSV_FILE, mode="w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([f"Solver: {SOLVER}"])
+        writer.writerow([f"Solver: {solver}"])
         writer.writerow([f"Version: {solver_version}"])
         writer.writerow(["File Name", 
                          "Parameter Count", 
@@ -125,4 +124,10 @@ def run_solver_on_smt_files():
     print(f"\nSaved to {CSV_FILE}")
 
 if __name__ == "__main__":
-    run_solver_on_smt_files()
+    if len(sys.argv) < 2:
+        print("Usage: python script.py <solver_name>")
+        print("Example: python script.py bitwuzla")
+        sys.exit(1)
+    
+    solver = sys.argv[1]
+    run_solver_on_smt_files(solver)
