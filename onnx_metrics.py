@@ -26,7 +26,7 @@ def analyze_onnx_model(model_path):
     onnx.checker.check_model(model)
     graph = model.graph
 
-    print(f"✓ ONNX model validation passed: {model_path}")
+    print(f"ONNX model validation passed: {model_path}")
         
     # Print model info
     print(f"  - IR version: {model.ir_version}")

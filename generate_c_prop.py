@@ -90,7 +90,6 @@ def determine_expected_result(filename):
     #     - Files with "unsat" -> UNSAT  
     #     - Files with "safe", "holds", "valid" -> SAT
     #     - Files with "unsafe", "violation", "invalid" -> UNSAT
-    #     - Default -> SAT (with warning)
     
     filename_lower = filename.lower()
     
@@ -107,7 +106,7 @@ def determine_expected_result(filename):
         return 'UNSAT'
     
     # Default to SAT if no clear indication is found
-    print(f"Warning: Could not determine expected result for {filename}, defaulting to SAT")
+    print(f"Could not determine expected result for {filename}, defaulting to SAT")
     return 'SAT'
 
 def generate_property_code(input_name, input_shape, output_name, output_shape, expected_result):
@@ -214,11 +213,11 @@ def genrate_c_prop(c_file_path, output_dir):
         prop_path.write_text(prop_code)
         
         # Print success message with expected result
-        print(f"✓ {prop_path.name} (Expected: {expected_result})")
+        print(f"{prop_path.name} (Expected: {expected_result})")
         
     except Exception as e:
         # Print error message if processing fails
-        print(f"✗ Failed for {c_file_path.name}: {e}")
+        print(f"Failed for {c_file_path.name}: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="Generate property C files from onnx2c C files.",
@@ -254,7 +253,7 @@ Examples:
             print("No model .c files found in c_network/")
             return
             
-        print(f"Converting {len(model_files)} files...\n")
+        print(f"Converting {len(model_files)} files\n")
         
         # Process each model file
         for c_file in model_files:

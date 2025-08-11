@@ -33,18 +33,12 @@ def get_expected_result(filename):
 
 
 def count_parameters_in_smt(smt_file_path):
-    """
-    Counts the number of trainable parameters in a neural network
-    encoded in an SMT-LIB file with a structure similar to the provided example.
-    Assumes a feedforward network with one hidden layer (ReLU activation)
-    and linear output.
-    """
     with open(smt_file_path, 'r') as file:
         content = file.read()
 
     # Count input features (X_i)
     input_matches = re.findall(r'\(declare-fun X_(\d+) ', content)
-    num_inputs = len(set(input_matches))  # Use set for unique indices
+    num_inputs = len(set(input_matches)) 
 
     # Count hidden units (from H_0_j declarations)
     hidden_matches = re.findall(r'\(declare-fun H_0_(\d+) ', content)
@@ -70,11 +64,11 @@ def run_solver_on_smt_files():
 
     for smt_file in smt_files:
         smt_path = os.path.join(SMT_FOLDER, smt_file)
-        param_count = count_parameters_in_smt(smt_path)  # Count parameters
+        param_count = count_parameters_in_smt(smt_path) 
 
         cmd = [SOLVER, smt_path]
 
-        print(f"🔍 Running {SOLVER} on: {smt_file}")
+        print(f"Running {SOLVER} on: {smt_file}")
         try:
             start = time.time()
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
@@ -95,7 +89,7 @@ def run_solver_on_smt_files():
             ])
 
         except subprocess.TimeoutExpired:
-            print(f"⏳ Timeout: {smt_file}")
+            print(f"Timeout: {smt_file}")
             results.append([
                 smt_file,
                 param_count,
@@ -105,7 +99,7 @@ def run_solver_on_smt_files():
                 " ".join(cmd)
             ])
         except Exception as e:
-            print(f"❌ Error running {smt_file}: {e}")
+            print(f"Error running {smt_file}: {e}")
             results.append([
                 smt_file,
                 param_count,
@@ -128,7 +122,7 @@ def run_solver_on_smt_files():
                          "Command"])
         writer.writerows(results)
 
-    print(f"\n✅ Results saved to {CSV_FILE}")
+    print(f"\nSaved to {CSV_FILE}")
 
 if __name__ == "__main__":
     run_solver_on_smt_files()

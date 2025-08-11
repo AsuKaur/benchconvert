@@ -3,7 +3,7 @@ import subprocess
 import csv
 import time
 import re
-# === CONFIGURATION ===
+
 VERIFIER = "cbmc"  # Changed from "esbmc" to "cbmc"
 
 PROP_DIR = "c_prop"
@@ -26,7 +26,6 @@ FLAGS = [
     "-Iextern"
 ]
 
-# === FUNCTIONS ===
 
 def get_verifier_version(verifier):
     try:
@@ -63,7 +62,7 @@ def parse_verifier_output(output):
         result += f" ({bug_trace})"
     return result, runtime, solver
 
-# Count parameters from corresponding network C file 
+
 def count_parameters(file_path):
     weight_pattern = re.compile(r'static\s+const\s+float\s+(\w*weight\w*)\s*\[(.*?)\]\s*=')
     bias_pattern = re.compile(r'static\s+const\s+float\s+(\w*bias\w*)\s*\[(.*?)\]\s*=')
@@ -108,13 +107,13 @@ def run_verifier():
         net_path = os.path.join(NET_DIR, net_file)
 
         if not os.path.exists(net_path):
-            print(f"⚠️ Skipping {prop_file} – network file not found.")
+            print(f"Skipping {prop_file}, network file not found.")
             continue
 
         param_count = count_parameters(net_path)
 
         cmd = [VERIFIER, prop_path, net_path] + FLAGS
-        print(f"🔍 Running {VERIFIER} on: {prop_file} + {net_file}")
+        print(f"Running {VERIFIER} on: {prop_file} + {net_file}")
 
         try:
             start_time = time.time()
@@ -127,7 +126,7 @@ def run_verifier():
 
             results.append([
                 prop_file,
-                param_count,           # Parameter count as second column
+                param_count,          
                 expected_result,
                 actual_result,
                 runtime if VERIFIER != "cbmc" else f"{elapsed_time:.4f}s",
@@ -135,7 +134,7 @@ def run_verifier():
                 " ".join(FLAGS)
             ])
         except subprocess.TimeoutExpired:
-            print(f"⏳ Timeout: {prop_file}")
+            print(f"Timeout: {prop_file}")
             results.append([
                 prop_file,
                 param_count,
@@ -146,7 +145,7 @@ def run_verifier():
                 " ".join(FLAGS)
             ])
         except Exception as e:
-            print(f"❌ Error running {prop_file}: {e}")
+            print(f"Error running {prop_file}: {e}")
             results.append([
                 prop_file,
                 param_count,
@@ -173,9 +172,8 @@ def run_verifier():
         ])
         writer.writerows(results)
 
-    print(f"\n✅ Results saved to {OUTPUT_CSV}")
+    print(f"\nSsaved to {OUTPUT_CSV}")
 
-# === MAIN ===
 
 if __name__ == "__main__":
     run_verifier()

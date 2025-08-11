@@ -14,7 +14,7 @@ def run_script(script_name, args=None):
     result = subprocess.run([sys.executable, script_name] + args, capture_output=True, text=True)
     
     # Print a header for clarity on which script is being run
-    print(f"--- Running {script_name} with args: {args} ---")
+    print(f"Running {script_name} with args: {args}")
     
     # Print the standard output from the script
     print(result.stdout)
@@ -41,7 +41,6 @@ def main():
     # This runs the c_ops.py script to combine property and network files, then preprocess them
     run_script('c_ops.py')
 
-    print("All steps completed successfully.")
 
 if __name__ == "__main__":
     main()

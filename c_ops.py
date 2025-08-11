@@ -35,7 +35,7 @@ def combine_files():
             with open(prop_c_path, 'r') as f_prop:
                 prop_c_content = f_prop.read()
         else:
-            print(f"Warning: Property .c file '{prop_filename}' not found in '{C_PROP_DIR}'")
+            print(f"Property .c file '{prop_filename}' not found in '{C_PROP_DIR}'")
 
         # Read network C content
         try:
@@ -69,7 +69,7 @@ def preprocess_combined_files():
         base_name = os.path.splitext(filename)[0]
         output_i_path = os.path.join(PREPROCESSED_DIR, base_name + '.i')
 
-        print(f"Preprocessing {filename}...")
+        print(f"Preprocessing {filename}")
 
         cmd = ['gcc', '-E', '-I', EXTERN_DIR, combined_c_path]
 
@@ -86,11 +86,10 @@ def preprocess_combined_files():
         print(f"Preprocessed .i file saved: {output_i_path}")
 
 def main():
-    print("Starting combination of c_network and c_prop files...")
+    print("Starting combination of c_network and c_prop files")
     combine_files()
-    print("\nStarting preprocessing of combined files in 'c' directory...")
+    print("\nStarting preprocessing of combined files in 'c' directory")
     preprocess_combined_files()
-    print("\nAll done.")
 
 if __name__ == '__main__':
     main()

@@ -82,12 +82,12 @@ def validate_onnx_model(onnx_path):
     try:
         model = onnx.load(onnx_path)
         onnx.checker.check_model(model)
-        print(f"✓ ONNX model validation passed: {onnx_path}")
+        print(f"ONNX model validation passed: {onnx_path}")
 
         return True
         
     except Exception as e:
-        print(f"✗ ONNX model validation failed: {e}")
+        print(f"ONNX model validation failed: {e}")
         return False
 
 
@@ -107,7 +107,7 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
     
     # Validate input file exists
     if not onnx_path.exists():
-        print(f"Error: Input file not found: {onnx_path}")
+        print(f"Input file not found: {onnx_path}")
         return False
     
     # Generate output filename
@@ -119,7 +119,7 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
         return False
     
     try:
-        print(f"Converting {onnx_path} to {output_path}...")
+        print(f"Converting {onnx_path} to {output_path}")
         # Run onnx2c command
         # Usage: ./onnx2c [options] model.onnx > output.c
         with open(output_path, 'w') as output_file:
@@ -132,30 +132,30 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
             )
         
         if result.returncode != 0:
-            print(f"✗ onnx2c failed with return code {result.returncode}")
+            print(f"onnx2c failed with return code {result.returncode}")
             if result.stderr:
                 print(f"Error output: {result.stderr}")
             return False
         
         # Check if output file was created and has content
         if not output_path.exists() or output_path.stat().st_size == 0:
-            print(f"✗ Output file was not created or is empty: {output_path}")
+            print(f"Output file was not created or is empty: {output_path}")
             return False
         
-        print(f"✓ Successfully converted to C: {output_path}")
+        print(f"Successfully converted to C: {output_path}")
         print(f"  - Output file size: {output_path.stat().st_size} bytes")
         
         # Print any warnings from stderr
         if result.stderr:
-            print(f"  - Warnings: {result.stderr.strip()}")
+            print(f"{result.stderr.strip()}")
         
         return True
         
     except subprocess.TimeoutExpired:
-        print(f"✗ Conversion timed out after 5 minutes")
+        print(f"Conversion timed out after 5 minutes")
         return False
     except Exception as e:
-        print(f"✗ Conversion failed: {e}")
+        print(f"Conversion failed: {e}")
         print(f"Error type: {type(e).__name__}")
         return False
 
@@ -186,7 +186,7 @@ def convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path):
     total_count = len(onnx_files)
     
     for onnx_file in onnx_files:
-        print(f"Processing {onnx_file.name}...")
+        print(f"Processing {onnx_file.name}")
         if convert_onnx_to_c(onnx_file.name, onnx_dir, c_network_dir, onnx2c_path):
             success_count += 1
     
@@ -255,7 +255,7 @@ Examples:
     # Check for onnx2c executable
     onnx2c_path = args.onnx2c_path or check_onnx2c_executable()
     if not onnx2c_path:
-        print("❌ onnx2c executable not found!")
+        print("onnx2c executable not found!")
         print("\nonnx2c is required but not installed or not in PATH.")
         return 1
     
@@ -263,13 +263,13 @@ Examples:
     
     # Convert all files
     if args.all:
-        print("Converting all ONNX files...")
+        print("Converting all ONNX files")
         success_count, total_count = convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path)
         
         print(f"\nConversion Summary:")
-        print(f"  ✓ Successful: {success_count}")
-        print(f"  ✗ Failed: {total_count - success_count}")
-        print(f"  📊 Total: {total_count}")
+        print(f"  Successful: {success_count}")
+        print(f"  Failed: {total_count - success_count}")
+        print(f"  Total: {total_count}")
         
         return 0 if success_count == total_count else 1
     
@@ -278,11 +278,11 @@ Examples:
         success = convert_onnx_to_c(args.onnx_file, onnx_dir, c_network_dir, onnx2c_path)
         
         if success:
-            print("\n✓ Conversion completed successfully!")
+            print("\nConversion completed successfully!")
             print(f"Generated files are in: {c_network_dir}")
             return 0
         else:
-            print("\n✗ Conversion failed!")
+            print("\nConversion failed!")
             return 1
     
     # No arguments provided

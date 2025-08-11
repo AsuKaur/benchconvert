@@ -147,7 +147,7 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
 
     # Parse VNNLIB file to extract verification specification
     input_vars, output_vars, input_constraints, output_constraints = parse_vnnlib(vnnlib_path)
-    print(f"\n✔ Processing: {onnx_path.name}")
+    print(f"\nProcessing: {onnx_path.name}")
     print(f" - Input vars: {input_vars}")
     print(f" - Output vars: {output_vars}")
 
@@ -345,7 +345,7 @@ def process_single(name, smt_dir):
 
     # Verify required input files exist
     if not onnx_path.exists() or not vnnlib_path.exists():
-        print(f"✗ Missing files: {onnx_path} or {vnnlib_path}")
+        print(f"Missing files: {onnx_path} or {vnnlib_path}")
         return
 
     onnx_to_smt(onnx_path, vnnlib_path, smt_path)
@@ -362,7 +362,7 @@ def process_all(smt_dir):
     total_count = len(common_names)
 
     if not common_names:
-        print("✗ No matching ONNX and vnnlib files found.")
+        print("No matching ONNX and vnnlib files found.")
         return
 
     # Process each matching pair
@@ -373,8 +373,8 @@ def process_all(smt_dir):
         onnx_to_smt(onnx_path, vnnlib_path, smt_path)
 
     print(f"\nConversion Summary:")
-    print(f"  📊 Total pairs processed: {total_count}")
-    print(f"  📁 Output directory: {smt_dir}")
+    print(f"  Total pairs processed: {total_count}")
+    print(f"  Output directory: {smt_dir}")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -428,14 +428,14 @@ Examples:
 
     # Handle batch processing mode
     if args.all:
-        print("Converting all matching ONNX+vnnlib pairs...")
+        print("Converting all matching ONNX+vnnlib pairs")
         process_all(smt_dir)
         return 0
 
     # Handle single file processing mode
     if args.model_name:
         process_single(args.model_name, smt_dir)
-        print("\n✓ Conversion completed successfully!")
+        print("\nConversion completed successfully!")
         print(f"Generated SMT-LIB file: {smt_dir}/{args.model_name}.smt2")
         return 0
 

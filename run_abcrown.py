@@ -3,9 +3,8 @@ import subprocess
 import csv
 import time
 import tempfile
-import onnx  # Make sure to install this package
+import onnx 
 
-# === Config ===
 VERIFIER = "abcrown"
 ONNX_DIR = "onnx"
 VNNLIB_DIR = "vnnlib"
@@ -24,30 +23,29 @@ YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/comple
 import sys
 
 def run_with_live_output(cmd, timeout):
-    """Run cmd, stream stdout/stderr live, and return combined output string."""
+    # Run cmd, stream stdout/stderr live, and return combined output string.
     proc = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
-        bufsize=1  # line-buffered
+        bufsize=1 
     )
     output_lines = []
     start = time.time()
     try:
         for line in proc.stdout:
-            print(line, end="")        # print to console immediately
+            print(line, end="")        
             sys.stdout.flush()
-            output_lines.append(line)  # save for later
+            output_lines.append(line) 
         proc.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
         proc.kill()
-        print(f"⏳ Timeout after {timeout}s")
+        print(f"Timeout after {timeout}s")
     end = time.time()
     return "".join(output_lines), round(end - start, 4)
 
 
-# === Helper to get expected result from filename ===
 def get_expected_result(filename):
     filename = filename.lower()
     if "unsat" in filename:
@@ -56,7 +54,7 @@ def get_expected_result(filename):
         return "SAT"
     return "UNKNOWN"
 
-# === Parse output to find result and runtime ===
+
 def parse_output(output):
     decision = "UNKNOWN"
     runtime = "N/A"
@@ -85,7 +83,7 @@ def parse_output(output):
 
     return decision, runtime
 
-# === Patch YAML file with correct onnx and vnnlib paths ===
+# Patch YAML file with correct onnx and vnnlib paths
 def make_temp_yaml(onnx_path, vnnlib_path):
     import yaml
 
@@ -113,7 +111,7 @@ def count_parameters(onnx_path):
             param_count += count
         return param_count
     except Exception as e:
-        print(f"⚠️ Warning: Failed to count parameters for {onnx_path}: {e}")
+        print(f"Failed to count parameters for {onnx_path}: {e}")
         return "N/A"
 
 def get_verifier_version():
@@ -136,10 +134,9 @@ def run_vnn_verifier():
         vnnlib_path = os.path.abspath(os.path.join(VNNLIB_DIR, vnnlib_file))
 
         if not os.path.exists(vnnlib_path):
-            print(f"⚠️ Skipping {onnx_file} – matching VNNLIB file not found.")
+            print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
-        # Count parameters for this ONNX model
         param_count = count_parameters(onnx_path)
 
         temp_yaml = make_temp_yaml(onnx_path, vnnlib_path)
@@ -147,7 +144,7 @@ def run_vnn_verifier():
         cmd = [VENV_PYTHON, ABCROWN_PY, "--config", temp_yaml]
 
 
-        print(f"🔍 Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
+        print(f"Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
             # proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
@@ -174,10 +171,10 @@ def run_vnn_verifier():
             ])
 
         except subprocess.TimeoutExpired:
-            print(f"⏳ Timeout: {onnx_file}")
+            print(f"Timeout: {onnx_file}")
             results.append([base, param_count, get_expected_result(base), "TIMEOUT", f"{TIMEOUT}s", " ".join(cmd)])
         except Exception as e:
-            print(f"❌ Error running {onnx_file}: {e}")
+            print(f"Error running {onnx_file}: {e}")
             results.append([base, param_count, get_expected_result(base), f"ERROR: {e}", "N/A", " ".join(cmd)])
 
         finally:
@@ -191,7 +188,7 @@ def run_vnn_verifier():
         writer.writerow(["File Name", "Parameter Count", "Expected Result", "Actual Result", "Runtime", "Command"])
         writer.writerows(results)
 
-    print(f"\n✅ Results saved to {CSV_FILE}")
+    print(f"\nSaved to {CSV_FILE}")
 
 if __name__ == "__main__":
     run_vnn_verifier()

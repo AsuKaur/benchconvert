@@ -10,7 +10,7 @@ VNNLIB_DIR = "vnnlib"
 CSV_FILE = "results/vnn_result_" + VERIFIER + ".csv"
 TIMEOUT = 900
 
-# === Get verifier version ===
+
 def get_verifier_version(verifier):
     try:
         result = subprocess.run([verifier, "--version"], capture_output=True, text=True)
@@ -18,7 +18,7 @@ def get_verifier_version(verifier):
     except Exception:
         return "Version info not available"
 
-# === Determine expected result from filename ===
+
 def get_expected_result(filename):
     filename = filename.lower()
     if "unsat" in filename:
@@ -27,24 +27,23 @@ def get_expected_result(filename):
         return "SAT"
     return "UNKNOWN"
 
-# Count parameters of ONNX model
+
 def count_parameters(onnx_path):
     try:
         model = onnx.load(onnx_path)
         param_count = 0
         for tensor in model.graph.initializer:
             dims = tensor.dims
-            # Multiply dimensions to get total params in this tensor
             count = 1
             for d in dims:
                 count *= d
             param_count += count
         return param_count
     except Exception as e:
-        print(f"⚠️ Warning: Failed to count parameters for {onnx_path}: {e}")
+        print(f"Failed to count parameters for {onnx_path}: {e}")
         return "N/A"
 
-# === Run verifier on each ONNX+VNNLIB pair ===
+
 def run_vnn_verifier():
     results = []
 
@@ -58,15 +57,14 @@ def run_vnn_verifier():
         vnnlib_path = os.path.join(VNNLIB_DIR, vnnlib_file)
 
         if not os.path.exists(vnnlib_path):
-            print(f"⚠️ Skipping {onnx_file} – matching VNNLIB file not found.")
+            print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
-        # Count parameters for this ONNX model
         param_count = count_parameters(onnx_path)
 
         cmd = [VERIFIER, onnx_path, vnnlib_path]
 
-        print(f"🔍 Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
+        print(f"Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
@@ -87,7 +85,7 @@ def run_vnn_verifier():
 
             results.append([
                 base,
-                param_count,          # parameter count as second column
+                param_count,         
                 expected,
                 decision,
                 f"{runtime}s",
@@ -95,13 +93,12 @@ def run_vnn_verifier():
             ])
 
         except subprocess.TimeoutExpired:
-            print(f"⏳ Timeout: {onnx_file}")
+            print(f"Timeout: {onnx_file}")
             results.append([base, param_count, get_expected_result(base), "TIMEOUT",f"{TIMEOUT}s", " ".join(cmd)])
         except Exception as e:
-            print(f"❌ Error running {onnx_file}: {e}")
+            print(f"Error running {onnx_file}: {e}")
             results.append([base, param_count, get_expected_result(base), f"ERROR: {e}", "N/A", " ".join(cmd)])
 
-    # Write CSV
     version_info = get_verifier_version(VERIFIER)
     with open(CSV_FILE, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -110,8 +107,8 @@ def run_vnn_verifier():
         writer.writerow(["File Name", "Parameter Count", "Expected Result", "Actual Result", "Runtime", "Command"])
         writer.writerows(results)
 
-    print(f"\n✅ Results saved to {CSV_FILE}")
+    print(f"\nSaved to {CSV_FILE}")
 
-# === Run ===
+
 if __name__ == "__main__":
     run_vnn_verifier()

@@ -114,7 +114,7 @@ def onnx_to_smt_real(onnx_path, vnnlib_path, smt_path):
 
     # First, parse the vnnlib file to understand the verification problem
     input_vars, output_vars, vnn_constraints = parse_vnnlib(vnnlib_path)
-    print(f"\n✔ Processing: {onnx_path.name}")
+    print(f"\nProcessing: {onnx_path.name}")
     print(f" - Input vars: {input_vars}")
     print(f" - Output vars: {output_vars}")
 
@@ -216,7 +216,7 @@ def process_single(name):
 
     # Verify both input files exist
     if not onnx_path.exists() or not vnnlib_path.exists():
-        print(f"✗ Missing files: {onnx_path} or {vnnlib_path}")
+        print(f"Missing files: {onnx_path} or {vnnlib_path}")
         return
 
     onnx_to_smt_real(onnx_path, vnnlib_path, smt_path)
@@ -233,7 +233,7 @@ def process_all():
     total_count = len(common_names)
     
     if not common_names:
-        print("✗ No matching ONNX and vnnlib files found.")
+        print("No matching ONNX and vnnlib files found.")
         return
 
     # Process each matching pair
@@ -244,8 +244,8 @@ def process_all():
         onnx_to_smt_real(onnx_path, vnnlib_path, smt_path)
 
     print(f"\nConversion Summary:")
-    print(f"  📊 Total pairs processed: {total_count}")
-    print(f"  📁 Output directory: {SMT_DIR}")
+    print(f"  Total pairs processed: {total_count}")
+    print(f"  Output directory: {SMT_DIR}")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -289,7 +289,7 @@ Examples:
     
     # Convert all files
     if args.all:
-        print("Converting all matching ONNX+vnnlib pairs...")
+        print("Converting all matching ONNX+vnnlib pairs")
         # Process all files
         process_all()
         return 0
@@ -298,7 +298,7 @@ Examples:
     if args.model_name:
         process_single(args.model_name)
         
-        print("\n✓ Conversion completed successfully!")
+        print("\nConversion completed successfully!")
         print(f"Generated SMT-LIB file: smt_real/{args.model_name}.smt2")
         return 0
     
