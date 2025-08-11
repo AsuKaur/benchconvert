@@ -8,7 +8,7 @@ myenv*
 c
 c_network
 c_preprocessed
-c_props 
+c_prop
 dimacs
 onnx
 smt
