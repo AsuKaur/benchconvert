@@ -1,10 +1,12 @@
+# This script validates and analyses ONNX models.
+
 import os
 import onnx
 import numpy as np
 
-onnx_dir = "onnx"  # Change this to your ONNX folder path
+ONNX_DIR = "onnx"  
 
-def human_size(num):
+def size_of_file(num):
     for unit in ['B','KB','MB','GB']:
         if abs(num) < 1024.0:
             return "%3.1f %s" % (num, unit)
@@ -14,9 +16,8 @@ def human_size(num):
 def analyze_onnx_model(model_path):
     print(f"\nModel: {model_path}")
 
-    # File size
     file_size = os.path.getsize(model_path)
-    print(f"File size: {file_size} bytes ({human_size(file_size)})")
+    print(f"File size: {file_size} bytes ({size_of_file(file_size)})")
 
     # Load the ONNX model
     model = onnx.load(model_path)
@@ -45,7 +46,7 @@ def analyze_onnx_model(model_path):
     print("Total layers (nodes):", len(all_layer_types))
     print("Layer types:", set(all_layer_types))
 
-    # Collect (possible) hidden layers: nodes that are not directly connected to input/output
+    # Collect hidden layers: nodes that are not directly connected to input/output
     hidden_layers = []
     input_set = set(input_names)
     output_set = set(output_names)
@@ -91,16 +92,16 @@ def analyze_onnx_model(model_path):
     except Exception:
         print("Couldn't parse input/output shapes.")
 
-    # Optionally, print the total number and names of initializers (parameters)
+    # Print the total number and names of initializers (parameters)
     print(f"Number of initializers (weight/bias tensors): {len(graph.initializer)}")
     # List the initializer names/sizes
     # for init in graph.initializer:
     #     print(f"{init.name}: shape {init.dims}")
 
 def main():
-    for filename in sorted(os.listdir(onnx_dir)):
+    for filename in sorted(os.listdir(ONNX_DIR)):
         if filename.endswith('.onnx'):
-            model_path = os.path.join(onnx_dir, filename)
+            model_path = os.path.join(ONNX_DIR, filename)
             try:
                 analyze_onnx_model(model_path)
             except Exception as e:

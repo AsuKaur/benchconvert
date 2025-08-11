@@ -2,8 +2,7 @@
 
 # This enhanced version converts neural network models from ONNX format along with 
 # vnnlib verification specifications into SMT-LIB format using IEEE 754 floating-point
-# arithmetic instead of real numbers. This provides more accurate modeling of actual
-# neural network behavior since real implementations use finite-precision arithmetic.
+# arithmetic instead of real numbers.
 
 # The conversion process:
 # 1. Parses vnnlib to extract variables and constraints
@@ -18,7 +17,7 @@
 #     vnnlib/         - Input vnnlib files for ONNX
 #     smt/            - Output SMT files for the ONNX + VNNLIB files
 
-# Usage:
+# Examples:
 #     python onnx_to_smt.py <onnx_filename>           # Convert single file
 #     python onnx_to_smt.py --all                     # Convert all ONNX files
 
@@ -39,20 +38,13 @@ SMT_DIR = Path("smt")          # Directory for output .smt2 files
 
 def setup_directories():
     # Create the required directory structure if it doesn't exist.
-    # Ensures organized storage for input ONNX models, vnnlib specifications,
-    # and generated SMT-LIB output files.
-
     ONNX_DIR.mkdir(exist_ok=True)
     VNNLIB_DIR.mkdir(exist_ok=True)
     SMT_DIR.mkdir(exist_ok=True)
 
 def float_to_bv32(f):
-    # Convert a Python float to a Z3 32-bit IEEE 754 floating-point value.
-    
     # This function handles the conversion from Python's native float representation
     # to Z3's floating-point representation that matches IEEE 754 single precision.
-    # This is crucial for accurate modeling since neural networks typically use
-    # 32-bit floats in practice.
     
     # Args:
     #     f: Input float value (can be numpy floating type or regular float)
@@ -60,17 +52,12 @@ def float_to_bv32(f):
     # Returns:
     #     z3.FPVal: Z3 floating-point value in Float32 format (8-bit exponent, 24-bit significand)
 
-    # Ensure we have a standard Python float (handles numpy types)
+    # Ensure we have a standard Python float 
     f = float(f) if isinstance(f, np.floating) else f
     return z3.FPVal(f, z3.Float32())
 
 def parse_vnnlib(vnnlib_path):
     # Parse a vnnlib file to extract input/output variables and their constraints.
-    
-    # This enhanced parser separates input and output constraints for better
-    # organization and more accurate constraint handling. It distinguishes between:
-    # - Input constraints: bounds on network inputs 
-    # - Output constraints: properties to verify on network outputs
     
     # vnnlib format uses S-expressions:
     # - (declare-const X_0 Real) declares an input variable
@@ -166,7 +153,6 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
 
     # Load and validate ONNX model
     model = onnx.load(onnx_path)
-    # Validate model structure to catch malformed ONNX files early
     onnx.checker.check_model(model)
 
     # Extract model parameters (weights and biases) from initializers
@@ -190,9 +176,9 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
     # Translate input constraints from vnnlib to floating-point SMT-LIB
     for constraint in input_constraints:
         # Parse constraint structure: (assert (op var value))
-        expr = constraint[1:-1].split()  # Remove parentheses and split
-        var = expr[2]           # Variable name (e.g., "X_0")
-        op = expr[1].replace('(', '')  # Operator (e.g., "<=", ">=")
+        expr = constraint[1:-1].split()          # Remove parentheses and split
+        var = expr[2]                            # Variable name (e.g., "X_0")
+        op = expr[1].replace('(', '')            # Operator (e.g., "<=", ">=")
         value = float(expr[3].replace(')', ''))  # Constraint value
         
         # Find corresponding floating-point variable
@@ -213,13 +199,12 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
 
     # Process ONNX computational graph node by node
     # Track intermediate variables and current layer outputs
-    intermediate_vars = {}  # Maps ONNX tensor names to Z3 variables
+    intermediate_vars = {}         # Maps ONNX tensor names to Z3 variables
     current_input = input_fp_vars  # Variables from previous layer
-    node_count = 0  # Counter for generating unique variable names
+    node_count = 0                 # Counter for generating unique variable names
 
     # Iterate through ONNX graph nodes in execution order
     for node in model.graph.node:
-        
         # Handle General Matrix Multiplication (Gemm) operation
         # Gemm computes: Y = α * A * B + β * C (typically α=β=1, C=bias)
         if node.op_type == "Gemm":
@@ -264,7 +249,6 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
                     # RNE = Round to Nearest Even (IEEE 754 default rounding mode)
                     sum_expr = z3.fpAdd(z3.RNE(), sum_expr, 
                                        z3.fpMul(z3.RNE(), float_to_bv32(w_ij), current_input[j]))                    
-
                 # Assert that output variable equals computed expression
                 smt.append(f"(assert (= {y[i].sexpr()} {sum_expr.sexpr()}))")
 
@@ -276,8 +260,8 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
         # Handle Rectified Linear Unit (ReLU) activation function
         # ReLU(x) = max(0, x) = x if x >= 0, else 0
         elif node.op_type == "Relu":
-            input_name = node.input[0]    # Input tensor name
-            output_name = node.output[0]  # Output tensor name
+            input_name = node.input[0]              # Input tensor name
+            output_name = node.output[0]            # Output tensor name
             inputs = intermediate_vars[input_name]  # Get input variables
             
             # Create output variables for ReLU layer
@@ -298,9 +282,6 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
             intermediate_vars[output_name] = y
             current_input = y
             node_count += 1
-            
-        # Additional node types (Conv2D, MaxPool, etc.) could be handled here
-        # Each would require specific logic for their mathematical operations
 
     # Bind output variables from vnnlib to final network layer outputs
     # This assumes the final layer output tensor is named "7" (ONNX-specific)
@@ -321,8 +302,8 @@ def onnx_to_smt(onnx_path, vnnlib_path, smt_path):
     for constraint in output_constraints:
         # Parse output constraint structure
         expr = constraint[1:-1].split()
-        var = expr[2]           # Output variable name
-        op = expr[1].replace('(', '')  # Comparison operator
+        var = expr[2]                            # Output variable name
+        op = expr[1].replace('(', '')            # Comparison operator
         value = float(expr[3].replace(')', ''))  # Constraint value
         
         # Generate floating-point constraint
@@ -367,21 +348,16 @@ def process_single(name, smt_dir):
         print(f"✗ Missing files: {onnx_path} or {vnnlib_path}")
         return
 
-    # Perform the conversion
     onnx_to_smt(onnx_path, vnnlib_path, smt_path)
 
 def process_all(smt_dir):
     # Batch process all matching ONNX and vnnlib file pairs.
     
-    # Discovers all .onnx files in the onnx/ directory and .vnnlib files
-    # in the vnnlib/ directory, then processes every pair with matching
-    # base names. Provides a summary of the batch conversion results.
-
-    # Build file inventories
+    # Build dictionaries mapping base names to file paths
     onnx_files = {p.stem: p for p in ONNX_DIR.glob("*.onnx")}
     vnnlib_files = {p.stem: p for p in VNNLIB_DIR.glob("*.vnnlib")}
     
-    # Find matching pairs (intersection of base names)
+    # Find files that exist in both directories
     common_names = onnx_files.keys() & vnnlib_files.keys()
     total_count = len(common_names)
 
@@ -396,19 +372,11 @@ def process_all(smt_dir):
         smt_path = smt_dir / f"{name}.smt2"
         onnx_to_smt(onnx_path, vnnlib_path, smt_path)
 
-    # Provide batch conversion summary
     print(f"\nConversion Summary:")
     print(f"  📊 Total pairs processed: {total_count}")
     print(f"  📁 Output directory: {smt_dir}")
 
 def main():
-    # Main entry point with enhanced command line interface.
-    
-    # Provides a user-friendly interface for converting neural network
-    # verification problems from ONNX+vnnlib format to SMT-LIB format
-    # with floating-point precision modeling.
-
-    # Set up comprehensive argument parsing
     parser = argparse.ArgumentParser(
         description="Convert ONNX + vnnlib pairs to SMT-LIB format for formal verification",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -424,7 +392,6 @@ Examples:
         """
     )
 
-    # Create mutually exclusive argument groups
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         'model_name',
@@ -437,7 +404,6 @@ Examples:
         help='Convert all matching ONNX+vnnlib file pairs'
     )
     
-    # Additional options
     parser.add_argument(
         '--verbose',
         action='store_true',
@@ -454,7 +420,6 @@ Examples:
 
     args = parser.parse_args()
     
-    # Initialize directory structure
     setup_directories()
 
     # Use provided output directory if specified
@@ -474,7 +439,6 @@ Examples:
         print(f"Generated SMT-LIB file: {smt_dir}/{args.model_name}.smt2")
         return 0
 
-    # No arguments provided - show help
     parser.print_help()
     return 1
 

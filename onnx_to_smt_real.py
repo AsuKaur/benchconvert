@@ -1,8 +1,7 @@
 # ONNX to SMT-LIB Converter
 
 # This script converts neural network models from ONNX format along with their
-# verification specifications (vnnlib files) into SMT-LIB format for formal
-# verification using SMT solvers like Z3, CVC5, etc.
+# verification specifications (vnnlib files) into SMT-LIB format.
 
 # The conversion process:
 # 1. Parses the vnnlib file to extract input/output variable names and constraints
@@ -14,9 +13,9 @@
 # Folder Structure:
 #     onnx/           - Input ONNX model files
 #     vnnlib/         - Input vnnlib files for ONNX
-#     smt_real/            - Output SMT files for the ONNX + VNNLIB files
+#     smt_real/       - Output SMT files for the ONNX + VNNLIB files
 
-# Usage:
+# Examples:
 #     python onnx_to_smt_real.py <onnx_filename>           # Convert single file
 #     python onnx_to_smt_real.py --all                     # Convert all ONNX files
 
@@ -32,13 +31,10 @@ import re
 # Directory structure for organizing input and output files
 ONNX_DIR = Path("onnx")        # Directory containing .onnx model files
 VNNLIB_DIR = Path("vnnlib")    # Directory containing .vnnlib specification files
-SMT_DIR = Path("smt_real")          # Directory for output .smt2 files
+SMT_DIR = Path("smt_real")     # Directory for output .smt2 files
 
 def setup_directories():
     # Create the required directory structure if it doesn't exist.
-    # This ensures we have organized locations for input ONNX files,
-    # vnnlib specification files, and output SMT-LIB files.
-
     ONNX_DIR.mkdir(exist_ok=True)
     VNNLIB_DIR.mkdir(exist_ok=True)
     SMT_DIR.mkdir(exist_ok=True)
@@ -48,12 +44,7 @@ def parse_vnnlib(vnnlib_path):
     # 1. Input variable declarations (typically X_0, X_1, ... or similar)
     # 2. Output variable declarations (typically Y_0, Y_1)
     # 3. Verification constraints (assert statements)
-    
-    # vnnlib format uses S-expressions similar to SMT-LIB:
-    # - (declare-const X_0 Real) declares an input variable
-    # - (declare-const Y_0 Real) declares an output variable  
-    # - (assert (>= X_0 0.0)) adds a constraint
-    
+
     # Args:
     #     vnnlib_path: Path to the .vnnlib file
         
@@ -232,16 +223,12 @@ def process_single(name):
 
 def process_all():
     # Batch process all matching ONNX and vnnlib file pairs.
-    
-    # Finds all .onnx files in the onnx/ directory and .vnnlib files
-    # in the vnnlib/ directory, then processes every pair that has
-    # matching base names.
 
     # Build dictionaries mapping base names to file paths
     onnx_files = {p.stem: p for p in ONNX_DIR.glob("*.onnx")}
     vnnlib_files = {p.stem: p for p in VNNLIB_DIR.glob("*.vnnlib")}
     
-    # Find files that exist in both directories (intersection of keys)
+    # Find files that exist in both directories
     common_names = onnx_files.keys() & vnnlib_files.keys()
     total_count = len(common_names)
     
@@ -261,13 +248,6 @@ def process_all():
     print(f"  📁 Output directory: {SMT_DIR}")
 
 def main():
-    # Main entry point. Sets up directories and handles command line arguments.
-    
-    # Usage:
-    #     python onnx_to_smt_real.py model           # Convert specific model (without extension)
-    #     python onnx_to_smt_real.py --all           # Convert all matching pairs
-
-    # Set up command line argument parsing with detailed help
     parser = argparse.ArgumentParser(
         description="Convert ONNX + vnnlib pairs to SMT-LIB format for formal verification",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -283,7 +263,6 @@ Examples:
         """
     )
     
-    # Main argument group - mutually exclusive options
     group = parser.add_mutually_exclusive_group()
     
     group.add_argument(
@@ -306,17 +285,16 @@ Examples:
     
     args = parser.parse_args()
     
-    # Setup directories
     setup_directories()
     
-    # Convert all files mode
+    # Convert all files
     if args.all:
         print("Converting all matching ONNX+vnnlib pairs...")
         # Process all files
         process_all()
         return 0
     
-    # Convert single file mode  
+    # Convert single file  
     if args.model_name:
         process_single(args.model_name)
         
@@ -324,7 +302,6 @@ Examples:
         print(f"Generated SMT-LIB file: smt_real/{args.model_name}.smt2")
         return 0
     
-    # No arguments provided - show help
     parser.print_help()
     return 1
 

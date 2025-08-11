@@ -7,7 +7,7 @@
 #     onnx/           - Input ONNX model files
 #     c_network/      - Output C source files
 
-# Usage:
+# Examples:
 #     python onnx_to_c.py <onnx_filename>           # Convert single file
 #     python onnx_to_c.py --all                     # Convert all ONNX files
 
@@ -71,7 +71,7 @@ def setup_directories():
 
 
 def validate_onnx_model(onnx_path):
-    # Validate that the ONNX model is well-formed and supported.
+    # Validate the ONNX model.
     
     # Args:
     #     onnx_path (str): Path to the ONNX model file
@@ -80,9 +80,7 @@ def validate_onnx_model(onnx_path):
     #     bool: True if model is valid, False otherwise
 
     try:
-        # Load the ONNX model
         model = onnx.load(onnx_path)
-        # Check if the model is valid
         onnx.checker.check_model(model)
         print(f"✓ ONNX model validation passed: {onnx_path}")
 
@@ -105,7 +103,6 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
     # Returns:
     #     bool: True if conversion successful, False otherwise
 
-    # Construct full paths
     onnx_path = onnx_dir /  f"{onnx_filename}"
     
     # Validate input file exists
@@ -117,7 +114,7 @@ def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
     input_stem = onnx_path.stem
     output_path = c_network_dir / f"{input_stem}.c"
     
-    # Validate ONNX model first
+    # Validate ONNX model
     if not validate_onnx_model(str(onnx_path)):
         return False
     
@@ -174,7 +171,6 @@ def convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path):
     # Returns:
     #     tuple: (success_count, total_count)
 
-    # Find all ONNX files
     onnx_files = list(onnx_dir.glob("*.onnx"))
     
     if not onnx_files:
@@ -198,7 +194,6 @@ def convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path):
 
 
 def main():
-    # Main function to handle command line arguments and execute conversion.
     parser = argparse.ArgumentParser(
         description="Convert ONNX models to C source code using onnx2c",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -213,8 +208,6 @@ Examples:
   python onnx_to_c.py --all             # Convert all ONNX files in onnx/ folder
         """
     )
-    
-    # Main argument group
     group = parser.add_mutually_exclusive_group()
     
     group.add_argument(
@@ -256,7 +249,6 @@ Examples:
     c_network_dir = Path(args.output_dir) if args.output_dir else C_NETWORK_DIR
     c_network_dir.mkdir(exist_ok=True)
     
-    # Set verbosity
     if args.verbose:
         print("Verbose mode enabled")
     
@@ -269,7 +261,7 @@ Examples:
     
     print(f"Using onnx2c: {onnx2c_path}")
     
-    # Convert all files mode
+    # Convert all files
     if args.all:
         print("Converting all ONNX files...")
         success_count, total_count = convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path)
@@ -281,7 +273,7 @@ Examples:
         
         return 0 if success_count == total_count else 1
     
-    # Convert single file mode
+    # Convert single file
     if args.onnx_file:
         success = convert_onnx_to_c(args.onnx_file, onnx_dir, c_network_dir, onnx2c_path)
         

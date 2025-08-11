@@ -10,7 +10,7 @@
 # - Calls to the neural network entry function
 # - Assertions that determine SAT/UNSAT results based on filename patterns
 
-# Usage:
+# Examples:
 #     python genrate_c_prop.py model.c               # Generates prop_model.c
 #     python genrate_c_prop.py --all                 # Generates property files for all .c models
 
@@ -78,8 +78,6 @@ def parse_tensor_dec(decl):
 
 def determine_expected_result(filename):
     # Determine if a file should produce SAT or UNSAT based on filename patterns.
-    
-    # This function analyzes the filename to determine the expected verification result.
     
     # Args:
     #     filename (str): The name of the C file
@@ -179,8 +177,6 @@ def generate_property_code(input_name, input_shape, output_name, output_shape, e
     return "\n".join(lines)
 
 def genrate_c_prop(c_file_path, output_dir):
-    # Generate a property file for a given C neural network file.
-    
     # This function processes a single C file containing a neural network
     # implementation and generates a corresponding property file that can
     # be used for verification.
@@ -225,13 +221,6 @@ def genrate_c_prop(c_file_path, output_dir):
         print(f"✗ Failed for {c_file_path.name}: {e}")
 
 def main():
-    # Main function that handles command-line arguments and orchestrates the file generation.
-    
-    # Command-line options:
-    # - Single file: python script.py model.c
-    # - All files: python script.py --all
-
-    # Set up argument parser
     parser = argparse.ArgumentParser(description="Generate property C files from onnx2c C files.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=""" 
@@ -240,7 +229,6 @@ Examples:
      python genrate_c_prop.py --all                 # Generates property files for all .c models
         """)
     
-    # Create mutually exclusive group for file selection
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("c_file", 
         nargs="?", help="Single model C file in c_network/ (e.g., model.c)")

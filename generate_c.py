@@ -37,11 +37,10 @@ def main():
     # This runs the generate_c_prop.py script with '--all' to create property files for all C files in 'c_network'
     run_script('generate_c_prop.py', ['--all'])
 
-    # Step 3: Perform remaining operations (combining and preprocessing)
+    # Step 3: Combine and Preprocess the c files
     # This runs the c_ops.py script to combine property and network files, then preprocess them
     run_script('c_ops.py')
 
-    # Print a completion message if all steps succeed
     print("All steps completed successfully.")
 
 if __name__ == "__main__":
