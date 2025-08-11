@@ -1,5 +1,0 @@
-c NeuroCodeBench 2.0 CNF formula with verdict Unsat
-p cnf 2 3
-1 0
--1 2 0
--1 -2 0
