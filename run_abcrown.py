@@ -117,7 +117,10 @@ def count_parameters(onnx_path):
 def get_verifier_version():
     try:
         result = subprocess.run([VENV_PYTHON, ABCROWN_PY, "--version"], capture_output=True, text=True, timeout=TIMEOUT)
-        return result.stdout.strip() or result.stderr.strip()
+        output = result.stdout.strip() or result.stderr.strip()
+        if "error" in output.lower():
+            return "No version found"
+        return output
     except Exception:
         return "Version info not available"
 
