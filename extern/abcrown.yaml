@@ -1,0 +1,29 @@
+general:
+    device: cpu
+
+model:
+    onnx_path: ../onnx/unsat_v2_c3.onnx
+
+specification:
+    vnnlib_path: ../vnnlib/unsat_v2_c3.vnnlib
+solver:
+    batch_size: 32 # Decreased for slower, more iterative processing
+    early_stop_patience: -1
+
+    alpha-crown:
+        iteration: 5000000 # Increased for longer optimization
+
+bab:
+    initial_max_domains: 4 # Increased to start with more domains
+    max_domains: 100 # Capped to allow extensive but controlled exploration
+    pruning_in_iteration_ratio: 0.5 # Less aggressive pruning
+    timeout: 20
+    branching:
+        method: naive # Changed to support input splits
+        enable_intermediate_bound_opt: true
+
+        input_split:
+            enable: true
+            enhanced_branching_method: naive
+            enhanced_bound_patience: 1000000000.0
+            split_partitions: 4 # Increased for deeper splitting
