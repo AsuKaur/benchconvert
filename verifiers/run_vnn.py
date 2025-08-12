@@ -6,12 +6,11 @@ import onnx
 import sys
 from pathlib import Path
 
-
-RESULT_DIR = Path("results")
-ONNX_DIR = "onnx"
-VNNLIB_DIR = "vnnlib"
+SCRIPT_DIR = Path(__file__).parent
+RESULT_DIR = SCRIPT_DIR.parent / "results"
+ONNX_DIR = SCRIPT_DIR.parent / "onnx"
+VNNLIB_DIR = SCRIPT_DIR.parent / "vnnlib"
 TIMEOUT = 900
-
 
 def get_verifier_version(verifier):
     try:
@@ -20,7 +19,6 @@ def get_verifier_version(verifier):
     except Exception:
         return "Version info not available"
 
-
 def get_expected_result(filename):
     filename = filename.lower()
     if "unsat" in filename:
@@ -28,7 +26,6 @@ def get_expected_result(filename):
     elif "sat" in filename:
         return "SAT"
     return "UNKNOWN"
-
 
 def count_parameters(onnx_path):
     try:
@@ -45,7 +42,6 @@ def count_parameters(onnx_path):
         print(f"Failed to count parameters for {onnx_path}: {e}")
         return "N/A"
 
-
 def run_vnn_verifier(verifier):
     results = []
     csv_file = RESULT_DIR / f"vnn_result_{verifier.lower()}.csv"
@@ -55,16 +51,16 @@ def run_vnn_verifier(verifier):
         base = os.path.splitext(onnx_file)[0]
         vnnlib_file = base + ".vnnlib"
 
-        onnx_path = os.path.join(ONNX_DIR, onnx_file)
-        vnnlib_path = os.path.join(VNNLIB_DIR, vnnlib_file)
+        onnx_path = ONNX_DIR / onnx_file
+        vnnlib_path = VNNLIB_DIR / vnnlib_file
 
-        if not os.path.exists(vnnlib_path):
+        if not vnnlib_path.exists():
             print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
         param_count = count_parameters(onnx_path)
 
-        cmd = [verifier, onnx_path, vnnlib_path]
+        cmd = [verifier, str(onnx_path), str(vnnlib_path)]
 
         print(f"Running {verifier} on: {onnx_file} + {vnnlib_file}")
         try:
@@ -110,7 +106,6 @@ def run_vnn_verifier(verifier):
         writer.writerows(results)
 
     print(f"\nSaved to {csv_file}")
-
 
 if __name__ == "__main__":
     RESULT_DIR.mkdir(exist_ok=True)

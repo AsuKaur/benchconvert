@@ -6,12 +6,11 @@ import re
 import sys
 from pathlib import Path
 
-
-RESULT_DIR = Path("results")
-PROP_DIR = "c_prop"
-NET_DIR = "c_network"
+SCRIPT_DIR = Path(__file__).parent
+RESULT_DIR = SCRIPT_DIR.parent / "results"
+PROP_DIR = SCRIPT_DIR.parent / "c_prop"
+NET_DIR = SCRIPT_DIR.parent / "c_network"
 TIMEOUT = 900
-
 
 def get_verifier_version(verifier):
     try:
@@ -48,7 +47,6 @@ def parse_verifier_output(output):
         result += f" ({bug_trace})"
     return result, runtime, solver
 
-
 def count_parameters(file_path):
     weight_pattern = re.compile(r'static\s+const\s+float\s+(\w*weight\w*)\s*\[(.*?)\]\s*=')
     bias_pattern = re.compile(r'static\s+const\s+float\s+(\w*bias\w*)\s*\[(.*?)\]\s*=')
@@ -82,7 +80,7 @@ def count_parameters(file_path):
 
 def run_verifier(verifier):
     results = []
-    output_csv = "results/sv_result_" + verifier + ".csv"
+    output_csv = RESULT_DIR / ("sv_result_" + verifier + ".csv")
 
     flags = [
     "--no-bounds-check",
@@ -105,16 +103,17 @@ def run_verifier(verifier):
         base_name = prop_file.replace("prop_", "")
         net_file = base_name
 
-        prop_path = os.path.join(PROP_DIR, prop_file)
-        net_path = os.path.join(NET_DIR, net_file)
+        prop_path = PROP_DIR / prop_file
+        net_path = NET_DIR / net_file
 
-        if not os.path.exists(net_path):
+        if not net_path.exists():
             print(f"Skipping {prop_file}, network file not found.")
             continue
 
         param_count = count_parameters(net_path)
 
-        cmd = [verifier, prop_path, net_path] + flags
+        cmd = [verifier, str(prop_path), str(net_path)] + flags
+        print(f"Command: {' '.join(cmd)}")
         print(f"Running {verifier} on: {prop_file} + {net_file}")
 
         try:
@@ -175,7 +174,6 @@ def run_verifier(verifier):
         writer.writerows(results)
 
     print(f"\nSaved to {output_csv}")
-
 
 if __name__ == "__main__":
     RESULT_DIR.mkdir(exist_ok=True)

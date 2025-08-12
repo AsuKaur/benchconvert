@@ -3,8 +3,10 @@
 import os
 import onnx
 import numpy as np
+from pathlib import Path
 
-ONNX_DIR = "onnx"  
+SCRIPT_DIR = Path(__file__).parent
+ONNX_DIR = SCRIPT_DIR.parent / "onnx"
 
 def size_of_file(num):
     for unit in ['B','KB','MB','GB']:
@@ -101,7 +103,7 @@ def analyze_onnx_model(model_path):
 def main():
     for filename in sorted(os.listdir(ONNX_DIR)):
         if filename.endswith('.onnx'):
-            model_path = os.path.join(ONNX_DIR, filename)
+            model_path = ONNX_DIR / filename
             try:
                 analyze_onnx_model(model_path)
             except Exception as e:
