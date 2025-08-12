@@ -4,24 +4,25 @@ import csv
 import time
 import tempfile
 import onnx 
+import sys
+from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).parent
 VERIFIER = "abcrown"
-ONNX_DIR = "onnx"
-VNNLIB_DIR = "vnnlib"
-CSV_FILE = f"results/vnn_result_{VERIFIER}.csv"
+ONNX_DIR = SCRIPT_DIR.parent / "onnx"
+VNNLIB_DIR = SCRIPT_DIR.parent / "vnnlib"
+RESULT_DIR = SCRIPT_DIR.parent / "results"
+CSV_FILE = RESULT_DIR / f"vnn_result_{VERIFIER}.csv"
 TIMEOUT = 900
 
 # ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 # VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
-#YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
-YAML_TEMPLATE = "./extern/abcrown.yaml"
-
+# YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+YAML_TEMPLATE = SCRIPT_DIR.parent / "extern" / "abcrown.yaml"
 
 ABCROWN_PY = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 VENV_PYTHON = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/envs/alpha-beta-crown/bin/python"
 # YAML_TEMPLATE = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
-
-import sys
 
 def run_with_live_output(cmd, timeout):
     # Run cmd, stream stdout/stderr live, and return combined output string.
@@ -46,7 +47,6 @@ def run_with_live_output(cmd, timeout):
     end = time.time()
     return "".join(output_lines), round(end - start, 4)
 
-
 def get_expected_result(filename):
     filename = filename.lower()
     if "unsat" in filename:
@@ -54,7 +54,6 @@ def get_expected_result(filename):
     elif "sat" in filename:
         return "SAT"
     return "UNKNOWN"
-
 
 def parse_output(output):
     decision = "UNKNOWN"
@@ -91,8 +90,9 @@ def make_temp_yaml(onnx_path, vnnlib_path):
     with open(YAML_TEMPLATE, "r") as f:
         cfg = yaml.safe_load(f)
 
-    cfg["model"]["onnx_path"] = onnx_path
-    cfg["specification"]["vnnlib_path"] = vnnlib_path
+    cfg["model"]["onnx_path"] = str(onnx_path)
+    cfg["specification"]["vnnlib_path"] = str(vnnlib_path)
+    cfg["bab"]["timeout"] = TIMEOUT
 
     tmpf = tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".yaml")
     yaml.dump(cfg, tmpf)
@@ -134,10 +134,10 @@ def run_vnn_verifier():
         base = os.path.splitext(onnx_file)[0]
         vnnlib_file = base + ".vnnlib"
 
-        onnx_path = os.path.abspath(os.path.join(ONNX_DIR, onnx_file))
-        vnnlib_path = os.path.abspath(os.path.join(VNNLIB_DIR, vnnlib_file))
+        onnx_path = ONNX_DIR / onnx_file
+        vnnlib_path = VNNLIB_DIR / vnnlib_file
 
-        if not os.path.exists(vnnlib_path):
+        if not vnnlib_path.exists():
             print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
@@ -147,16 +147,14 @@ def run_vnn_verifier():
 
         cmd = [VENV_PYTHON, ABCROWN_PY, "--config", temp_yaml]
 
-
         print(f"Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
             start = time.time()
-            # proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
-            # output = proc.stdout + proc.stderr
-            output, elapsed = run_with_live_output(cmd, TIMEOUT)
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
+            output = proc.stdout + proc.stderr
+            # output, elapsed = run_with_live_output(cmd, TIMEOUT)
 
             end = time.time()
-
 
             decision, runtime_str = parse_output(output)
             # fallback to measured time if parsing fails
@@ -195,4 +193,5 @@ def run_vnn_verifier():
     print(f"\nSaved to {CSV_FILE}")
 
 if __name__ == "__main__":
+    RESULT_DIR.mkdir(exist_ok=True)
     run_vnn_verifier()

@@ -3,19 +3,21 @@
 
 import os
 import subprocess
+from pathlib import Path
 
-C_NETWORK_DIR = 'c_network'           # Original network source files
-C_PROP_DIR = 'c_prop'                 # Property files prefixed with "prop_"
-EXTERN_DIR = 'extern'                 # Headers for preprocessing
-COMBINED_C_DIR = 'c'                  # Directory to save combined .c files
-PREPROCESSED_DIR = 'c_preprocessed'   # Directory to save preprocessed .i files
+SCRIPT_DIR = Path(__file__).parent
+C_NETWORK_DIR = SCRIPT_DIR.parent / 'c_network'           # Original network source files
+C_PROP_DIR = SCRIPT_DIR.parent / 'c_prop'                 # Property files prefixed with "prop_"
+EXTERN_DIR = SCRIPT_DIR.parent / 'extern'                 # Headers for preprocessing
+COMBINED_C_DIR = SCRIPT_DIR.parent / 'c'                  # Directory to save combined .c files
+PREPROCESSED_DIR = SCRIPT_DIR.parent / 'c_preprocessed'   # Directory to save preprocessed .i files
 
 # Ensure output directories exist
-os.makedirs(COMBINED_C_DIR, exist_ok=True)
-os.makedirs(PREPROCESSED_DIR, exist_ok=True)
+COMBINED_C_DIR.mkdir(exist_ok=True)
+PREPROCESSED_DIR.mkdir(exist_ok=True)
 
 def combine_files():
-    # Combine .c files from c_prop and c_network directories.
+    # Combine .c files from c_network and c_prop directories.
     # For each file in c_network, find corresponding `prop_` prefixed file in c_prop.
     # Combine: property file content first, then network file content.
     # Save combined file in 'c' directory.
@@ -25,13 +27,13 @@ def combine_files():
 
         prop_filename = "prop_" + network_filename  
 
-        network_c_path = os.path.join(C_NETWORK_DIR, network_filename)
-        prop_c_path = os.path.join(C_PROP_DIR, prop_filename)
-        combined_c_path = os.path.join(COMBINED_C_DIR, network_filename)  
+        network_c_path = C_NETWORK_DIR / network_filename
+        prop_c_path = C_PROP_DIR / prop_filename
+        combined_c_path = COMBINED_C_DIR / network_filename  
 
         # Read property C content if it exists
         prop_c_content = ""
-        if os.path.exists(prop_c_path):
+        if prop_c_path.exists():
             with open(prop_c_path, 'r') as f_prop:
                 prop_c_content = f_prop.read()
         else:
@@ -65,13 +67,13 @@ def preprocess_combined_files():
         if not filename.endswith('.c'):
             continue
 
-        combined_c_path = os.path.join(COMBINED_C_DIR, filename)
+        combined_c_path = COMBINED_C_DIR / filename
         base_name = os.path.splitext(filename)[0]
-        output_i_path = os.path.join(PREPROCESSED_DIR, base_name + '.i')
+        output_i_path = PREPROCESSED_DIR / (base_name + '.i')
 
         print(f"Preprocessing {filename}")
 
-        cmd = ['gcc', '-E', '-I', EXTERN_DIR, combined_c_path]
+        cmd = ['gcc', '-E', '-I', str(EXTERN_DIR), str(combined_c_path)]
 
         try:
             completed = subprocess.run(cmd, check=True, capture_output=True, text=True)

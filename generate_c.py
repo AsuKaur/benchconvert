@@ -39,7 +39,7 @@ def main():
 
     # Step 3: Combine and Preprocess the c files
     # This runs the c_ops.py script to combine property and network files, then preprocess them
-    run_script('c_ops.py')
+    run_script('helpers/c_ops.py')
 
 
 if __name__ == "__main__":

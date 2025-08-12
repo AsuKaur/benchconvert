@@ -6,9 +6,10 @@ import re
 import sys
 from pathlib import Path
 
-SMT_FOLDER = "smt"
+SCRIPT_DIR = Path(__file__).parent
+SMT_FOLDER = SCRIPT_DIR.parent / "smt"
 TIMEOUT = 900
-RESULT_DIR = Path("results")
+RESULT_DIR = SCRIPT_DIR.parent / "results"
 
 def get_solver_version(solver):
     try:
@@ -57,17 +58,17 @@ def count_parameters_in_smt(smt_file_path):
     return total_parameters
 
 def run_solver_on_smt_files(solver):
-    CSV_FILE = "results/smt_result_" + solver + ".csv"
+    CSV_FILE = RESULT_DIR / ("smt_result_" + solver + ".csv")
     
     results = []
 
     smt_files = sorted([f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")])
 
     for smt_file in smt_files:
-        smt_path = os.path.join(SMT_FOLDER, smt_file)
+        smt_path = SMT_FOLDER / smt_file
         param_count = count_parameters_in_smt(smt_path) 
 
-        cmd = [solver, smt_path]
+        cmd = [solver, str(smt_path)]
 
         print(f"Running {solver} on: {smt_file}")
         try:
