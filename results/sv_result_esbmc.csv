@@ -1,6 +1,6 @@
 Verifier: esbmc
 Version: ESBMC version 7.9.0 64-bit aarch64 macos
-File Name,Parameter Count,Expected Result,Actual Result,Runtime decision procedure,Solver Used,Flags Used
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Solver Used,Flags Used
 prop_sat_v10_c33.c,691,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.002s,UNKNOWN,--floatbv --no-bounds-check --no-pointer-check --no-div-by-zero-check --k-induction --unwind 10 -Iextern
 prop_sat_v10_c45.c,847,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.001s,UNKNOWN,--floatbv --no-bounds-check --no-pointer-check --no-div-by-zero-check --k-induction --unwind 10 -Iextern
 prop_sat_v2_c1.c,27,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.001s,UNKNOWN,--floatbv --no-bounds-check --no-pointer-check --no-div-by-zero-check --k-induction --unwind 10 -Iextern

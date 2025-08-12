@@ -167,7 +167,7 @@ def run_verifier(verifier):
             "Parameter Count",
             "Expected Result",
             "Actual Result",
-            "Runtime decision procedure" if verifier == "esbmc" else "Runtime",
+            "Runtime",
             "Solver Used",
             "Flags Used"
         ])
