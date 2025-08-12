@@ -35,13 +35,13 @@ See the file COPYING (distributed with the source code, and with
 all binaries) for the full cvc5 copyright, licensing, and (lack of)
 warranty information."
 File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
-sat_v10_c33.smt2,691,SAT,TIMEOUT,900s,cvc5 smt/sat_v10_c33.smt2
-sat_v10_c45.smt2,847,SAT,TIMEOUT,900s,cvc5 smt/sat_v10_c45.smt2
-sat_v2_c1.smt2,27,SAT,SAT,0.9259s,cvc5 smt/sat_v2_c1.smt2
-sat_v4_c7.smt2,107,SAT,SAT,56.3511s,cvc5 smt/sat_v4_c7.smt2
-sat_v7_c30.smt2,442,SAT,TIMEOUT,900s,cvc5 smt/sat_v7_c30.smt2
-unsat_v10_c33.smt2,691,UNSAT,TIMEOUT,900s,cvc5 smt/unsat_v10_c33.smt2
-unsat_v10_c45.smt2,847,UNSAT,TIMEOUT,900s,cvc5 smt/unsat_v10_c45.smt2
-unsat_v2_c3.smt2,37,UNSAT,UNSAT,1.7855s,cvc5 smt/unsat_v2_c3.smt2
-unsat_v4_c8.smt2,114,UNSAT,UNSAT,254.1729s,cvc5 smt/unsat_v4_c8.smt2
-unsat_v7_c33.smt2,472,UNSAT,TIMEOUT,900s,cvc5 smt/unsat_v7_c33.smt2
+sat_v10_c33.smt2,691,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v10_c33.smt2
+sat_v10_c45.smt2,847,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v10_c45.smt2
+sat_v2_c1.smt2,27,SAT,SAT,0.8562s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v2_c1.smt2
+sat_v4_c7.smt2,107,SAT,SAT,57.1622s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v4_c7.smt2
+sat_v7_c30.smt2,442,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v7_c30.smt2
+unsat_v10_c33.smt2,691,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v10_c33.smt2
+unsat_v10_c45.smt2,847,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v10_c45.smt2
+unsat_v2_c3.smt2,37,UNSAT,UNSAT,1.8013s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v2_c3.smt2
+unsat_v4_c8.smt2,114,UNSAT,UNSAT,213.5689s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v4_c8.smt2
+unsat_v7_c33.smt2,472,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v7_c33.smt2
