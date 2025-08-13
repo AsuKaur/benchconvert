@@ -1,11 +1,11 @@
 File Name,Time Taken (s)
-sat_v10_c33,0.0696
-sat_v10_c45,0.0488
-sat_v2_c1,0.0024
-sat_v4_c7,0.0075
-sat_v7_c30,0.0258
-unsat_v10_c33,0.0395
-unsat_v10_c45,0.0483
-unsat_v2_c3,0.0024
-unsat_v4_c8,0.0074
-unsat_v7_c33,0.0276
+sat_v2_c1,0.0272
+unsat_v2_c3,0.003
+sat_v4_c7,0.0071
+unsat_v4_c8,0.0078
+sat_v7_c30,0.0263
+unsat_v7_c33,0.0277
+sat_v10_c33,0.0412
+unsat_v10_c33,0.0413
+sat_v10_c45,0.0511
+unsat_v10_c45,0.049

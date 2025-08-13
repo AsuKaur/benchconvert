@@ -30,6 +30,7 @@ import numpy as np
 import z3
 import time
 import csv
+from helpers.sort_files import sort_files_by_v_c
 
 # Directory structure for organizing input and output files
 ONNX_DIR = Path("onnx")        # Directory containing .onnx model files
@@ -373,8 +374,10 @@ def process_all(smt_dir):
         return []
 
     times = []
+    sorted_names = sort_files_by_v_c(list(common_names))
+
     # Process each matching pair
-    for name in sorted(common_names):
+    for name in sorted_names:
         onnx_path = onnx_files[name]
         vnnlib_path = vnnlib_files[name]
         smt_path = smt_dir / f"{name}.smt2"

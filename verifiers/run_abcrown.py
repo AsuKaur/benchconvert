@@ -7,18 +7,25 @@ import onnx
 import sys
 from pathlib import Path
 
+# Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
+ROOT_DIR = SCRIPT_DIR.parent
+sys.path.insert(0, str(ROOT_DIR))
+
+# Import custom sorting function from helpers (now in root directory)
+from helpers.sort_files import sort_files_by_v_c
+
 VERIFIER = "abcrown"
-ONNX_DIR = SCRIPT_DIR.parent / "onnx"
-VNNLIB_DIR = SCRIPT_DIR.parent / "vnnlib"
-RESULT_DIR = SCRIPT_DIR.parent / "results"
+ONNX_DIR = ROOT_DIR / "onnx"
+VNNLIB_DIR = ROOT_DIR / "vnnlib"
+RESULT_DIR = ROOT_DIR / "results"
 CSV_FILE = RESULT_DIR / f"vnn_result_{VERIFIER}.csv"
 TIMEOUT = 900
 
 # ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 # VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
 # YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
-YAML_TEMPLATE = SCRIPT_DIR.parent / "extern" / "abcrown.yaml"
+YAML_TEMPLATE = ROOT_DIR / "extern" / "abcrown.yaml"
 
 ABCROWN_PY = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 VENV_PYTHON = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/envs/alpha-beta-crown/bin/python"
@@ -128,7 +135,7 @@ def get_verifier_version():
 def run_vnn_verifier():
     results = []
 
-    onnx_files = sorted([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
+    onnx_files = sort_files_by_v_c([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
 
     for onnx_file in onnx_files:
         base = os.path.splitext(onnx_file)[0]
