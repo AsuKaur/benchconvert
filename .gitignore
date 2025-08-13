@@ -6,13 +6,13 @@ myenv*
 __pycache__
 
 # Auto-generated files
-c
-c_network
-c_preprocessed
-c_prop
-dimacs
-onnx
-smt
-smt_real
-vnnlib
+# c
+# c_network
+# c_preprocessed
+# c_prop
+# dimacs
+# onnx
+# smt
+# smt_real
+# vnnlib
 out.txt
