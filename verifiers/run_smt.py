@@ -2,7 +2,6 @@ import os
 import subprocess
 import csv
 import time
-import re
 import sys
 from pathlib import Path
 
@@ -13,6 +12,7 @@ sys.path.insert(0, str(ROOT_DIR))
 
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
+from helpers.parameter_count import count_parameters_smt
 
 SMT_FOLDER = ROOT_DIR / "smt"
 RESULT_DIR = ROOT_DIR / "results"
@@ -40,30 +40,6 @@ def get_expected_result(filename):
         return "SAT"
     return "UNKNOWN"
 
-def count_parameters_in_smt(smt_file_path):
-    with open(smt_file_path, 'r') as file:
-        content = file.read()
-
-    # Count input features (X_i)
-    input_matches = re.findall(r'\(declare-fun X_(\d+) ', content)
-    num_inputs = len(set(input_matches)) 
-
-    # Count hidden units (from H_0_j declarations)
-    hidden_matches = re.findall(r'\(declare-fun H_0_(\d+) ', content)
-    num_hidden = len(set(hidden_matches))
-
-    # Count output units (from Y_k declarations)
-    output_matches = re.findall(r'\(declare-fun Y_(\d+) ', content)
-    num_outputs = len(set(output_matches))
-
-    # Calculate parameters
-    # Input to hidden: weights + biases
-    input_to_hidden = (num_inputs * num_hidden) + num_hidden
-    # Hidden to output: weights + biases
-    hidden_to_output = (num_hidden * num_outputs) + num_outputs
-    total_parameters = input_to_hidden + hidden_to_output
-
-    return total_parameters
 
 def run_solver_on_smt_files(solver):
     CSV_FILE = RESULT_DIR / ("smt_result_" + solver + ".csv")
@@ -74,7 +50,7 @@ def run_solver_on_smt_files(solver):
 
     for smt_file in smt_files:
         smt_path = SMT_FOLDER / smt_file
-        param_count = count_parameters_in_smt(smt_path) 
+        param_count = count_parameters_smt(smt_path) 
 
         cmd = [solver, str(smt_path)]
 

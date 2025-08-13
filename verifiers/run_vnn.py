@@ -2,7 +2,6 @@ import os
 import subprocess
 import csv
 import time
-import onnx
 import sys
 from pathlib import Path
 # Add parent directory to Python path to import from helpers
@@ -12,6 +11,7 @@ sys.path.insert(0, str(ROOT_DIR))
 
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
+from helpers.parameter_count import count_parameters_onnx
 
 RESULT_DIR = ROOT_DIR / "results"
 ONNX_DIR = ROOT_DIR / "onnx"
@@ -33,20 +33,6 @@ def get_expected_result(filename):
         return "SAT"
     return "UNKNOWN"
 
-def count_parameters(onnx_path):
-    try:
-        model = onnx.load(onnx_path)
-        param_count = 0
-        for tensor in model.graph.initializer:
-            dims = tensor.dims
-            count = 1
-            for d in dims:
-                count *= d
-            param_count += count
-        return param_count
-    except Exception as e:
-        print(f"Failed to count parameters for {onnx_path}: {e}")
-        return "N/A"
 
 def run_vnn_verifier(verifier):
     results = []
@@ -64,7 +50,7 @@ def run_vnn_verifier(verifier):
             print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
-        param_count = count_parameters(onnx_path)
+        param_count = count_parameters_onnx(onnx_path)
 
         cmd = [verifier, str(onnx_path), str(vnnlib_path)]
 
