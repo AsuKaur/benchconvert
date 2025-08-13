@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=smt_z3
+#SBATCH --output=smt_z3.out
+#SBATCH --error=smt_z3.err
+#SBATCH --time=26:00:00       # hh:mm:ss
+#SBATCH --partition=multicore
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32G
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=asu.kaur@postgrad.manchester.ac.uk
+
+# Go to the directory containing the script
+cd $HOME/asukaur/benchmark/benchconvert/verifiers
+
+# Log start time and mark the beginning of the job
+echo "Job started at: $(date)"
+start_time=$(date +%s)
+
+python run_smt.py z3
+
+# Log end time and calculate duration
+end_time=$(date +%s)
+duration=$((end_time - start_time))
+echo "Job ended at: $(date)"
+echo "Total job runtime: $duration seconds"
