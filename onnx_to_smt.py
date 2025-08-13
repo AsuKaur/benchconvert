@@ -31,6 +31,7 @@ import z3
 import time
 import csv
 from helpers.sort_files import sort_files_by_v_c
+from helpers.parameter_count import count_parameters_onnx
 
 # Directory structure for organizing input and output files
 ONNX_DIR = Path("onnx")        # Directory containing .onnx model files
@@ -351,12 +352,14 @@ def process_single(name, smt_dir):
         print(f"Missing files: {onnx_path} or {vnnlib_path}")
         return []
 
+    # Count parameters in ONNX model
+    param_count = count_parameters_onnx(onnx_path)
     start_time = time.time()
     onnx_to_smt(onnx_path, vnnlib_path, smt_path)
     end_time = time.time()
     duration = end_time - start_time
 
-    return [(name, duration)]
+    return [(name, duration, param_count)]
 
 def process_all(smt_dir):
     # Batch process all matching ONNX and vnnlib file pairs.
@@ -376,17 +379,18 @@ def process_all(smt_dir):
     times = []
     sorted_names = sort_files_by_v_c(list(common_names))
 
-    # Process each matching pair
-    for name in sorted_names:
+    for i, name in sorted_names:
         onnx_path = onnx_files[name]
         vnnlib_path = vnnlib_files[name]
         smt_path = smt_dir / f"{name}.smt2"
 
+        # Count parameters in ONNX model
+        param_count = count_parameters_onnx(onnx_path)
         start_time = time.time()
         onnx_to_smt(onnx_path, vnnlib_path, smt_path)
         end_time = time.time()
         duration = end_time - start_time
-        times.append((name, duration))
+        times.append((name, duration, param_count))
 
     print(f"\nConversion Summary:")
     print(f"  Total pairs processed: {total_count}")
@@ -401,9 +405,9 @@ def write_conversion_times(times):
     csv_file = RESULT_DIR / "onnx_to_smt.csv"
     with open(csv_file, mode="w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["File Name", "Time Taken (s)"])
-        for name, duration in times:
-            writer.writerow([name, round(duration, 4)])
+        writer.writerow(["File Name", "Parameter Count", "Time Taken (s)"])
+        for name, duration, param_count in times:
+            writer.writerow([name, param_count, round(duration, 4)])
 
     print(f"\nConversion times saved to: {csv_file}")
 
@@ -474,8 +478,8 @@ Examples:
     write_conversion_times(times)
 
     if args.verbose:
-        for name, duration in times:
-            print(f"Conversion time for {name}: {round(duration, 4)} seconds")
+        for name, duration, param_count in times:
+            print(f"Conversion time for {name}: {round(duration, 4)} seconds, Parameters: {param_count}")
 
     return 0
 
