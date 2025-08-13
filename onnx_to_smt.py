@@ -379,7 +379,7 @@ def process_all(smt_dir):
     times = []
     sorted_names = sort_files_by_v_c(list(common_names))
 
-    for i, name in sorted_names:
+    for name in sorted_names:
         onnx_path = onnx_files[name]
         vnnlib_path = vnnlib_files[name]
         smt_path = smt_dir / f"{name}.smt2"
