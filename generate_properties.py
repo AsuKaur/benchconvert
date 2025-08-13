@@ -24,9 +24,9 @@ def remake_dir(path):
         os.rmdir(path)
     os.makedirs(path)
 
-N_BENCH_PAIRS = 5 # number of SAT/UNSAT instance pairs
+N_BENCH_PAIRS = 50 # number of SAT/UNSAT instance pairs
 N_VAR_MIN = 2 # minimum number of network input variables
-N_VAR_MAX = 10 # maximum number of network input variables
+N_VAR_MAX = 100 # maximum number of network input variables
 X_CLAUSE_MIN = 1 # CNF clauses: minimum variable multiplier
 X_CLAUSE_MAX = 5 # CNF clauses: maximum variable multiplier
 VNN_COMP_TIMEOUT = 100
