@@ -12,7 +12,8 @@ import uuid
 import re               
 import subprocess       
 import os                
-import tempfile        
+import tempfile 
+import argparse
 
 def parse_vnnlib_constraints(vnnlib_file_path, var_prefix='X'):
     # Parses the VNNLIB file to extract variable constraints for inputs or outputs.
@@ -470,10 +471,15 @@ def differential_test_onnx_smt_c(onnx_model_path, smt_file_path, vnnlib_file_pat
 
 
 if __name__ == "__main__":
-    onnx_model_path = "onnx/unsat_v2_c3.onnx"      # ONNX neural network model
-    smt_file_path = "smt/unsat_v2_c3.smt2"         # SMT-LIB encoding of the model
-    vnnlib_file_path = "vnnlib/unsat_v2_c3.vnnlib" # VNN-LIB property specification
-    c_file_path = "c/unsat_v2_c3.c"                # C implementation from onnx2c
+    parser = argparse.ArgumentParser(description="Run differential testing on ONNX, SMT, and C models.")
+    parser.add_argument('model_name', help='Name of the model (e.g., unsat_v2_c3)')
+    args = parser.parse_args()
+
+    model_name = args.model_name
+    onnx_model_path = f"onnx/{model_name}.onnx"      # ONNX neural network model
+    smt_file_path = f"smt/{model_name}.smt2"         # SMT-LIB encoding of the model
+    vnnlib_file_path = f"vnnlib/{model_name}.vnnlib" # VNN-LIB property specification
+    c_file_path = f"c/{model_name}.c"                # C implementation from onnx2c
     
     # Run differential testing
     results = differential_test_onnx_smt_c(onnx_model_path, smt_file_path, vnnlib_file_path, c_file_path)
