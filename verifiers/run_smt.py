@@ -52,7 +52,13 @@ def run_solver_on_smt_files(solver):
         smt_path = SMT_FOLDER / smt_file
         param_count = count_parameters_smt(smt_path) 
 
-        cmd = [solver, str(smt_path)]
+        if solver == "z3":
+            cmd = [solver, f"-memory:2048", f"-T:{TIMEOUT}", str(smt_path)]
+        elif solver == "cvc5":
+            cmd = [solver, f"--tlimit={TIMEOUT*1000}", str(smt_path)]
+        elif solver == "bitwuzla":
+            cmd = [solver, f"--time-limit={TIMEOUT}", str(smt_path)]
+        # cmd = [solver, str(smt_path)]
 
         print(f"Running {solver} on: {smt_file}")
         try:
