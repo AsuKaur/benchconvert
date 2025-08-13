@@ -6,10 +6,17 @@ import re
 import sys
 from pathlib import Path
 
+# Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
-RESULT_DIR = SCRIPT_DIR.parent / "results"
-PROP_DIR = SCRIPT_DIR.parent / "c_prop"
-NET_DIR = SCRIPT_DIR.parent / "c_network"
+ROOT_DIR = SCRIPT_DIR.parent
+sys.path.insert(0, str(ROOT_DIR))
+
+# Import custom sorting function from helpers (now in root directory)
+from helpers.sort_files import sort_files_by_v_c
+
+RESULT_DIR = ROOT_DIR / "results"
+PROP_DIR = ROOT_DIR / "c_prop"
+NET_DIR = ROOT_DIR / "c_network"
 TIMEOUT = 900
 
 def get_verifier_version(verifier):
@@ -96,7 +103,7 @@ def run_verifier(verifier):
     "--unwind", "10",
     "-Iextern"
     ]
-    for prop_file in sorted(os.listdir(PROP_DIR)):
+    for prop_file in sort_files_by_v_c(os.listdir(PROP_DIR)):
         if not prop_file.endswith(".c"):
             continue
 

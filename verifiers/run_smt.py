@@ -6,10 +6,18 @@ import re
 import sys
 from pathlib import Path
 
+# Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
-SMT_FOLDER = SCRIPT_DIR.parent / "smt"
+ROOT_DIR = SCRIPT_DIR.parent
+sys.path.insert(0, str(ROOT_DIR))
+
+# Import custom sorting function from helpers (now in root directory)
+from helpers.sort_files import sort_files_by_v_c
+
+SMT_FOLDER = ROOT_DIR / "smt"
+RESULT_DIR = ROOT_DIR / "results"
 TIMEOUT = 900
-RESULT_DIR = SCRIPT_DIR.parent / "results"
+
 
 def get_solver_version(solver):
     try:
@@ -62,7 +70,7 @@ def run_solver_on_smt_files(solver):
     
     results = []
 
-    smt_files = sorted([f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")])
+    smt_files = sort_files_by_v_c([f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")])
 
     for smt_file in smt_files:
         smt_path = SMT_FOLDER / smt_file
