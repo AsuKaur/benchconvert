@@ -61,17 +61,28 @@ def run_verifier(verifier):
     output_csv = RESULT_DIR / ("sv_result_" + verifier + ".csv")
 
     flags = [
-    "--no-bounds-check",
+    "--float-overflow-check",
+    "--nan-check",
+    "--bounds-check",
     "--no-pointer-check",
-    "--unwind", "10",
+    "--signed-overflow-check"
+    "--no-div-by-zero-check",
+    "--unwind 200",
+    "--round-to-nearest",
+    "--fpa",
+    "--trace",
     "-Iextern"
     ] if  verifier == "cbmc" else [
-    "--floatbv",
-    "--no-bounds-check",
-    "--no-pointer-check",
-    "--no-div-by-zero-check",
+    f"--timeout {TIMEOUT}s", 
+    "--floatbv", 
+    "--nan-check", 
+    "--overflow-check", 
+    "--no-bounds-check",  
+    "--unwind 200",  
+    "--no-pointer-check", 
+    "--no-div-by-zero-check", 
     "--k-induction",
-    "--unwind", "10",
+    "--no-slice"
     "-Iextern"
     ]
     for prop_file in sort_files_by_v_c(os.listdir(PROP_DIR)):
@@ -90,7 +101,7 @@ def run_verifier(verifier):
 
         param_count = count_parameters_c(net_path)
 
-        cmd = [verifier, str(prop_path), str(net_path)] + flags
+        cmd = [verifier, str(prop_path), "--include", str(net_path)] + flags
         print(f"Command: {' '.join(cmd)}")
         print(f"Running {verifier} on: {prop_file} + {net_file}")
 

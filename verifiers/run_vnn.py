@@ -52,7 +52,10 @@ def run_vnn_verifier(verifier):
 
         param_count = count_parameters_onnx(onnx_path)
 
-        cmd = [verifier, str(onnx_path), str(vnnlib_path)]
+        if verifier == "Marabou":
+            cmd = [verifier, str(onnx_path), str(vnnlib_path), f"--timeout={TIMEOUT}", "--num-workers=4", "--snc", "--tightening-strategy=deeppoly", "--branch=relu-violation", "--verbosity=2"]
+        else:
+            cmd = [verifier, str(onnx_path), str(vnnlib_path)]
 
         print(f"Running {verifier} on: {onnx_file} + {vnnlib_file}")
         try:
