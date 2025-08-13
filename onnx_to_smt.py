@@ -21,8 +21,6 @@
 #     python onnx_to_smt.py <onnx_filename>           # Convert single file
 #     python onnx_to_smt.py --all                     # Convert all ONNX files
 
-
-
 import sys
 import argparse
 from pathlib import Path
@@ -30,17 +28,22 @@ import onnx
 from onnx import numpy_helper
 import numpy as np
 import z3
+import time
+import csv
+from helpers.sort_files import sort_files_by_v_c
 
 # Directory structure for organizing input and output files
 ONNX_DIR = Path("onnx")        # Directory containing .onnx model files
 VNNLIB_DIR = Path("vnnlib")    # Directory containing .vnnlib specification files
 SMT_DIR = Path("smt")          # Directory for output .smt2 files
+RESULT_DIR = Path("results")   # Directory for results, including conversion times CSV
 
 def setup_directories():
     # Create the required directory structure if it doesn't exist.
     ONNX_DIR.mkdir(exist_ok=True)
     VNNLIB_DIR.mkdir(exist_ok=True)
     SMT_DIR.mkdir(exist_ok=True)
+    RESULT_DIR.mkdir(exist_ok=True)
 
 def float_to_bv32(f):
     # This function handles the conversion from Python's native float representation
@@ -346,9 +349,14 @@ def process_single(name, smt_dir):
     # Verify required input files exist
     if not onnx_path.exists() or not vnnlib_path.exists():
         print(f"Missing files: {onnx_path} or {vnnlib_path}")
-        return
+        return []
 
+    start_time = time.time()
     onnx_to_smt(onnx_path, vnnlib_path, smt_path)
+    end_time = time.time()
+    duration = end_time - start_time
+
+    return [(name, duration)]
 
 def process_all(smt_dir):
     # Batch process all matching ONNX and vnnlib file pairs.
@@ -363,18 +371,41 @@ def process_all(smt_dir):
 
     if not common_names:
         print("No matching ONNX and vnnlib files found.")
-        return
+        return []
+
+    times = []
+    sorted_names = sort_files_by_v_c(list(common_names))
 
     # Process each matching pair
-    for name in sorted(common_names):
+    for name in sorted_names:
         onnx_path = onnx_files[name]
         vnnlib_path = vnnlib_files[name]
         smt_path = smt_dir / f"{name}.smt2"
+
+        start_time = time.time()
         onnx_to_smt(onnx_path, vnnlib_path, smt_path)
+        end_time = time.time()
+        duration = end_time - start_time
+        times.append((name, duration))
 
     print(f"\nConversion Summary:")
     print(f"  Total pairs processed: {total_count}")
     print(f"  Output directory: {smt_dir}")
+
+    return times
+
+def write_conversion_times(times):
+    if not times:
+        return
+
+    csv_file = RESULT_DIR / "onnx_to_smt.csv"
+    with open(csv_file, mode="w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["File Name", "Time Taken (s)"])
+        for name, duration in times:
+            writer.writerow([name, round(duration, 4)])
+
+    print(f"\nConversion times saved to: {csv_file}")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -417,7 +448,6 @@ Examples:
     help='Directory to save the generated SMT-LIB files (overrides default smt/)'
     )
 
-
     args = parser.parse_args()
     
     setup_directories()
@@ -426,21 +456,28 @@ Examples:
     smt_dir = Path(args.output_dir) if args.output_dir else SMT_DIR
     smt_dir.mkdir(exist_ok=True)
 
+    times = []
     # Handle batch processing mode
     if args.all:
         print("Converting all matching ONNX+vnnlib pairs")
-        process_all(smt_dir)
-        return 0
-
+        times = process_all(smt_dir)
     # Handle single file processing mode
-    if args.model_name:
-        process_single(args.model_name, smt_dir)
+    elif args.model_name:
+        times = process_single(args.model_name, smt_dir)
         print("\nConversion completed successfully!")
         print(f"Generated SMT-LIB file: {smt_dir}/{args.model_name}.smt2")
-        return 0
+    else:
+        parser.print_help()
+        return 1
 
-    parser.print_help()
-    return 1
+    # Write conversion times to CSV
+    write_conversion_times(times)
+
+    if args.verbose:
+        for name, duration in times:
+            print(f"Conversion time for {name}: {round(duration, 4)} seconds")
+
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())

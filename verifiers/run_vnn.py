@@ -5,11 +5,17 @@ import time
 import onnx
 import sys
 from pathlib import Path
-
+# Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
-RESULT_DIR = SCRIPT_DIR.parent / "results"
-ONNX_DIR = SCRIPT_DIR.parent / "onnx"
-VNNLIB_DIR = SCRIPT_DIR.parent / "vnnlib"
+ROOT_DIR = SCRIPT_DIR.parent
+sys.path.insert(0, str(ROOT_DIR))
+
+# Import custom sorting function from helpers (now in root directory)
+from helpers.sort_files import sort_files_by_v_c
+
+RESULT_DIR = ROOT_DIR / "results"
+ONNX_DIR = ROOT_DIR / "onnx"
+VNNLIB_DIR = ROOT_DIR / "vnnlib"
 TIMEOUT = 900
 
 def get_verifier_version(verifier):
@@ -45,7 +51,7 @@ def count_parameters(onnx_path):
 def run_vnn_verifier(verifier):
     results = []
     csv_file = RESULT_DIR / f"vnn_result_{verifier.lower()}.csv"
-    onnx_files = sorted([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
+    onnx_files = sort_files_by_v_c([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
 
     for onnx_file in onnx_files:
         base = os.path.splitext(onnx_file)[0]
