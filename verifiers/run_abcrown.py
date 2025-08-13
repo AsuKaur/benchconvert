@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT_DIR))
 
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
+from helpers.parameter_count import count_parameters_onnx
 
 VERIFIER = "abcrown"
 ONNX_DIR = ROOT_DIR / "onnx"
@@ -106,21 +107,6 @@ def make_temp_yaml(onnx_path, vnnlib_path):
     tmpf.close()
     return tmpf.name
 
-# Count parameters of ONNX model
-def count_parameters(onnx_path):
-    try:
-        model = onnx.load(onnx_path)
-        param_count = 0
-        for tensor in model.graph.initializer:
-            dims = tensor.dims
-            count = 1
-            for d in dims:
-                count *= d
-            param_count += count
-        return param_count
-    except Exception as e:
-        print(f"Failed to count parameters for {onnx_path}: {e}")
-        return "N/A"
 
 def get_verifier_version():
     try:
@@ -148,7 +134,7 @@ def run_vnn_verifier():
             print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
-        param_count = count_parameters(onnx_path)
+        param_count = count_parameters_onnx(onnx_path)
 
         temp_yaml = make_temp_yaml(onnx_path, vnnlib_path)
 

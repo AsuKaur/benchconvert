@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT_DIR))
 
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
+from helpers.parameter_count import count_parameters_c
 
 RESULT_DIR = ROOT_DIR / "results"
 PROP_DIR = ROOT_DIR / "c_prop"
@@ -54,36 +55,6 @@ def parse_verifier_output(output):
         result += f" ({bug_trace})"
     return result, runtime, solver
 
-def count_parameters(file_path):
-    weight_pattern = re.compile(r'static\s+const\s+float\s+(\w*weight\w*)\s*\[(.*?)\]\s*=')
-    bias_pattern = re.compile(r'static\s+const\s+float\s+(\w*bias\w*)\s*\[(.*?)\]\s*=')
-
-    total_params = 0
-
-    with open(file_path, "r") as f:
-        data = f.read()
-
-    # Find all weight arrays
-    weights = weight_pattern.findall(data)
-    for name, dims in weights:
-        count = 1
-        for dim in dims.split("]["):
-            dim_clean = dim.replace("[","").replace("]","").strip()
-            count *= int(dim_clean)
-        print(f"Found weight {name} with {count} parameters")
-        total_params += count
-
-    # Find all bias arrays
-    biases = bias_pattern.findall(data)
-    for name, dims in biases:
-        count = 1
-        for dim in dims.split("]["):
-            dim_clean = dim.replace("[","").replace("]","").strip()
-            count *= int(dim_clean)
-        print(f"Found bias {name} with {count} parameters")
-        total_params += count
-
-    return total_params
 
 def run_verifier(verifier):
     results = []
@@ -117,7 +88,7 @@ def run_verifier(verifier):
             print(f"Skipping {prop_file}, network file not found.")
             continue
 
-        param_count = count_parameters(net_path)
+        param_count = count_parameters_c(net_path)
 
         cmd = [verifier, str(prop_path), str(net_path)] + flags
         print(f"Command: {' '.join(cmd)}")
