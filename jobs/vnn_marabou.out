@@ -1,1 +1,155 @@
 Job started at: Thu 14 Aug 01:05:22 BST 2025
+Running Marabou on: sat_v7_c22.onnx + sat_v7_c22.vnnlib
+Running Marabou on: unsat_v7_c22.onnx + unsat_v7_c22.vnnlib
+Timeout: unsat_v7_c22.onnx
+Running Marabou on: sat_v8_c36.onnx + sat_v8_c36.vnnlib
+Running Marabou on: unsat_v8_c38.onnx + unsat_v8_c38.vnnlib
+Timeout: unsat_v8_c38.onnx
+Running Marabou on: sat_v9_c14.onnx + sat_v9_c14.vnnlib
+Running Marabou on: unsat_v9_c14.onnx + unsat_v9_c14.vnnlib
+Timeout: unsat_v9_c14.onnx
+Running Marabou on: sat_v10_c13.onnx + sat_v10_c13.vnnlib
+Running Marabou on: unsat_v10_c13.onnx + unsat_v10_c13.vnnlib
+Timeout: unsat_v10_c13.onnx
+Running Marabou on: sat_v10_c16.onnx + sat_v10_c16.vnnlib
+Running Marabou on: unsat_v10_c16.onnx + unsat_v10_c16.vnnlib
+Timeout: unsat_v10_c16.onnx
+Running Marabou on: sat_v12_c44.onnx + sat_v12_c44.vnnlib
+Running Marabou on: unsat_v12_c45.onnx + unsat_v12_c45.vnnlib
+Timeout: unsat_v12_c45.onnx
+Running Marabou on: sat_v15_c66.onnx + sat_v15_c66.vnnlib
+Running Marabou on: unsat_v15_c68.onnx + unsat_v15_c68.vnnlib
+Timeout: unsat_v15_c68.onnx
+Running Marabou on: sat_v16_c37.onnx + sat_v16_c37.vnnlib
+Running Marabou on: unsat_v16_c37.onnx + unsat_v16_c37.vnnlib
+Timeout: unsat_v16_c37.onnx
+Running Marabou on: sat_v19_c26.onnx + sat_v19_c26.vnnlib
+Running Marabou on: unsat_v19_c26.onnx + unsat_v19_c26.vnnlib
+Timeout: unsat_v19_c26.onnx
+Running Marabou on: sat_v26_c113.onnx + sat_v26_c113.vnnlib
+Running Marabou on: unsat_v26_c113.onnx + unsat_v26_c113.vnnlib
+Timeout: unsat_v26_c113.onnx
+Running Marabou on: sat_v27_c39.onnx + sat_v27_c39.vnnlib
+Running Marabou on: unsat_v27_c39.onnx + unsat_v27_c39.vnnlib
+Timeout: unsat_v27_c39.onnx
+Running Marabou on: sat_v34_c77.onnx + sat_v34_c77.vnnlib
+Running Marabou on: unsat_v34_c77.onnx + unsat_v34_c77.vnnlib
+Timeout: unsat_v34_c77.onnx
+Running Marabou on: sat_v35_c81.onnx + sat_v35_c81.vnnlib
+Running Marabou on: unsat_v35_c81.onnx + unsat_v35_c81.vnnlib
+Timeout: unsat_v35_c81.onnx
+Running Marabou on: sat_v40_c66.onnx + sat_v40_c66.vnnlib
+Running Marabou on: unsat_v40_c66.onnx + unsat_v40_c66.vnnlib
+Timeout: unsat_v40_c66.onnx
+Running Marabou on: sat_v45_c118.onnx + sat_v45_c118.vnnlib
+Running Marabou on: unsat_v45_c118.onnx + unsat_v45_c118.vnnlib
+Timeout: unsat_v45_c118.onnx
+Running Marabou on: sat_v46_c218.onnx + sat_v46_c218.vnnlib
+Running Marabou on: unsat_v46_c218.onnx + unsat_v46_c218.vnnlib
+Timeout: unsat_v46_c218.onnx
+Running Marabou on: sat_v48_c167.onnx + sat_v48_c167.vnnlib
+Running Marabou on: unsat_v48_c167.onnx + unsat_v48_c167.vnnlib
+Timeout: unsat_v48_c167.onnx
+Running Marabou on: sat_v48_c233.onnx + sat_v48_c233.vnnlib
+Running Marabou on: unsat_v48_c233.onnx + unsat_v48_c233.vnnlib
+Timeout: unsat_v48_c233.onnx
+Running Marabou on: sat_v50_c187.onnx + sat_v50_c187.vnnlib
+Running Marabou on: unsat_v50_c187.onnx + unsat_v50_c187.vnnlib
+Timeout: unsat_v50_c187.onnx
+Running Marabou on: sat_v51_c253.onnx + sat_v51_c253.vnnlib
+Running Marabou on: unsat_v51_c253.onnx + unsat_v51_c253.vnnlib
+Timeout: unsat_v51_c253.onnx
+Running Marabou on: sat_v52_c162.onnx + sat_v52_c162.vnnlib
+Running Marabou on: unsat_v52_c162.onnx + unsat_v52_c162.vnnlib
+Timeout: unsat_v52_c162.onnx
+Running Marabou on: sat_v55_c137.onnx + sat_v55_c137.vnnlib
+Running Marabou on: unsat_v55_c137.onnx + unsat_v55_c137.vnnlib
+Timeout: unsat_v55_c137.onnx
+Running Marabou on: sat_v55_c225.onnx + sat_v55_c225.vnnlib
+Running Marabou on: unsat_v55_c225.onnx + unsat_v55_c225.vnnlib
+Timeout: unsat_v55_c225.onnx
+Running Marabou on: sat_v57_c277.onnx + sat_v57_c277.vnnlib
+Running Marabou on: unsat_v57_c277.onnx + unsat_v57_c277.vnnlib
+Timeout: unsat_v57_c277.onnx
+Running Marabou on: sat_v59_c64.onnx + sat_v59_c64.vnnlib
+Running Marabou on: unsat_v59_c64.onnx + unsat_v59_c64.vnnlib
+Timeout: unsat_v59_c64.onnx
+Running Marabou on: sat_v59_c92.onnx + sat_v59_c92.vnnlib
+Running Marabou on: unsat_v59_c92.onnx + unsat_v59_c92.vnnlib
+Timeout: unsat_v59_c92.onnx
+Running Marabou on: sat_v61_c228.onnx + sat_v61_c228.vnnlib
+Running Marabou on: unsat_v61_c228.onnx + unsat_v61_c228.vnnlib
+Timeout: unsat_v61_c228.onnx
+Running Marabou on: sat_v62_c73.onnx + sat_v62_c73.vnnlib
+Running Marabou on: unsat_v62_c73.onnx + unsat_v62_c73.vnnlib
+Timeout: unsat_v62_c73.onnx
+Running Marabou on: sat_v65_c147.onnx + sat_v65_c147.vnnlib
+Running Marabou on: unsat_v65_c147.onnx + unsat_v65_c147.vnnlib
+Timeout: unsat_v65_c147.onnx
+Running Marabou on: sat_v69_c201.onnx + sat_v69_c201.vnnlib
+Running Marabou on: unsat_v69_c201.onnx + unsat_v69_c201.vnnlib
+Timeout: unsat_v69_c201.onnx
+Running Marabou on: sat_v69_c239.onnx + sat_v69_c239.vnnlib
+Running Marabou on: unsat_v69_c239.onnx + unsat_v69_c239.vnnlib
+Timeout: unsat_v69_c239.onnx
+Running Marabou on: sat_v69_c313.onnx + sat_v69_c313.vnnlib
+Running Marabou on: unsat_v69_c313.onnx + unsat_v69_c313.vnnlib
+Timeout: unsat_v69_c313.onnx
+Running Marabou on: sat_v73_c295.onnx + sat_v73_c295.vnnlib
+Running Marabou on: unsat_v73_c295.onnx + unsat_v73_c295.vnnlib
+Timeout: unsat_v73_c295.onnx
+Running Marabou on: sat_v74_c255.onnx + sat_v74_c255.vnnlib
+Running Marabou on: unsat_v74_c255.onnx + unsat_v74_c255.vnnlib
+Timeout: unsat_v74_c255.onnx
+Running Marabou on: sat_v76_c157.onnx + sat_v76_c157.vnnlib
+Running Marabou on: unsat_v76_c157.onnx + unsat_v76_c157.vnnlib
+Timeout: unsat_v76_c157.onnx
+Running Marabou on: sat_v76_c172.onnx + sat_v76_c172.vnnlib
+Running Marabou on: unsat_v76_c172.onnx + unsat_v76_c172.vnnlib
+Timeout: unsat_v76_c172.onnx
+Running Marabou on: sat_v78_c364.onnx + sat_v78_c364.vnnlib
+Running Marabou on: unsat_v78_c364.onnx + unsat_v78_c364.vnnlib
+Timeout: unsat_v78_c364.onnx
+Running Marabou on: sat_v79_c276.onnx + sat_v79_c276.vnnlib
+Running Marabou on: unsat_v79_c276.onnx + unsat_v79_c276.vnnlib
+Timeout: unsat_v79_c276.onnx
+Running Marabou on: sat_v83_c201.onnx + sat_v83_c201.vnnlib
+Running Marabou on: unsat_v83_c201.onnx + unsat_v83_c201.vnnlib
+Timeout: unsat_v83_c201.onnx
+Running Marabou on: sat_v84_c256.onnx + sat_v84_c256.vnnlib
+Running Marabou on: unsat_v84_c256.onnx + unsat_v84_c256.vnnlib
+Timeout: unsat_v84_c256.onnx
+Running Marabou on: sat_v85_c152.onnx + sat_v85_c152.vnnlib
+Running Marabou on: unsat_v85_c152.onnx + unsat_v85_c152.vnnlib
+Timeout: unsat_v85_c152.onnx
+Running Marabou on: sat_v88_c154.onnx + sat_v88_c154.vnnlib
+Running Marabou on: unsat_v88_c154.onnx + unsat_v88_c154.vnnlib
+Timeout: unsat_v88_c154.onnx
+Running Marabou on: sat_v88_c339.onnx + sat_v88_c339.vnnlib
+Running Marabou on: unsat_v88_c339.onnx + unsat_v88_c339.vnnlib
+Timeout: unsat_v88_c339.onnx
+Running Marabou on: sat_v89_c366.onnx + sat_v89_c366.vnnlib
+Running Marabou on: unsat_v89_c366.onnx + unsat_v89_c366.vnnlib
+Timeout: unsat_v89_c366.onnx
+Running Marabou on: sat_v91_c419.onnx + sat_v91_c419.vnnlib
+Running Marabou on: unsat_v91_c419.onnx + unsat_v91_c419.vnnlib
+Timeout: unsat_v91_c419.onnx
+Running Marabou on: sat_v92_c383.onnx + sat_v92_c383.vnnlib
+Running Marabou on: unsat_v92_c383.onnx + unsat_v92_c383.vnnlib
+Timeout: unsat_v92_c383.onnx
+Running Marabou on: sat_v95_c453.onnx + sat_v95_c453.vnnlib
+Running Marabou on: unsat_v95_c453.onnx + unsat_v95_c453.vnnlib
+Timeout: unsat_v95_c453.onnx
+Running Marabou on: sat_v96_c286.onnx + sat_v96_c286.vnnlib
+Running Marabou on: unsat_v96_c286.onnx + unsat_v96_c286.vnnlib
+Timeout: unsat_v96_c286.onnx
+Running Marabou on: sat_v98_c239.onnx + sat_v98_c239.vnnlib
+Running Marabou on: unsat_v98_c239.onnx + unsat_v98_c239.vnnlib
+Timeout: unsat_v98_c239.onnx
+Running Marabou on: sat_v100_c103.onnx + sat_v100_c103.vnnlib
+Running Marabou on: unsat_v100_c103.onnx + unsat_v100_c103.vnnlib
+Timeout: unsat_v100_c103.onnx
+
+Saved to /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/results/vnn_result_marabou.csv
+Job ended at: Thu 14 Aug 13:35:53 BST 2025
+Total job runtime: 45031 seconds

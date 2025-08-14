@@ -35,103 +35,103 @@ See the file COPYING (distributed with the source code, and with
 all binaries) for the full cvc5 copyright, licensing, and (lack of)
 warranty information."
 File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
-sat_v7_c22.smt2,362,SAT,SAT,608.941s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v7_c22.smt2
-unsat_v7_c22.smt2,362,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v7_c22.smt2
-sat_v8_c36.smt2,574,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v8_c36.smt2
-unsat_v8_c38.smt2,596,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v8_c38.smt2
-sat_v9_c14.smt2,386,SAT,SAT,375.0061s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v9_c14.smt2
-unsat_v9_c14.smt2,386,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v9_c14.smt2
-sat_v10_c13.smt2,431,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v10_c13.smt2
-unsat_v10_c13.smt2,431,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v10_c13.smt2
-sat_v10_c16.smt2,470,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v10_c16.smt2
-unsat_v10_c16.smt2,470,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v10_c16.smt2
-sat_v12_c44.smt2,1022,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v12_c44.smt2
-unsat_v12_c45.smt2,1037,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v12_c45.smt2
-sat_v15_c66.smt2,1730,SAT,UNKNOWN,509.315s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v15_c66.smt2
-unsat_v15_c68.smt2,1766,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v15_c68.smt2
-sat_v16_c37.smt2,1313,SAT,UNKNOWN,64.4003s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v16_c37.smt2
-unsat_v16_c37.smt2,1313,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v16_c37.smt2
-sat_v19_c26.smt2,1410,SAT,UNKNOWN,42.4073s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v19_c26.smt2
-unsat_v19_c26.smt2,1410,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v19_c26.smt2
-sat_v26_c113.smt2,4787,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v26_c113.smt2
-unsat_v26_c113.smt2,4787,UNSAT,UNKNOWN,460.5818s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v26_c113.smt2
-sat_v27_c39.smt2,2792,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v27_c39.smt2
-unsat_v27_c39.smt2,2792,UNSAT,UNKNOWN,661.2601s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v27_c39.smt2
-sat_v34_c77.smt2,5367,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v34_c77.smt2
-unsat_v34_c77.smt2,5367,UNSAT,UNKNOWN,787.0271s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v34_c77.smt2
-sat_v35_c81.smt2,5740,SAT,UNKNOWN,275.8512s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v35_c81.smt2
-unsat_v35_c81.smt2,5740,UNSAT,UNKNOWN,55.9924s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v35_c81.smt2
-sat_v40_c66.smt2,6280,SAT,UNKNOWN,59.5848s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v40_c66.smt2
-unsat_v40_c66.smt2,6280,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v40_c66.smt2
-sat_v45_c118.smt2,9986,SAT,UNKNOWN,861.3381s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v45_c118.smt2
-unsat_v45_c118.smt2,9986,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v45_c118.smt2
-sat_v46_c218.smt2,15192,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v46_c218.smt2
-unsat_v46_c218.smt2,15192,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v46_c218.smt2
-sat_v48_c167.smt2,13415,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c167.smt2
-unsat_v48_c167.smt2,13415,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c167.smt2
-sat_v48_c233.smt2,16781,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c233.smt2
-unsat_v48_c233.smt2,16781,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c233.smt2
-sat_v50_c187.smt2,15213,SAT,UNKNOWN,757.7102s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v50_c187.smt2
-unsat_v50_c187.smt2,15213,UNSAT,UNKNOWN,792.9638s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v50_c187.smt2
-sat_v51_c253.smt2,19172,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v51_c253.smt2
-unsat_v51_c253.smt2,19172,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v51_c253.smt2
-sat_v52_c162.smt2,14632,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v52_c162.smt2
-unsat_v52_c162.smt2,14632,UNSAT,UNKNOWN,120.4647s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v52_c162.smt2
-sat_v55_c137.smt2,14328,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v55_c137.smt2
-unsat_v55_c137.smt2,14328,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v55_c137.smt2
-sat_v55_c225.smt2,19432,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v55_c225.smt2
-unsat_v55_c225.smt2,19432,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v55_c225.smt2
-sat_v57_c277.smt2,23462,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v57_c277.smt2
-unsat_v57_c277.smt2,23462,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v57_c277.smt2
-sat_v59_c64.smt2,11286,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v59_c64.smt2
-unsat_v59_c64.smt2,11286,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v59_c64.smt2
-sat_v59_c92.smt2,13022,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v59_c92.smt2
-unsat_v59_c92.smt2,13022,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v59_c92.smt2
-sat_v61_c228.smt2,22402,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v61_c228.smt2
-unsat_v61_c228.smt2,22402,UNSAT,UNKNOWN,594.1948s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v61_c228.smt2
-sat_v62_c73.smt2,12807,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v62_c73.smt2
-unsat_v62_c73.smt2,12807,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v62_c73.smt2
-sat_v65_c147.smt2,18838,SAT,UNKNOWN,897.5212s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v65_c147.smt2
-unsat_v65_c147.smt2,18838,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v65_c147.smt2
-sat_v69_c201.smt2,24410,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v69_c201.smt2
-unsat_v69_c201.smt2,24410,UNSAT,UNKNOWN,831.3486s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v69_c201.smt2
-sat_v69_c239.smt2,27146,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v69_c239.smt2
-unsat_v69_c239.smt2,27146,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v69_c239.smt2
-sat_v69_c313.smt2,32474,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v69_c313.smt2
-unsat_v69_c313.smt2,32474,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v69_c313.smt2
-sat_v73_c295.smt2,33518,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v73_c295.smt2
-unsat_v73_c295.smt2,33518,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v73_c295.smt2
-sat_v74_c255.smt2,31033,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v74_c255.smt2
-unsat_v74_c255.smt2,31033,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v74_c255.smt2
-sat_v76_c157.smt2,24413,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v76_c157.smt2
-unsat_v76_c157.smt2,24413,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v76_c157.smt2
-sat_v76_c172.smt2,25598,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v76_c172.smt2
-unsat_v76_c172.smt2,25598,UNSAT,UNKNOWN,839.1632s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v76_c172.smt2
-sat_v78_c364.smt2,42122,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v78_c364.smt2
-unsat_v78_c364.smt2,42122,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v78_c364.smt2
-sat_v79_c276.smt2,35590,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v79_c276.smt2
-unsat_v79_c276.smt2,35590,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v79_c276.smt2
-sat_v83_c201.smt2,31564,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v83_c201.smt2
-unsat_v83_c201.smt2,31564,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v83_c201.smt2
-sat_v84_c256.smt2,36890,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v84_c256.smt2
-unsat_v84_c256.smt2,36890,UNSAT,UNKNOWN,619.3927s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v84_c256.smt2
-sat_v85_c152.smt2,28338,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v85_c152.smt2
-unsat_v85_c152.smt2,28338,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v85_c152.smt2
-sat_v88_c154.smt2,30032,SAT,UNKNOWN,568.6298s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v88_c154.smt2
-unsat_v88_c154.smt2,30032,UNSAT,UNKNOWN,482.4412s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v88_c154.smt2
-sat_v88_c339.smt2,46867,SAT,UNKNOWN,456.5489s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v88_c339.smt2
-unsat_v88_c339.smt2,46867,UNSAT,UNKNOWN,800.8346s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v88_c339.smt2
-sat_v89_c366.smt2,50050,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v89_c366.smt2
-unsat_v89_c366.smt2,50050,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v89_c366.smt2
-sat_v91_c419.smt2,56496,SAT,UNKNOWN,511.7396s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v91_c419.smt2
-unsat_v91_c419.smt2,56496,UNSAT,UNKNOWN,865.861s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v91_c419.smt2
-sat_v92_c383.smt2,53867,SAT,UNKNOWN,521.4931s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v92_c383.smt2
-unsat_v92_c383.smt2,53867,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v92_c383.smt2
-sat_v95_c453.smt2,63016,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v95_c453.smt2
-unsat_v95_c453.smt2,63016,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v95_c453.smt2
-sat_v96_c286.smt2,47324,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v96_c286.smt2
-unsat_v96_c286.smt2,47324,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v96_c286.smt2
-sat_v98_c239.smt2,43937,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v98_c239.smt2
-unsat_v98_c239.smt2,43937,UNSAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v98_c239.smt2
-sat_v100_c103.smt2,31211,SAT,TIMEOUT,900s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v100_c103.smt2
-unsat_v100_c103.smt2,31211,UNSAT,UNKNOWN,473.0785s,cvc5 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v100_c103.smt2
+sat_v7_c22.smt2,362,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v7_c22.smt2
+unsat_v7_c22.smt2,362,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v7_c22.smt2
+sat_v8_c36.smt2,574,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v8_c36.smt2
+unsat_v8_c38.smt2,596,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v8_c38.smt2
+sat_v9_c14.smt2,386,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v9_c14.smt2
+unsat_v9_c14.smt2,386,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v9_c14.smt2
+sat_v10_c13.smt2,431,SAT,SAT,349.2094s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v10_c13.smt2
+unsat_v10_c13.smt2,431,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v10_c13.smt2
+sat_v10_c16.smt2,470,SAT,SAT,598.6273s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v10_c16.smt2
+unsat_v10_c16.smt2,470,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v10_c16.smt2
+sat_v12_c44.smt2,1022,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v12_c44.smt2
+unsat_v12_c45.smt2,1037,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v12_c45.smt2
+sat_v15_c66.smt2,1730,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v15_c66.smt2
+unsat_v15_c68.smt2,1766,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v15_c68.smt2
+sat_v16_c37.smt2,1313,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v16_c37.smt2
+unsat_v16_c37.smt2,1313,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v16_c37.smt2
+sat_v19_c26.smt2,1410,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v19_c26.smt2
+unsat_v19_c26.smt2,1410,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v19_c26.smt2
+sat_v26_c113.smt2,4787,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v26_c113.smt2
+unsat_v26_c113.smt2,4787,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v26_c113.smt2
+sat_v27_c39.smt2,2792,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v27_c39.smt2
+unsat_v27_c39.smt2,2792,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v27_c39.smt2
+sat_v34_c77.smt2,5367,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v34_c77.smt2
+unsat_v34_c77.smt2,5367,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v34_c77.smt2
+sat_v35_c81.smt2,5740,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v35_c81.smt2
+unsat_v35_c81.smt2,5740,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v35_c81.smt2
+sat_v40_c66.smt2,6280,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v40_c66.smt2
+unsat_v40_c66.smt2,6280,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v40_c66.smt2
+sat_v45_c118.smt2,9986,SAT,UNKNOWN,326.763s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v45_c118.smt2
+unsat_v45_c118.smt2,9986,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v45_c118.smt2
+sat_v46_c218.smt2,15192,SAT,UNKNOWN,804.9328s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v46_c218.smt2
+unsat_v46_c218.smt2,15192,UNSAT,UNKNOWN,636.4109s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v46_c218.smt2
+sat_v48_c167.smt2,13415,SAT,UNKNOWN,353.7377s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c167.smt2
+unsat_v48_c167.smt2,13415,UNSAT,UNKNOWN,317.1908s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c167.smt2
+sat_v48_c233.smt2,16781,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c233.smt2
+unsat_v48_c233.smt2,16781,UNSAT,UNKNOWN,507.5667s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c233.smt2
+sat_v50_c187.smt2,15213,SAT,UNKNOWN,671.6748s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v50_c187.smt2
+unsat_v50_c187.smt2,15213,UNSAT,UNKNOWN,392.6977s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v50_c187.smt2
+sat_v51_c253.smt2,19172,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v51_c253.smt2
+unsat_v51_c253.smt2,19172,UNSAT,UNKNOWN,644.9224s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v51_c253.smt2
+sat_v52_c162.smt2,14632,SAT,UNKNOWN,687.338s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v52_c162.smt2
+unsat_v52_c162.smt2,14632,UNSAT,UNKNOWN,651.3884s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v52_c162.smt2
+sat_v55_c137.smt2,14328,SAT,UNKNOWN,585.7808s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v55_c137.smt2
+unsat_v55_c137.smt2,14328,UNSAT,UNKNOWN,260.6384s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v55_c137.smt2
+sat_v55_c225.smt2,19432,SAT,UNKNOWN,791.087s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v55_c225.smt2
+unsat_v55_c225.smt2,19432,UNSAT,UNKNOWN,467.7619s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v55_c225.smt2
+sat_v57_c277.smt2,23462,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v57_c277.smt2
+unsat_v57_c277.smt2,23462,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v57_c277.smt2
+sat_v59_c64.smt2,11286,SAT,UNKNOWN,299.388s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v59_c64.smt2
+unsat_v59_c64.smt2,11286,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v59_c64.smt2
+sat_v59_c92.smt2,13022,SAT,UNKNOWN,273.4458s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v59_c92.smt2
+unsat_v59_c92.smt2,13022,UNSAT,UNKNOWN,269.0992s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v59_c92.smt2
+sat_v61_c228.smt2,22402,SAT,UNKNOWN,596.7696s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v61_c228.smt2
+unsat_v61_c228.smt2,22402,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v61_c228.smt2
+sat_v62_c73.smt2,12807,SAT,UNKNOWN,392.4751s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v62_c73.smt2
+unsat_v62_c73.smt2,12807,UNSAT,UNKNOWN,356.0033s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v62_c73.smt2
+sat_v65_c147.smt2,18838,SAT,UNKNOWN,899.5189s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v65_c147.smt2
+unsat_v65_c147.smt2,18838,UNSAT,UNKNOWN,807.1953s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v65_c147.smt2
+sat_v69_c201.smt2,24410,SAT,UNKNOWN,712.634s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v69_c201.smt2
+unsat_v69_c201.smt2,24410,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v69_c201.smt2
+sat_v69_c239.smt2,27146,SAT,UNKNOWN,451.5103s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v69_c239.smt2
+unsat_v69_c239.smt2,27146,UNSAT,UNKNOWN,791.1273s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v69_c239.smt2
+sat_v69_c313.smt2,32474,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v69_c313.smt2
+unsat_v69_c313.smt2,32474,UNSAT,UNKNOWN,717.5501s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v69_c313.smt2
+sat_v73_c295.smt2,33518,SAT,UNKNOWN,787.3919s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v73_c295.smt2
+unsat_v73_c295.smt2,33518,UNSAT,UNKNOWN,780.0303s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v73_c295.smt2
+sat_v74_c255.smt2,31033,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v74_c255.smt2
+unsat_v74_c255.smt2,31033,UNSAT,UNKNOWN,380.9446s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v74_c255.smt2
+sat_v76_c157.smt2,24413,SAT,UNKNOWN,727.9828s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v76_c157.smt2
+unsat_v76_c157.smt2,24413,UNSAT,UNKNOWN,758.2259s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v76_c157.smt2
+sat_v76_c172.smt2,25598,SAT,UNKNOWN,302.2421s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v76_c172.smt2
+unsat_v76_c172.smt2,25598,UNSAT,UNKNOWN,687.8529s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v76_c172.smt2
+sat_v78_c364.smt2,42122,SAT,UNKNOWN,424.9548s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v78_c364.smt2
+unsat_v78_c364.smt2,42122,UNSAT,UNKNOWN,667.0515s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v78_c364.smt2
+sat_v79_c276.smt2,35590,SAT,UNKNOWN,403.0692s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v79_c276.smt2
+unsat_v79_c276.smt2,35590,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v79_c276.smt2
+sat_v83_c201.smt2,31564,SAT,UNKNOWN,786.8761s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v83_c201.smt2
+unsat_v83_c201.smt2,31564,UNSAT,UNKNOWN,361.3585s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v83_c201.smt2
+sat_v84_c256.smt2,36890,SAT,UNKNOWN,783.1484s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v84_c256.smt2
+unsat_v84_c256.smt2,36890,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v84_c256.smt2
+sat_v85_c152.smt2,28338,SAT,UNKNOWN,340.2486s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v85_c152.smt2
+unsat_v85_c152.smt2,28338,UNSAT,UNKNOWN,322.3669s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v85_c152.smt2
+sat_v88_c154.smt2,30032,SAT,UNKNOWN,349.044s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v88_c154.smt2
+unsat_v88_c154.smt2,30032,UNSAT,UNKNOWN,341.9548s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v88_c154.smt2
+sat_v88_c339.smt2,46867,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v88_c339.smt2
+unsat_v88_c339.smt2,46867,UNSAT,UNKNOWN,584.9952s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v88_c339.smt2
+sat_v89_c366.smt2,50050,SAT,UNKNOWN,671.9915s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v89_c366.smt2
+unsat_v89_c366.smt2,50050,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v89_c366.smt2
+sat_v91_c419.smt2,56496,SAT,UNKNOWN,708.6136s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v91_c419.smt2
+unsat_v91_c419.smt2,56496,UNSAT,UNKNOWN,752.77s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v91_c419.smt2
+sat_v92_c383.smt2,53867,SAT,UNKNOWN,470.7145s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v92_c383.smt2
+unsat_v92_c383.smt2,53867,UNSAT,UNKNOWN,802.1349s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v92_c383.smt2
+sat_v95_c453.smt2,63016,SAT,UNKNOWN,540.6485s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v95_c453.smt2
+unsat_v95_c453.smt2,63016,UNSAT,UNKNOWN,692.8561s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v95_c453.smt2
+sat_v96_c286.smt2,47324,SAT,UNKNOWN,547.3679s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v96_c286.smt2
+unsat_v96_c286.smt2,47324,UNSAT,UNKNOWN,393.581s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v96_c286.smt2
+sat_v98_c239.smt2,43937,SAT,UNKNOWN,444.1073s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v98_c239.smt2
+unsat_v98_c239.smt2,43937,UNSAT,UNKNOWN,526.1588s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v98_c239.smt2
+sat_v100_c103.smt2,31211,SAT,UNKNOWN,330.2181s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v100_c103.smt2
+unsat_v100_c103.smt2,31211,UNSAT,UNKNOWN,306.0399s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v100_c103.smt2
