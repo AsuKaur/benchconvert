@@ -1,7 +1,7 @@
 Solver: cvc5
-"Version: This is cvc5 version 1.3.1-dev.16.e900af305 [git e900af305 on branch HEAD]
-compiled with GCC version 11.4.1 20231218 (Red Hat 11.4.1-3)
-on Aug  6 2025 15:07:24
+"Version: This is cvc5 version 1.3.1-dev.16.e900af3059 [git e900af3059 on branch main]
+compiled with GCC version Apple LLVM 17.0.0 (clang-1700.0.13.3)
+on Jul  7 2025 14:17:31
 
 Copyright (c) 2009-2025 by the authors and their institutional
 affiliations listed at https://cvc5.github.io/people.html
@@ -35,13 +35,13 @@ See the file COPYING (distributed with the source code, and with
 all binaries) for the full cvc5 copyright, licensing, and (lack of)
 warranty information."
 File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
-sat_v10_c33.smt2,691,SAT,TIMEOUT,900s,cvc5 smt/sat_v10_c33.smt2
-sat_v10_c45.smt2,847,SAT,TIMEOUT,900s,cvc5 smt/sat_v10_c45.smt2
-sat_v2_c1.smt2,27,SAT,SAT,0.9259s,cvc5 smt/sat_v2_c1.smt2
-sat_v4_c7.smt2,107,SAT,SAT,56.3511s,cvc5 smt/sat_v4_c7.smt2
-sat_v7_c30.smt2,442,SAT,TIMEOUT,900s,cvc5 smt/sat_v7_c30.smt2
-unsat_v10_c33.smt2,691,UNSAT,TIMEOUT,900s,cvc5 smt/unsat_v10_c33.smt2
-unsat_v10_c45.smt2,847,UNSAT,TIMEOUT,900s,cvc5 smt/unsat_v10_c45.smt2
-unsat_v2_c3.smt2,37,UNSAT,UNSAT,1.7855s,cvc5 smt/unsat_v2_c3.smt2
-unsat_v4_c8.smt2,114,UNSAT,UNSAT,254.1729s,cvc5 smt/unsat_v4_c8.smt2
-unsat_v7_c33.smt2,472,UNSAT,TIMEOUT,900s,cvc5 smt/unsat_v7_c33.smt2
+sat_v2_c1.smt2,27,SAT,SAT,0.3953s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v2_c1.smt2
+unsat_v2_c3.smt2,37,UNSAT,UNSAT,1.9811s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v2_c3.smt2
+sat_v4_c7.smt2,107,SAT,SAT,24.9929s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v4_c7.smt2
+unsat_v4_c8.smt2,114,UNSAT,UNSAT,48.2519s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v4_c8.smt2
+sat_v7_c30.smt2,442,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v7_c30.smt2
+unsat_v7_c33.smt2,472,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v7_c33.smt2
+sat_v10_c33.smt2,691,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v10_c33.smt2
+unsat_v10_c33.smt2,691,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v10_c33.smt2
+sat_v10_c45.smt2,847,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v10_c45.smt2
+unsat_v10_c45.smt2,847,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --fp-exp --fp-lazy-wb --stats --verbosity=2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v10_c45.smt2

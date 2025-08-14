@@ -1,13 +1,13 @@
 Solver: z3
-Version: Z3 version 4.15.1 - 64 bit
+Version: Z3 version 4.15.2 - 64 bit
 File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
-sat_v10_c33.smt2,691,SAT,TIMEOUT,900s,z3 smt/sat_v10_c33.smt2
-sat_v10_c45.smt2,847,SAT,TIMEOUT,900s,z3 smt/sat_v10_c45.smt2
-sat_v2_c1.smt2,27,SAT,SAT,1.9946s,z3 smt/sat_v2_c1.smt2
-sat_v4_c7.smt2,107,SAT,SAT,139.7905s,z3 smt/sat_v4_c7.smt2
-sat_v7_c30.smt2,442,SAT,TIMEOUT,900s,z3 smt/sat_v7_c30.smt2
-unsat_v10_c33.smt2,691,UNSAT,TIMEOUT,900s,z3 smt/unsat_v10_c33.smt2
-unsat_v10_c45.smt2,847,UNSAT,UNKNOWN,286.5907s,z3 smt/unsat_v10_c45.smt2
-unsat_v2_c3.smt2,37,UNSAT,UNSAT,4.6599s,z3 smt/unsat_v2_c3.smt2
-unsat_v4_c8.smt2,114,UNSAT,TIMEOUT,900s,z3 smt/unsat_v4_c8.smt2
-unsat_v7_c33.smt2,472,UNSAT,TIMEOUT,900s,z3 smt/unsat_v7_c33.smt2
+sat_v2_c1.smt2,27,SAT,SAT,0.5156s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v2_c1.smt2 memory_max_size=8589934592 timeout=900000
+unsat_v2_c3.smt2,37,UNSAT,UNSAT,1.3961s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v2_c3.smt2 memory_max_size=8589934592 timeout=900000
+sat_v4_c7.smt2,107,SAT,SAT,7.8723s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v4_c7.smt2 memory_max_size=8589934592 timeout=900000
+unsat_v4_c8.smt2,114,UNSAT,UNSAT,822.1757s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v4_c8.smt2 memory_max_size=8589934592 timeout=900000
+sat_v7_c30.smt2,442,SAT,TIMEOUT,900s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v7_c30.smt2 memory_max_size=8589934592 timeout=900000
+unsat_v7_c33.smt2,472,UNSAT,TIMEOUT,900s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v7_c33.smt2 memory_max_size=8589934592 timeout=900000
+sat_v10_c33.smt2,691,SAT,TIMEOUT,900s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v10_c33.smt2 memory_max_size=8589934592 timeout=900000
+unsat_v10_c33.smt2,691,UNSAT,TIMEOUT,900s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v10_c33.smt2 memory_max_size=8589934592 timeout=900000
+sat_v10_c45.smt2,847,SAT,TIMEOUT,900s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/sat_v10_c45.smt2 memory_max_size=8589934592 timeout=900000
+unsat_v10_c45.smt2,847,UNSAT,TIMEOUT,900s,z3 -smt2 /Users/asukaur/Study/Dissertation/Benchmarking/Benchmark Convertor/benchconvert/smt/unsat_v10_c45.smt2 memory_max_size=8589934592 timeout=900000
