@@ -6,7 +6,7 @@
 #SBATCH --partition=multicore
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
+#SBATCH --mem=64G
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=asu.kaur@postgrad.manchester.ac.uk
 

@@ -53,9 +53,9 @@ def run_solver_on_smt_files(solver):
         param_count = count_parameters_smt(smt_path) 
 
         if solver == "z3":
-            cmd = [solver, "-smt2", str(smt_path), "memory_max_size=8589934592", f"timeout={TIMEOUT*1000}"]
+            cmd = [solver, "-smt2", str(smt_path), "-memory:32768", f"-T:{TIMEOUT}"]
         elif solver == "cvc5":
-            cmd = [solver, f"--tlimit-per={TIMEOUT*1000}", "--fp-exp", "--fp-lazy-wb", "--stats", "--verbosity=2", str(smt_path)]
+            cmd = [solver, f"--tlimit-per={TIMEOUT*1000}", "--rlimit-per=100000000", "--stats", "--verbosity=2", str(smt_path)]
             # cmd = [solver, f"--tlimit-per={TIMEOUT*1000}", "--produce-models", "--fp-exp", "--fp-lazy-wb", "--stats", "--verbosity=2", str(smt_path)]
         elif solver == "bitwuzla":
             cmd = [solver, f"--time-limit={TIMEOUT * 1000}", "--sat-solver=cadical", "--nthreads=4", "--memory-limit=8192", str(smt_path)]
