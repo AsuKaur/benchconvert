@@ -49,9 +49,10 @@ def combine_files():
 
         combined_content = (
             f"// Combined source of '{network_filename}' from '{prop_filename}' and '{network_filename}'\n\n"
-            + prop_c_content
             + "\n\n// Network source \n\n"
             + network_c_content
+            + "\n\n// Property source \n\n"
+            + prop_c_content
         )
 
         # Write combined content
