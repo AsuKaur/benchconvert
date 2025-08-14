@@ -6,7 +6,7 @@
 #SBATCH --partition=gpuV      # GPU partition; confirm availability with sinfo
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4     # For multi-threaded parts of ABCrown
-#SBATCH --mem=64G             # Increased for FP/NN verification spikes
+#SBATCH --mem=46G             # Increased for FP/NN verification spikes
 #SBATCH --gres=gpu:1          # Request 1 GPU; adjust to 2+ if needed (e.g., for multi-GPU runs)
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=asu.kaur@postgrad.manchester.ac.uk
