@@ -3,10 +3,10 @@
 #SBATCH --output=smt_z3.out
 #SBATCH --error=smt_z3.err
 #SBATCH --time=26:00:00       # hh:mm:ss
-#SBATCH --partition=multicore
+#SBATCH --partition=himem     # Switch to himem for high memory and idle nodes
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=64G
+#SBATCH --cpus-per-task=8     # 8 cores for headroom (adjust to 4 if mem is low)
+#SBATCH --mem=64G             # Safe for himem; increase to 128G if needed
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=asu.kaur@postgrad.manchester.ac.uk
 
