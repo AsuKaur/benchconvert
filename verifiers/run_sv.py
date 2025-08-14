@@ -65,24 +65,24 @@ def run_verifier(verifier):
     "--nan-check",
     "--bounds-check",
     "--no-pointer-check",
-    "--signed-overflow-check"
+    "--signed-overflow-check",
     "--no-div-by-zero-check",
-    "--unwind 200",
+    # "--unwind 200",
     "--round-to-nearest",
     "--fpa",
     "--trace",
     "-Iextern"
     ] if  verifier == "cbmc" else [
-    f"--timeout {TIMEOUT}s", 
+    # f"--timeout {TIMEOUT}s", 
     "--floatbv", 
     "--nan-check", 
     "--overflow-check", 
     "--no-bounds-check",  
-    "--unwind 200",  
+    # "--unwind 200",  
     "--no-pointer-check", 
     "--no-div-by-zero-check", 
     "--k-induction",
-    "--no-slice"
+    "--no-slice",
     "-Iextern"
     ]
     for prop_file in sort_files_by_v_c(os.listdir(PROP_DIR)):
@@ -119,7 +119,7 @@ def run_verifier(verifier):
                 param_count,          
                 expected_result,
                 actual_result,
-                runtime if verifier != "cbmc" else f"{elapsed_time:.4f}s",
+                f"{elapsed_time:.4f}s",
                 solver,
                 " ".join(flags)
             ])
