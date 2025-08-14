@@ -1,0 +1,3 @@
+Verifier File,Total Instances,Expected SAT Count,Correct SAT Results,False SAT Results,Expected UNSAT Count,Correct UNSAT Results,False UNSAT Results
+vnn_result_abcrown.csv,100,50,0,50,50,8,42
+vnn_result_marabou.csv,100,50,50,0,50,0,50
