@@ -24,9 +24,15 @@ RESULT_COLORS = {
 # Shape mapping for different files/verifiers in comparison plot
 FILE_SHAPES = ['o', 's', '^', 'D', 'v', '<', '>']
 
-def setup_directories(verifier_type):
+# List of all verifier types for combined mode
+ALL_VERIFIER_TYPES = ['smt', 'sv', 'vnn']
+
+def setup_directories(verifier_type=None):
     # Create the required directory structure if it doesn't exist.
-    output_dir = GRAPHS_DIR / verifier_type
+    if verifier_type:
+        output_dir = GRAPHS_DIR / verifier_type
+    else:
+        output_dir = GRAPHS_DIR  # For combined, use root graphs dir
     output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir
 
@@ -37,7 +43,7 @@ def convert_runtime(runtime_str):
     except:
         return None
 
-def read_and_process_data(csv_files):
+def read_and_process_data(csv_files, verifier_type=None):
     # Read and process data from CSV files.
     data_dict = {}
     for csv_file in csv_files:
@@ -46,6 +52,8 @@ def read_and_process_data(csv_files):
             df = pd.read_csv(csv_path, skiprows=2)  # Skip Solver and Version headers
             df['RuntimeSeconds'] = df['Runtime'].apply(convert_runtime)
             df['Color'] = df['Actual Result'].map(RESULT_COLORS)
+            if verifier_type:
+                df['VerifierType'] = verifier_type
             data_dict[csv_file] = df
         except Exception as e:
             print(f"Error reading {csv_file}: {e}")
@@ -135,7 +143,7 @@ def plot_expected_results(data_dict, output_dir, verifier_type, expected_result)
             plt.scatter(
                 s['Parameter Count'],
                 s['RuntimeSeconds'],
-                c=s['Color'],
+                c=s['Color'].iloc[0],
                 label=actual_result,
                 edgecolors='black',
                 s=100
@@ -216,7 +224,77 @@ def plot_runtime_increase(data_dict, output_dir, verifier_type):
         plt.close()
         print(f"Saved cumulative runtime increase plot to {output_file}")
 
-def plot_verifier_results_with_extra(verifier_type):
+def plot_combined_results(output_dir):
+    # Combine data from all verifier types for cumulative line graph
+    all_data_dict = {}
+    for v_type in ALL_VERIFIER_TYPES:
+        csv_files = [f for f in os.listdir(RESULTS_DIR) if f.startswith(v_type) and f.endswith('.csv')]
+        if not csv_files:
+            print(f"No CSV files found for {v_type}")
+            continue
+        type_data_dict = read_and_process_data(csv_files, verifier_type=v_type)
+        all_data_dict.update(type_data_dict)
+    
+    if not all_data_dict:
+        print("No data available for combined plot.")
+        return
+    
+    # Generate combined line graph
+    plt.figure(figsize=(14, 10))
+    colors = plt.cm.tab10(np.linspace(0, 1, len(all_data_dict)))  # Unique colors for each line
+    color_idx = 0
+    
+    for file_name, df in all_data_dict.items():
+        # Extract verifier name from filename pattern <verifiertype>_*result_*<verifier>.csv
+        # Assuming format like smt_result_z3.csv -> label 'z3'
+        if '_result_' in file_name:
+            verifier_label = file_name.split('_result_')[1].replace('.csv', '')
+        else:
+            verifier_label = file_name.replace('.csv', '')  # Fallback
+        
+        # Sort by Parameter Count and drop NaN runtimes
+        sorted_df = df.dropna(subset=['RuntimeSeconds']).sort_values(by='Parameter Count').reset_index(drop=True)
+        if sorted_df.empty:
+            continue
+        
+        # Add index and cumulative runtime
+        sorted_df['Index'] = sorted_df.index
+        sorted_df['CumulativeRuntime'] = sorted_df['RuntimeSeconds'].cumsum()
+        
+        x = sorted_df['Index'].values
+        y = sorted_df['CumulativeRuntime'].values
+        
+        if len(sorted_df) < 2:
+            plt.plot(x, y, marker='o', linestyle='None', color=colors[color_idx], label=verifier_label)
+        else:
+            # Create smooth spline
+            x_smooth = np.linspace(x.min(), x.max(), 300)
+            spline = make_interp_spline(x, y, k=3)  # Cubic spline
+            y_smooth = spline(x_smooth)
+            plt.plot(x_smooth, y_smooth, '-', color=colors[color_idx], label=verifier_label)
+            plt.plot(x, y, 'o', color=colors[color_idx])  # Original points
+        
+        color_idx += 1
+    
+    plt.title('Combined Cumulative Runtime Across All Verifiers (smt, sv, vnn)')
+    plt.xlabel('Instance Index (Sorted by Parameter Count per Verifier)')
+    plt.ylabel('Cumulative Runtime (seconds)')
+    plt.legend(title='Verifier', bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True)
+    plt.tight_layout()
+    output_file = output_dir / 'all_verifiers_combined_cumulative_plot.png'
+    plt.savefig(output_file)
+    plt.close()
+    print(f"Saved combined cumulative plot to {output_file}")
+
+def plot_verifier_results_with_extra(verifier_type, combined=False):
+    if combined:
+        output_dir = setup_directories()  # Use root graphs dir for combined
+        print("Generating combined results plot across all verifiers (smt, sv, vnn)")
+        plot_combined_results(output_dir)
+        return  # Skip other operations in combined mode
+    
+    # Single verifier mode
     csv_files = [f for f in os.listdir(RESULTS_DIR) if f.startswith(verifier_type) and f.endswith('.csv')]
     if not csv_files:
         print(f'No CSV files found for verifier type: {verifier_type}')
@@ -248,7 +326,8 @@ def plot_verifier_results_with_extra(verifier_type):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Plot verifier results')
     parser.add_argument('--verifier', type=str, default='smt', 
-                        help='Verifier type prefix for CSV files')
+                        help='Verifier type prefix for CSV files (ignored in --combined mode)')
+    parser.add_argument('--combined', action='store_true', 
+                        help='Generate combined graph across all verifiers (smt, sv, vnn)')
     args = parser.parse_args()
-    VERIFIER_TYPE = args.verifier
-    plot_verifier_results_with_extra(VERIFIER_TYPE)
+    plot_verifier_results_with_extra(args.verifier, combined=args.combined)
