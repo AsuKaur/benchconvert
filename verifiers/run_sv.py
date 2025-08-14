@@ -18,6 +18,7 @@ from helpers.parameter_count import count_parameters_c
 RESULT_DIR = ROOT_DIR / "results"
 PROP_DIR = ROOT_DIR / "c_prop"
 NET_DIR = ROOT_DIR / "c_network"
+EXTERN_DIR = ROOT_DIR / "extern"
 TIMEOUT = 900
 
 def get_verifier_version(verifier):
@@ -71,7 +72,7 @@ def run_verifier(verifier):
     "--round-to-nearest",
     "--fpa",
     "--trace",
-    "-Iextern"
+    f"-I{EXTERN_DIR}"
     ] if  verifier == "cbmc" else [
     # f"--timeout {TIMEOUT}s", 
     "--floatbv", 
@@ -83,7 +84,7 @@ def run_verifier(verifier):
     "--no-div-by-zero-check", 
     "--k-induction",
     "--no-slice",
-    "-Iextern"
+    f"-I{EXTERN_DIR}"
     ]
     for prop_file in sort_files_by_v_c(os.listdir(PROP_DIR)):
         if not prop_file.endswith(".c"):
@@ -110,6 +111,7 @@ def run_verifier(verifier):
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
             elapsed_time = time.time() - start_time
             output = result.stdout + result.stderr
+            print("Output:\n", output)
             actual_result, runtime, solver = parse_verifier_output(output)
 
             expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
