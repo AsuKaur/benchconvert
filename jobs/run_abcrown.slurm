@@ -3,10 +3,11 @@
 #SBATCH --output=vnn_abcrown.out
 #SBATCH --error=vnn_abcrown.err
 #SBATCH --time=26:00:00       # hh:mm:ss
-#SBATCH --partition=gpuV  # For GPU if needed; else himem
+#SBATCH --partition=gpuV      # GPU partition; confirm availability with sinfo
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=64G
+#SBATCH --cpus-per-task=4     # For multi-threaded parts of ABCrown
+#SBATCH --mem=64G             # Increased for FP/NN verification spikes
+#SBATCH --gres=gpu:1          # Request 1 GPU; adjust to 2+ if needed (e.g., for multi-GPU runs)
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=asu.kaur@postgrad.manchester.ac.uk
 
