@@ -43,6 +43,17 @@ def convert_runtime(runtime_str):
     except:
         return None
 
+def get_verifier_name(filename: str) -> str:
+    prefixes = ['vnn_result_', 'sv_result_', 'smt_result_']
+    for prefix in prefixes:
+        if filename.startswith(prefix):
+            name_with_extension = filename[len(prefix):]
+            # Remove file extension if present
+            name = name_with_extension.split('.')[0]
+            return name
+    return filename  # Fallback if no prefix matched
+
+
 def read_and_process_data(csv_files, verifier_type=None):
     # Read and process data from CSV files.
     data_dict = {}
@@ -82,12 +93,12 @@ def generate_individual_plots(data_dict, output_dir, verifier_type):
                     fontsize=8,
                     ha='right'
                 )
-        plt.title(f'Verifier Results: Parameter Count vs Runtime for {file_name}')
+        plt.title(f'Parameter Count vs Runtime for {get_verifier_name(file_name)}')
         plt.xlabel('Parameter Count')
         plt.ylabel('Runtime (seconds)')
         plt.legend(title='Actual Result')
         plt.grid(True)
-        output_file = output_dir / f"{verifier_type}_{file_name}_plot.png"
+        output_file = output_dir / f"{verifier_type}_{get_verifier_name(file_name)}_plot.png"
         plt.savefig(output_file)
         plt.close()
         print(f"Saved individual plot to {output_file}")
@@ -104,7 +115,7 @@ def generate_comparison_plot(data_dict, output_dir, verifier_type):
                 subset['Parameter Count'],
                 subset['RuntimeSeconds'],
                 c=subset['Color'].iloc[0],
-                label=f'{file_name} - {result}',
+                label=f'{get_verifier_name(file_name)} - {result}',
                 marker=marker,
                 edgecolors='black',
                 s=100
@@ -130,6 +141,7 @@ def generate_comparison_plot(data_dict, output_dir, verifier_type):
     plt.close()
     print(f"Saved comparison plot to {output_file}")
 
+    
 def plot_expected_results(data_dict, output_dir, verifier_type, expected_result):
     # Plot graphs for expected SAT or expected UNSAT
     for file_name, df in data_dict.items():
@@ -148,14 +160,12 @@ def plot_expected_results(data_dict, output_dir, verifier_type, expected_result)
                 edgecolors='black',
                 s=100
             )
-            for i, row in s.iterrows():
-                plt.text(row['Parameter Count'], row['RuntimeSeconds'], row['Actual Result'], fontsize=8, ha='right')
         plt.title(f'{verifier_type.upper()} - Expected {expected_result} Results with Actual Results')
         plt.xlabel('Parameter Count')
         plt.ylabel('Runtime (seconds)')
         plt.legend(title='Actual Result')
         plt.grid(True)
-        output_file = output_dir / f"{verifier_type}_{file_name}_expected_{expected_result.lower()}_plot.png"
+        output_file = output_dir / f"{verifier_type}_{get_verifier_name(file_name)}_expected_{expected_result.lower()}_plot.png"
         plt.savefig(output_file)
         plt.close()
         print(f"Saved expected {expected_result} plot to {output_file}")
@@ -214,12 +224,12 @@ def plot_runtime_increase(data_dict, output_dir, verifier_type):
             plt.plot(x, y, 'o', label='Original Data')  # Original points
             plt.plot(x_smooth, y_smooth, '-', label='Smoothed Curve')  # Smoothed line
         
-        plt.title(f'{verifier_type.upper()} - Cumulative Runtime Increase per Instance Index - {file_name}')
+        plt.title(f'{verifier_type.upper()} - Cumulative Runtime Increase per Instance Index - {get_verifier_name(file_name)}')
         plt.xlabel('Instance Index (Sorted by Parameter Count)')
         plt.ylabel('Cumulative Runtime (seconds)')
         plt.legend()
         plt.grid(True)
-        output_file = output_dir / f'{verifier_type}_{file_name}_runtime_increase.png'
+        output_file = output_dir / f'{verifier_type}_{get_verifier_name(file_name)}_runtime_increase.png'
         plt.savefig(output_file)
         plt.close()
         print(f"Saved cumulative runtime increase plot to {output_file}")
@@ -282,7 +292,7 @@ def plot_combined_results(output_dir):
     plt.legend(title='Verifier', bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True)
     plt.tight_layout()
-    output_file = output_dir / 'all_verifiers_combined_cumulative_plot.png'
+    output_file = output_dir / 'combined_cumulative_plot.png'
     plt.savefig(output_file)
     plt.close()
     print(f"Saved combined cumulative plot to {output_file}")
