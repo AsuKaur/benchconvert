@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=smt_bitwuzla_3
-#SBATCH --output=smt_bitwuzla.out
-#SBATCH --error=smt_bitwuzla.err
+#SBATCH --output=smt_bitwuzla_3.out
+#SBATCH --error=smt_bitwuzla_3.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=himem     # Switch to himem for high memory and idle nodes
 #SBATCH --ntasks=1

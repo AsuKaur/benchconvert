@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=smt_z3_10
-#SBATCH --output=smt_z3.out
-#SBATCH --error=smt_z3.err
+#SBATCH --output=smt_z3_10.out
+#SBATCH --error=smt_z3_10.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=himem     # Switch to himem for high memory and idle nodes
 #SBATCH --ntasks=1

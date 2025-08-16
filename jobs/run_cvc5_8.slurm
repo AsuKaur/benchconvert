@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=smt_cvc5_8
-#SBATCH --output=smt_cvc5.out
-#SBATCH --error=smt_cvc5.err
+#SBATCH --output=smt_cvc5_8.out
+#SBATCH --error=smt_cvc5_8.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=himem     # Switch to himem for high memory and idle nodes
 #SBATCH --ntasks=1

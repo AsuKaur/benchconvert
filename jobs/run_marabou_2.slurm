@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=vnn_marabou_2
-#SBATCH --output=vnn_marabou.out
-#SBATCH --error=vnn_marabou.err
+#SBATCH --output=vnn_marabou_2.out
+#SBATCH --error=vnn_marabou_2.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=himem  # For higher memory needs
 #SBATCH --ntasks=1

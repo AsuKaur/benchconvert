@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=vnn_abcrown_2
-#SBATCH --output=vnn_abcrown.out
-#SBATCH --error=vnn_abcrown.err
+#SBATCH --output=vnn_abcrown_2.out
+#SBATCH --error=vnn_abcrown_2.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=gpuV      # GPU partition; confirm availability with sinfo
 #SBATCH --ntasks=1
