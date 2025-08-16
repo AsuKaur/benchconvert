@@ -7,30 +7,35 @@ import onnx
 import sys
 from pathlib import Path
 
+
 # Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent
 sys.path.insert(0, str(ROOT_DIR))
 
+
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
 from helpers.parameter_count import count_parameters_onnx
+
 
 VERIFIER = "abcrown"
 ONNX_DIR = ROOT_DIR / "onnx"
 VNNLIB_DIR = ROOT_DIR / "vnnlib"
 RESULT_DIR = ROOT_DIR / "results"
-CSV_FILE = RESULT_DIR / f"vnn_result_{VERIFIER}.csv"
 TIMEOUT = 900
+
 
 # ABCROWN_PY = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 # VENV_PYTHON = "/Users/asukaur/myenv311/bin/python"
 # YAML_TEMPLATE = "/Users/asukaur/Softwares/AlphaBetaCrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
 YAML_TEMPLATE = ROOT_DIR / "extern" / "abcrown.yaml"
 
+
 ABCROWN_PY = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/abcrown.py"
 VENV_PYTHON = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/envs/alpha-beta-crown/bin/python"
 # YAML_TEMPLATE = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/abcrown/alpha-beta-CROWN/complete_verifier/exp_configs/tutorial_examples/onnx_with_one_vnnlib.yaml"
+
 
 def run_with_live_output(cmd, timeout):
     # Run cmd, stream stdout/stderr live, and return combined output string.
@@ -55,6 +60,7 @@ def run_with_live_output(cmd, timeout):
     end = time.time()
     return "".join(output_lines), round(end - start, 4)
 
+
 def get_expected_result(filename):
     filename = filename.lower()
     if "unsat" in filename:
@@ -63,9 +69,11 @@ def get_expected_result(filename):
         return "SAT"
     return "UNKNOWN"
 
+
 def parse_output(output):
     decision = "UNKNOWN"
     runtime = "N/A"
+
 
     for line in output.splitlines():
         l = line.lower()
@@ -89,23 +97,29 @@ def parse_output(output):
             if match:
                 runtime = f"{match.group(1)}s"
 
+
     return decision, runtime
+
 
 # Patch YAML file with correct onnx and vnnlib paths
 def make_temp_yaml(onnx_path, vnnlib_path):
     import yaml
 
+
     with open(YAML_TEMPLATE, "r") as f:
         cfg = yaml.safe_load(f)
+
 
     cfg["model"]["onnx_path"] = str(onnx_path)
     cfg["specification"]["vnnlib_path"] = str(vnnlib_path)
     cfg["bab"]["timeout"] = TIMEOUT
 
+
     tmpf = tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".yaml")
     yaml.dump(cfg, tmpf)
     tmpf.close()
     return tmpf.name
+
 
 
 def get_verifier_version():
@@ -118,27 +132,48 @@ def get_verifier_version():
     except Exception:
         return "Version info not available"
 
-def run_vnn_verifier():
+
+def run_vnn_verifier(chunk=None):
+    if chunk is None:
+        CSV_FILE = RESULT_DIR / f"vnn_result_{VERIFIER}.csv"
+    else:
+        CSV_FILE = RESULT_DIR / f"vnn_result_{VERIFIER}_chunk{chunk}.csv"
     results = []
 
-    onnx_files = sort_files_by_v_c([f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")])
+
+    all_files = [f for f in os.listdir(ONNX_DIR) if f.endswith(".onnx")]
+    sorted_files = sort_files_by_v_c(all_files)
+    
+    if chunk is None:
+        onnx_files = sorted_files
+    else:
+        start_idx = (chunk - 1) * 10
+        end_idx = chunk * 10
+        onnx_files = sorted_files[start_idx:end_idx]
+
 
     for onnx_file in onnx_files:
         base = os.path.splitext(onnx_file)[0]
         vnnlib_file = base + ".vnnlib"
 
+
         onnx_path = ONNX_DIR / onnx_file
         vnnlib_path = VNNLIB_DIR / vnnlib_file
+
 
         if not vnnlib_path.exists():
             print(f"Skipping {onnx_file}, matching VNNLIB file not found.")
             continue
 
+
         param_count = count_parameters_onnx(onnx_path)
+
 
         temp_yaml = make_temp_yaml(onnx_path, vnnlib_path)
 
+
         cmd = [VENV_PYTHON, ABCROWN_PY, "--config", temp_yaml]
+
 
         print(f"Running {VERIFIER} on: {onnx_file} + {vnnlib_file}")
         try:
@@ -147,14 +182,18 @@ def run_vnn_verifier():
             output = proc.stdout + proc.stderr
             # output, elapsed = run_with_live_output(cmd, TIMEOUT)
 
+
             end = time.time()
+
 
             decision, runtime_str = parse_output(output)
             # fallback to measured time if parsing fails
             if runtime_str == "N/A":
                 runtime_str = f"{round(end - start, 4)}s"
 
+
             expected = get_expected_result(base)
+
 
             results.append([
                 base,
@@ -165,6 +204,7 @@ def run_vnn_verifier():
                 " ".join(cmd)
             ])
 
+
         except subprocess.TimeoutExpired:
             print(f"Timeout: {onnx_file}")
             results.append([base, param_count, get_expected_result(base), "TIMEOUT", f"{TIMEOUT}s", " ".join(cmd)])
@@ -172,8 +212,10 @@ def run_vnn_verifier():
             print(f"Error running {onnx_file}: {e}")
             results.append([base, param_count, get_expected_result(base), f"ERROR: {e}", "N/A", " ".join(cmd)])
 
+
         finally:
             os.remove(temp_yaml)
+
 
     version_info = get_verifier_version()
     with open(CSV_FILE, mode="w", newline="") as f:
@@ -183,8 +225,26 @@ def run_vnn_verifier():
         writer.writerow(["File Name", "Parameter Count", "Expected Result", "Actual Result", "Runtime", "Command"])
         writer.writerows(results)
 
+
     print(f"\nSaved to {CSV_FILE}")
+
 
 if __name__ == "__main__":
     RESULT_DIR.mkdir(exist_ok=True)
-    run_vnn_verifier()
+    chunk = None
+    if len(sys.argv) == 2:
+        try:
+            chunk = int(sys.argv[1])
+            if chunk < 1 or chunk > 10:
+                raise ValueError
+        except ValueError:
+            print("chunk_number must be an integer from 1 to 10")
+            sys.exit(1)
+    elif len(sys.argv) > 2:
+        print("Usage: python run_abcrown.py [chunk_number]")
+        print("Example: python run_abcrown.py 1")
+        print("If chunk_number is provided, it must be an integer from 1 to 10")
+        print("If chunk_number is not provided, runs on all files")
+        sys.exit(1)
+    
+    run_vnn_verifier(chunk)

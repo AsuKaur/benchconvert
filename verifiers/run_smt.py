@@ -5,18 +5,22 @@ import time
 import sys
 from pathlib import Path
 
+
 # Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent
 sys.path.insert(0, str(ROOT_DIR))
 
+
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
 from helpers.parameter_count import count_parameters_smt
 
+
 SMT_FOLDER = ROOT_DIR / "smt"
 RESULT_DIR = ROOT_DIR / "results"
 TIMEOUT = 900
+
 
 
 def get_solver_version(solver):
@@ -26,12 +30,14 @@ def get_solver_version(solver):
     except Exception as e:
         return f"Could not retrieve version: {e}"
 
+
 def parse_solver_output(output):
     for line in output.strip().splitlines():
         line = line.strip().lower()
         if line in ["sat", "unsat", "unknown"]:
             return line.upper()
     return "UNKNOWN"
+
 
 def get_expected_result(filename):
     if "unsat" in filename.lower():
@@ -41,16 +47,31 @@ def get_expected_result(filename):
     return "UNKNOWN"
 
 
-def run_solver_on_smt_files(solver):
-    CSV_FILE = RESULT_DIR / ("smt_result_" + solver + ".csv")
+
+def run_solver_on_smt_files(solver, chunk=None):
+    if chunk is None:
+        CSV_FILE = RESULT_DIR / ("smt_result_" + solver + ".csv")
+    else:
+        CSV_FILE = RESULT_DIR / (f"smt_result_{solver}_chunk{chunk}.csv")
     
     results = []
 
-    smt_files = sort_files_by_v_c([f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")])
+
+    all_files = [f for f in os.listdir(SMT_FOLDER) if f.endswith(".smt2")]
+    sorted_files = sort_files_by_v_c(all_files)
+    
+    if chunk is None:
+        smt_files = sorted_files
+    else:
+        start_idx = (chunk - 1) * 10
+        end_idx = chunk * 10
+        smt_files = sorted_files[start_idx:end_idx]
+
 
     for smt_file in smt_files:
         smt_path = SMT_FOLDER / smt_file
         param_count = count_parameters_smt(smt_path) 
+
 
         if solver == "z3":
             cmd = [solver, "-smt2", str(smt_path), "-memory:32768", f"-T:{TIMEOUT}"]
@@ -61,7 +82,9 @@ def run_solver_on_smt_files(solver):
             cmd = [solver, f"--time-limit={TIMEOUT * 1000}", "--sat-solver=cadical", "--nthreads=4", "--memory-limit=8192", str(smt_path)]
             # cmd = [solver, f"--time-limit={TIMEOUT * 1000}", "--produce-models", "--sat-solver=cadical", "--nthreads=4", "--memory-limit=8192", str(smt_path)]
 
+
         # cmd = [solver, str(smt_path)]
+
 
         print(f"Running {solver} on: {smt_file}")
         try:
@@ -69,10 +92,12 @@ def run_solver_on_smt_files(solver):
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
             end = time.time()
 
+
             output = result.stdout + result.stderr
             actual_result = parse_solver_output(output)
             runtime = round(end - start, 4)
             expected = get_expected_result(smt_file)
+
 
             results.append([
                 smt_file,
@@ -82,6 +107,7 @@ def run_solver_on_smt_files(solver):
                 f"{runtime}s",
                 " ".join(cmd)
             ])
+
 
         except subprocess.TimeoutExpired:
             print(f"Timeout: {smt_file}")
@@ -104,6 +130,7 @@ def run_solver_on_smt_files(solver):
                 " ".join(cmd)
             ])
 
+
     solver_version = get_solver_version(solver)
     with open(CSV_FILE, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -117,14 +144,28 @@ def run_solver_on_smt_files(solver):
                          "Command"])
         writer.writerows(results)
 
+
     print(f"\nSaved to {CSV_FILE}")
+
 
 if __name__ == "__main__":
     RESULT_DIR.mkdir(exist_ok=True)
     if len(sys.argv) < 2:
-        print("Usage: python run_smt.py <solver_name>")
-        print("Example: python run_smt.py bitwuzla")
+        print("Usage: python run_smt.py <solver_name> [chunk_number]")
+        print("Example: python run_smt.py bitwuzla 1")
+        print("If chunk_number is provided, it must be an integer from 1 to 10")
+        print("If chunk_number is not provided, runs on all files")
         sys.exit(1)
     
     solver = sys.argv[1]
-    run_solver_on_smt_files(solver)
+    chunk = None
+    if len(sys.argv) == 3:
+        try:
+            chunk = int(sys.argv[2])
+            if chunk < 1 or chunk > 10:
+                raise ValueError
+        except ValueError:
+            print("chunk_number must be an integer from 1 to 10")
+            sys.exit(1)
+    
+    run_solver_on_smt_files(solver, chunk)

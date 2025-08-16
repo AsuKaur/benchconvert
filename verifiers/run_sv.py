@@ -6,20 +6,24 @@ import re
 import sys
 from pathlib import Path
 
+
 # Add parent directory to Python path to import from helpers
 SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent
 sys.path.insert(0, str(ROOT_DIR))
 
+
 # Import custom sorting function from helpers (now in root directory)
 from helpers.sort_files import sort_files_by_v_c
 from helpers.parameter_count import count_parameters_c
+
 
 RESULT_DIR = ROOT_DIR / "results"
 PROP_DIR = ROOT_DIR / "c_prop"
 NET_DIR = ROOT_DIR / "c_network"
 EXTERN_DIR = ROOT_DIR / "extern"
 TIMEOUT = 900
+
 
 def get_verifier_version(verifier):
     try:
@@ -29,11 +33,13 @@ def get_verifier_version(verifier):
     except Exception as e:
         return f"Could not retrieve version: {e}"
 
+
 def parse_verifier_output(output):
     result = "UNKNOWN"
     solver = "UNKNOWN"
     runtime = "UNKNOWN"
     bug_trace = ""
+
 
     for line in output.splitlines():
         line_lower = line.lower()
@@ -52,14 +58,31 @@ def parse_verifier_output(output):
         elif "bug found" in line_lower:
             bug_trace = line.strip()
 
+
     if result == "VERIFICATION FAILED (SAT)" and bug_trace:
         result += f" ({bug_trace})"
     return result, runtime, solver
 
 
-def run_verifier(verifier):
+
+def run_verifier(verifier, chunk=None):
+    if chunk is None:
+        output_csv = RESULT_DIR / ("sv_result_" + verifier + ".csv")
+    else:
+        output_csv = RESULT_DIR / (f"sv_result_{verifier}_chunk{chunk}.csv")
     results = []
-    output_csv = RESULT_DIR / ("sv_result_" + verifier + ".csv")
+
+
+    all_files = [f for f in os.listdir(PROP_DIR) if f.endswith(".c")]
+    sorted_files = sort_files_by_v_c(all_files)
+    
+    if chunk is None:
+        prop_files = sorted_files
+    else:
+        start_idx = (chunk - 1) * 10
+        end_idx = chunk * 10
+        prop_files = sorted_files[start_idx:end_idx]
+
 
     flags = [
     "--float-overflow-check",
@@ -86,25 +109,27 @@ def run_verifier(verifier):
     "--no-slice",
     f"-I{EXTERN_DIR}"
     ]
-    for prop_file in sort_files_by_v_c(os.listdir(PROP_DIR)):
-        if not prop_file.endswith(".c"):
-            continue
-
+    for prop_file in prop_files:
         base_name = prop_file.replace("prop_", "")
         net_file = base_name
 
+
         prop_path = PROP_DIR / prop_file
         net_path = NET_DIR / net_file
+
 
         if not net_path.exists():
             print(f"Skipping {prop_file}, network file not found.")
             continue
 
+
         param_count = count_parameters_c(net_path)
+
 
         cmd = [verifier, str(prop_path), "--include", str(net_path)] + flags
         print(f"Command: {' '.join(cmd)}")
         print(f"Running {verifier} on: {prop_file} + {net_file}")
+
 
         try:
             start_time = time.time()
@@ -114,7 +139,9 @@ def run_verifier(verifier):
             print("Output:\n", output)
             actual_result, runtime, solver = parse_verifier_output(output)
 
+
             expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
+
 
             results.append([
                 prop_file,
@@ -148,6 +175,7 @@ def run_verifier(verifier):
                 " ".join(flags)
             ])
 
+
     verifier_version = get_verifier_version(verifier)
     with open(output_csv, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -164,14 +192,28 @@ def run_verifier(verifier):
         ])
         writer.writerows(results)
 
+
     print(f"\nSaved to {output_csv}")
+
 
 if __name__ == "__main__":
     RESULT_DIR.mkdir(exist_ok=True)
     if len(sys.argv) < 2:
-        print("Usage: python run_sv.py <verifier_name>")
-        print("Example: python run_sv.py cbmc")
+        print("Usage: python run_sv.py <verifier_name> [chunk_number]")
+        print("Example: python run_sv.py cbmc 1")
+        print("If chunk_number is provided, it must be an integer from 1 to 10")
+        print("If chunk_number is not provided, runs on all files")
         sys.exit(1)
     
     verifier = sys.argv[1]
-    run_verifier(verifier)
+    chunk = None
+    if len(sys.argv) == 3:
+        try:
+            chunk = int(sys.argv[2])
+            if chunk < 1 or chunk > 10:
+                raise ValueError
+        except ValueError:
+            print("chunk_number must be an integer from 1 to 10")
+            sys.exit(1)
+    
+    run_verifier(verifier, chunk)
