@@ -1,0 +1,13 @@
+Solver: bitwuzla
+Version: 0.8.1-dev-HEAD@79229315
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
+sat_v27_c39.smt2,2792,SAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v27_c39.smt2
+unsat_v27_c39.smt2,2792,UNSAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v27_c39.smt2
+sat_v34_c77.smt2,5367,SAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v34_c77.smt2
+unsat_v34_c77.smt2,5367,UNSAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v34_c77.smt2
+sat_v35_c81.smt2,5740,SAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v35_c81.smt2
+unsat_v35_c81.smt2,5740,UNSAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v35_c81.smt2
+sat_v40_c66.smt2,6280,SAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v40_c66.smt2
+unsat_v40_c66.smt2,6280,UNSAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v40_c66.smt2
+sat_v45_c118.smt2,9986,SAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v45_c118.smt2
+unsat_v45_c118.smt2,9986,UNSAT,TIMEOUT,900s,bitwuzla --time-limit=900000 --sat-solver=cadical --nthreads=4 --memory-limit=8192 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v45_c118.smt2

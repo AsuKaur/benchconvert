@@ -1,0 +1,47 @@
+Solver: cvc5
+"Version: This is cvc5 version 1.3.1-dev.16.e900af305 [git e900af305 on branch HEAD]
+compiled with GCC version 11.4.1 20231218 (Red Hat 11.4.1-3)
+on Aug  6 2025 15:07:24
+
+Copyright (c) 2009-2025 by the authors and their institutional
+affiliations listed at https://cvc5.github.io/people.html
+
+cvc5 is open-source and is covered by the BSD license (modified).
+
+THIS SOFTWARE IS PROVIDED AS-IS, WITHOUT ANY WARRANTIES.
+USE AT YOUR OWN RISK.
+
+This version of cvc5 is linked against the following non-(L)GPL'ed
+third party libraries.
+
+  CaDiCaL - Simplified Satisfiability Solver
+  See https://github.com/arminbiere/cadical for copyright information.
+
+  SymFPU - The Symbolic Floating Point Unit
+  See https://github.com/martin-cs/symfpu/tree/CVC4 for copyright information.
+
+This version of cvc5 is linked against the following third party
+libraries covered by the LGPLv3 license.
+See licenses/lgpl-3.0.txt for more information.
+
+  GMP - Gnu Multi Precision Arithmetic Library
+  See http://gmplib.org for copyright information.
+
+  LibPoly polynomial library
+  See https://github.com/SRI-CSL/libpoly for copyright and
+  licensing information.
+
+See the file COPYING (distributed with the source code, and with
+all binaries) for the full cvc5 copyright, licensing, and (lack of)
+warranty information."
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
+sat_v12_c44.smt2,1022,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v12_c44.smt2
+unsat_v12_c45.smt2,1037,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v12_c45.smt2
+sat_v15_c66.smt2,1730,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v15_c66.smt2
+unsat_v15_c68.smt2,1766,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v15_c68.smt2
+sat_v16_c37.smt2,1313,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v16_c37.smt2
+unsat_v16_c37.smt2,1313,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v16_c37.smt2
+sat_v19_c26.smt2,1410,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v19_c26.smt2
+unsat_v19_c26.smt2,1410,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v19_c26.smt2
+sat_v26_c113.smt2,4787,SAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v26_c113.smt2
+unsat_v26_c113.smt2,4787,UNSAT,TIMEOUT,900s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v26_c113.smt2
