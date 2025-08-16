@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=smt_z3
+#SBATCH --job-name=smt_z3_9
 #SBATCH --output=smt_z3.out
 #SBATCH --error=smt_z3.err
 #SBATCH --time=26:00:00       # hh:mm:ss

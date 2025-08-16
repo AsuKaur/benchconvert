@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=smt_cvc5
+#SBATCH --job-name=smt_cvc5_7
 #SBATCH --output=smt_cvc5.out
 #SBATCH --error=smt_cvc5.err
 #SBATCH --time=26:00:00       # hh:mm:ss

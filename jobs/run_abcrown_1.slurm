@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=vnn_abcrown
+#SBATCH --job-name=vnn_abcrown_1
 #SBATCH --output=vnn_abcrown.out
 #SBATCH --error=vnn_abcrown.err
 #SBATCH --time=26:00:00       # hh:mm:ss

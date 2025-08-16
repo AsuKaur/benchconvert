@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=vnn_marabou
+#SBATCH --job-name=vnn_marabou_1
 #SBATCH --output=vnn_marabou.out
 #SBATCH --error=vnn_marabou.err
 #SBATCH --time=26:00:00       # hh:mm:ss

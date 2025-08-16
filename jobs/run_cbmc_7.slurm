@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=sv_cbmc
+#SBATCH --job-name=sv_cbmc_7
 #SBATCH --output=sv_cbmc.out
 #SBATCH --error=sv_cbmc.err
 #SBATCH --time=26:00:00       # hh:mm:ss

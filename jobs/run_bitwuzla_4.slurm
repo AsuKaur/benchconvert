@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=smt_bitwuzla
+#SBATCH --job-name=smt_bitwuzla_4
 #SBATCH --output=smt_bitwuzla.out
 #SBATCH --error=smt_bitwuzla.err
 #SBATCH --time=26:00:00       # hh:mm:ss
