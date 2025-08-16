@@ -1,0 +1,13 @@
+Solver: z3
+Version: Z3 version 4.15.1 - 64 bit
+File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
+sat_v46_c218.smt2,15192,SAT,UNKNOWN,228.4809s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v46_c218.smt2 -memory:32768 -T:900
+unsat_v46_c218.smt2,15192,UNSAT,UNKNOWN,226.1921s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v46_c218.smt2 -memory:32768 -T:900
+sat_v48_c167.smt2,13415,SAT,UNKNOWN,194.5685s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c167.smt2 -memory:32768 -T:900
+unsat_v48_c167.smt2,13415,UNSAT,UNKNOWN,194.8131s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c167.smt2 -memory:32768 -T:900
+sat_v48_c233.smt2,16781,SAT,UNKNOWN,258.4555s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c233.smt2 -memory:32768 -T:900
+unsat_v48_c233.smt2,16781,UNSAT,UNKNOWN,257.0572s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c233.smt2 -memory:32768 -T:900
+sat_v50_c187.smt2,15213,SAT,UNKNOWN,210.182s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v50_c187.smt2 -memory:32768 -T:900
+unsat_v50_c187.smt2,15213,UNSAT,UNKNOWN,208.13s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v50_c187.smt2 -memory:32768 -T:900
+sat_v51_c253.smt2,19172,SAT,UNKNOWN,236.7839s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v51_c253.smt2 -memory:32768 -T:900
+unsat_v51_c253.smt2,19172,UNSAT,UNKNOWN,293.6304s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v51_c253.smt2 -memory:32768 -T:900
