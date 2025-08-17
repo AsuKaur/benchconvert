@@ -1,0 +1,75 @@
+Job started at: Sun 17 Aug 00:39:51 BST 2025
+Found weight tensor_0_weight with 13832 parameters
+Found weight tensor_2_weight with 532 parameters
+Found bias tensor_0_bias with 266 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_sat_v52_c162.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/sat_v52_c162.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_sat_v52_c162.c + sat_v52_c162.c
+Timeout: prop_sat_v52_c162.c
+Found weight tensor_0_weight with 13832 parameters
+Found weight tensor_2_weight with 532 parameters
+Found bias tensor_0_bias with 266 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_unsat_v52_c162.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/unsat_v52_c162.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_unsat_v52_c162.c + unsat_v52_c162.c
+Timeout: prop_unsat_v52_c162.c
+Found weight tensor_0_weight with 13585 parameters
+Found weight tensor_2_weight with 494 parameters
+Found bias tensor_0_bias with 247 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_sat_v55_c137.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/sat_v55_c137.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_sat_v55_c137.c + sat_v55_c137.c
+Timeout: prop_sat_v55_c137.c
+Found weight tensor_0_weight with 13585 parameters
+Found weight tensor_2_weight with 494 parameters
+Found bias tensor_0_bias with 247 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_unsat_v55_c137.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/unsat_v55_c137.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_unsat_v55_c137.c + unsat_v55_c137.c
+Timeout: prop_unsat_v55_c137.c
+Found weight tensor_0_weight with 18425 parameters
+Found weight tensor_2_weight with 670 parameters
+Found bias tensor_0_bias with 335 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_sat_v55_c225.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/sat_v55_c225.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_sat_v55_c225.c + sat_v55_c225.c
+Timeout: prop_sat_v55_c225.c
+Found weight tensor_0_weight with 18425 parameters
+Found weight tensor_2_weight with 670 parameters
+Found bias tensor_0_bias with 335 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_unsat_v55_c225.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/unsat_v55_c225.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_unsat_v55_c225.c + unsat_v55_c225.c
+Timeout: prop_unsat_v55_c225.c
+Found weight tensor_0_weight with 22287 parameters
+Found weight tensor_2_weight with 782 parameters
+Found bias tensor_0_bias with 391 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_sat_v57_c277.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/sat_v57_c277.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_sat_v57_c277.c + sat_v57_c277.c
+Timeout: prop_sat_v57_c277.c
+Found weight tensor_0_weight with 22287 parameters
+Found weight tensor_2_weight with 782 parameters
+Found bias tensor_0_bias with 391 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_unsat_v57_c277.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/unsat_v57_c277.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_unsat_v57_c277.c + unsat_v57_c277.c
+Timeout: prop_unsat_v57_c277.c
+Found weight tensor_0_weight with 10738 parameters
+Found weight tensor_2_weight with 364 parameters
+Found bias tensor_0_bias with 182 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_sat_v59_c64.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/sat_v59_c64.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_sat_v59_c64.c + sat_v59_c64.c
+Timeout: prop_sat_v59_c64.c
+Found weight tensor_0_weight with 10738 parameters
+Found weight tensor_2_weight with 364 parameters
+Found bias tensor_0_bias with 182 parameters
+Found bias tensor_2_bias with 2 parameters
+Command: cbmc /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_prop/prop_unsat_v59_c64.c --include /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/c_network/unsat_v59_c64.c --float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -I/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/extern
+Running cbmc on: prop_unsat_v59_c64.c + unsat_v59_c64.c
+Timeout: prop_unsat_v59_c64.c
+
+Saved to /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/results/sv_result_cbmc_chunk5.csv
+Job ended at: Sun 17 Aug 03:09:59 BST 2025
+Total job runtime: 9008 seconds

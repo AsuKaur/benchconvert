@@ -9,5 +9,5 @@ sat_v16_c37.smt2,1313,SAT,TIMEOUT,900s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsc
 unsat_v16_c37.smt2,1313,UNSAT,TIMEOUT,900s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v16_c37.smt2 -memory:32768 -T:900
 sat_v19_c26.smt2,1410,SAT,TIMEOUT,900s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v19_c26.smt2 -memory:32768 -T:900
 unsat_v19_c26.smt2,1410,UNSAT,TIMEOUT,900s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v19_c26.smt2 -memory:32768 -T:900
-sat_v26_c113.smt2,4787,SAT,UNKNOWN,223.1891s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v26_c113.smt2 -memory:32768 -T:900
-unsat_v26_c113.smt2,4787,UNSAT,UNKNOWN,219.4489s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v26_c113.smt2 -memory:32768 -T:900
+sat_v26_c113.smt2,4787,SAT,UNKNOWN,220.198s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v26_c113.smt2 -memory:32768 -T:900
+unsat_v26_c113.smt2,4787,UNSAT,UNKNOWN,216.3885s,z3 -smt2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v26_c113.smt2 -memory:32768 -T:900

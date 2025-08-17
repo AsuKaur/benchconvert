@@ -35,13 +35,13 @@ See the file COPYING (distributed with the source code, and with
 all binaries) for the full cvc5 copyright, licensing, and (lack of)
 warranty information."
 File Name,Parameter Count,Expected Result,Actual Result,Runtime,Command
-sat_v46_c218.smt2,15192,SAT,UNKNOWN,443.432s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v46_c218.smt2
-unsat_v46_c218.smt2,15192,UNSAT,UNKNOWN,370.8453s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v46_c218.smt2
-sat_v48_c167.smt2,13415,SAT,UNKNOWN,351.4369s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c167.smt2
-unsat_v48_c167.smt2,13415,UNSAT,UNKNOWN,317.1934s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c167.smt2
-sat_v48_c233.smt2,16781,SAT,UNKNOWN,477.3868s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c233.smt2
-unsat_v48_c233.smt2,16781,UNSAT,UNKNOWN,427.7274s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c233.smt2
-sat_v50_c187.smt2,15213,SAT,UNKNOWN,433.0332s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v50_c187.smt2
-unsat_v50_c187.smt2,15213,UNSAT,UNKNOWN,369.3591s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v50_c187.smt2
-sat_v51_c253.smt2,19172,SAT,UNKNOWN,539.4701s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v51_c253.smt2
-unsat_v51_c253.smt2,19172,UNSAT,UNKNOWN,473.3644s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v51_c253.smt2
+sat_v46_c218.smt2,15192,SAT,UNKNOWN,322.4558s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v46_c218.smt2
+unsat_v46_c218.smt2,15192,UNSAT,UNKNOWN,262.4882s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v46_c218.smt2
+sat_v48_c167.smt2,13415,SAT,UNKNOWN,256.8168s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c167.smt2
+unsat_v48_c167.smt2,13415,UNSAT,UNKNOWN,230.6667s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c167.smt2
+sat_v48_c233.smt2,16781,SAT,UNKNOWN,345.0426s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v48_c233.smt2
+unsat_v48_c233.smt2,16781,UNSAT,UNKNOWN,314.01s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v48_c233.smt2
+sat_v50_c187.smt2,15213,SAT,UNKNOWN,313.3085s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v50_c187.smt2
+unsat_v50_c187.smt2,15213,UNSAT,UNKNOWN,259.8632s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v50_c187.smt2
+sat_v51_c253.smt2,19172,SAT,UNKNOWN,391.3511s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/sat_v51_c253.smt2
+unsat_v51_c253.smt2,19172,UNSAT,UNKNOWN,338.3838s,cvc5 --tlimit-per=900000 --rlimit-per=100000000 --stats --verbosity=2 /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/smt/unsat_v51_c253.smt2

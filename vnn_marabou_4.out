@@ -1,0 +1,20 @@
+Job started at: Sun 17 Aug 04:58:01 BST 2025
+Running Marabou on: sat_v46_c218.onnx + sat_v46_c218.vnnlib
+Running Marabou on: unsat_v46_c218.onnx + unsat_v46_c218.vnnlib
+Timeout: unsat_v46_c218.onnx
+Running Marabou on: sat_v48_c167.onnx + sat_v48_c167.vnnlib
+Running Marabou on: unsat_v48_c167.onnx + unsat_v48_c167.vnnlib
+Timeout: unsat_v48_c167.onnx
+Running Marabou on: sat_v48_c233.onnx + sat_v48_c233.vnnlib
+Running Marabou on: unsat_v48_c233.onnx + unsat_v48_c233.vnnlib
+Timeout: unsat_v48_c233.onnx
+Running Marabou on: sat_v50_c187.onnx + sat_v50_c187.vnnlib
+Running Marabou on: unsat_v50_c187.onnx + unsat_v50_c187.vnnlib
+Timeout: unsat_v50_c187.onnx
+Running Marabou on: sat_v51_c253.onnx + sat_v51_c253.vnnlib
+Running Marabou on: unsat_v51_c253.onnx + unsat_v51_c253.vnnlib
+Timeout: unsat_v51_c253.onnx
+
+Saved to /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/results/vnn_result_marabou_chunk4.csv
+Job ended at: Sun 17 Aug 06:13:05 BST 2025
+Total job runtime: 4504 seconds

@@ -1,0 +1,15 @@
+Job started at: Sun 17 Aug 06:45:55 BST 2025
+Running z3 on: sat_v85_c152.smt2
+Running z3 on: unsat_v85_c152.smt2
+Running z3 on: sat_v88_c154.smt2
+Running z3 on: unsat_v88_c154.smt2
+Running z3 on: sat_v88_c339.smt2
+Running z3 on: unsat_v88_c339.smt2
+Running z3 on: sat_v89_c366.smt2
+Running z3 on: unsat_v89_c366.smt2
+Running z3 on: sat_v91_c419.smt2
+Running z3 on: unsat_v91_c419.smt2
+
+Saved to /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/results/smt_result_z3_chunk9.csv
+Job ended at: Sun 17 Aug 07:17:31 BST 2025
+Total job runtime: 1896 seconds

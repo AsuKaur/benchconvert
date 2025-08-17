@@ -1,0 +1,20 @@
+Job started at: Sat 16 Aug 23:56:53 BST 2025
+Running abcrown on: sat_v7_c22.onnx + sat_v7_c22.vnnlib
+Timeout: sat_v7_c22.onnx
+Running abcrown on: unsat_v7_c22.onnx + unsat_v7_c22.vnnlib
+Running abcrown on: sat_v8_c36.onnx + sat_v8_c36.vnnlib
+Timeout: sat_v8_c36.onnx
+Running abcrown on: unsat_v8_c38.onnx + unsat_v8_c38.vnnlib
+Running abcrown on: sat_v9_c14.onnx + sat_v9_c14.vnnlib
+Timeout: sat_v9_c14.onnx
+Running abcrown on: unsat_v9_c14.onnx + unsat_v9_c14.vnnlib
+Running abcrown on: sat_v10_c13.onnx + sat_v10_c13.vnnlib
+Timeout: sat_v10_c13.onnx
+Running abcrown on: unsat_v10_c13.onnx + unsat_v10_c13.vnnlib
+Running abcrown on: sat_v10_c16.onnx + sat_v10_c16.vnnlib
+Timeout: sat_v10_c16.onnx
+Running abcrown on: unsat_v10_c16.onnx + unsat_v10_c16.vnnlib
+
+Saved to /mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/asukaur/benchmark/benchconvert/results/vnn_result_abcrown_chunk1.csv
+Job ended at: Sun 17 Aug 01:13:12 BST 2025
+Total job runtime: 4579 seconds
