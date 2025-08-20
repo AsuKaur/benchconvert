@@ -19,7 +19,9 @@ RESULT_DIR = ROOT_DIR / "results"
 PROP_DIR = ROOT_DIR / "c_prop"
 NET_DIR = ROOT_DIR / "c_network"
 EXTERN_DIR = ROOT_DIR / "extern"
+PREPROC_FLOAT_DIR = ROOT_DIR / "c_preprocessed_float32"  
 TIMEOUT = 900
+ULTIMATE_TOOLCHAIN_PATH = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/ultimate/ultimate-automizer/UAutomizer-linux/config/AutomizerReach.xml"  # Toolchain path as variable
 
 def get_verifier_version(verifier):
     try:
@@ -29,12 +31,14 @@ def get_verifier_version(verifier):
     except Exception as e:
         return f"Could not retrieve version: {e}"
 
-def parse_verifier_output(output):
+def parse_verifier_output(output, verifier):
+    if verifier.lower() == "ultimate":
+        return parse_ultimate_output(output)
+    # Original parsing for other verifiers
     result = "UNKNOWN"
     solver = "UNKNOWN"
     runtime = "UNKNOWN"
     bug_trace = ""
-
     for line in output.splitlines():
         line_lower = line.lower()
         if "verification failed" in line_lower:
@@ -51,104 +55,176 @@ def parse_verifier_output(output):
                 solver = parts[1].strip()
         elif "bug found" in line_lower:
             bug_trace = line.strip()
-
     if result == "VERIFICATION FAILED (SAT)" and bug_trace:
         result += f" ({bug_trace})"
     return result, runtime, solver
 
+def parse_ultimate_output(output):
+    result = "UNKNOWN"
+    runtime = "UNKNOWN"
+    solver = "Ultimate"
+    for line in output.splitlines():
+        line_lower = line.lower()
+        if "result: ultimate could not prove your program" in line_lower:
+            if "timeout" in line_lower:
+                result = "TIMEOUT"
+            else:
+                result = "VERIFICATION FAILED (SAT)"
+        elif "verification successful" in line_lower or "true" in line_lower:
+            result = "VERIFICATION SUCCESSFUL (UNSAT)"
+        elif "verification failed" in line_lower or "false" in line_lower:
+            result = "VERIFICATION FAILED (SAT)"
+        # Extract runtime from statistics (example patterns; adjust based on actual output)
+        runtime_match = re.search(r'(\d+\.\d+)s', line)
+        if runtime_match:
+            runtime = runtime_match.group(1) + "s"
+    return result, runtime, solver
 
 def run_verifier(verifier):
     results = []
-    output_csv = RESULT_DIR / ("sv_result_" + verifier + ".csv")
+    output_csv = RESULT_DIR / ("sv_result_" + verifier.lower() + ".csv")
 
-    flags = [
-    "--float-overflow-check",
-    "--nan-check",
-    "--bounds-check",
-    "--no-pointer-check",
-    "--signed-overflow-check",
-    "--no-div-by-zero-check",
-    # "--unwind 200",
-    "--round-to-nearest",
-    "--fpa",
-    "--trace",
-    f"-I{EXTERN_DIR}"
-    ] if  verifier == "cbmc" else [
-    # f"--timeout {TIMEOUT}s", 
-    "--floatbv", 
-    "--nan-check", 
-    "--overflow-check", 
-    "--no-bounds-check",  
-    # "--unwind 200",  
-    "--no-pointer-check", 
-    "--no-div-by-zero-check", 
-    "--k-induction",
-    "--no-slice",
-    f"-I{EXTERN_DIR}"
-    ]
-    for prop_file in sort_files_by_v_c(os.listdir(PROP_DIR)):
-        if not prop_file.endswith(".c"):
-            continue
+    if verifier.lower() == "ultimate":
+        verifier_version = get_verifier_version(verifier)
+        file_list = sort_files_by_v_c(os.listdir(PREPROC_FLOAT_DIR))
+        for prop_file in file_list:
+            if not prop_file.endswith(".i"):
+                continue
+            prop_path = PREPROC_FLOAT_DIR / prop_file
+            # Assuming parameter count can be derived from corresponding network file
+            # e.g., if prop_file is "prop_v1_c1_unsat.i", base_name = "v1_c1_unsat.c" or adjust accordingly
+            base_name = prop_file.replace("prop_", "").replace(".i", ".c")
+            net_path = NET_DIR / base_name
+            param_count = count_parameters_c(net_path) if net_path.exists() else "N/A"
+            cmd = [
+                "Ultimate",
+                "--input", str(prop_path),
+                "--core.toolchain.timeout.in.seconds", str(TIMEOUT),
+                "--toolchain", ULTIMATE_TOOLCHAIN_PATH
+            ]
+            print(f"Command: {' '.join(cmd)}")
+            print(f"Running {verifier} on: {prop_file}")
+            try:
+                start_time = time.time()
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT + 10)  # Buffer for subprocess
+                elapsed_time = time.time() - start_time
+                output = result.stdout + result.stderr
+                print("Output:\n", output)
+                actual_result, runtime, solver = parse_verifier_output(output, verifier)
+                expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
+                results.append([
+                    prop_file,
+                    param_count,
+                    expected_result,
+                    actual_result,
+                    runtime if runtime != "UNKNOWN" else f"{elapsed_time:.4f}s",
+                    solver,
+                    " ".join(cmd)
+                ])
+            except subprocess.TimeoutExpired:
+                print(f"Timeout: {prop_file}")
+                results.append([
+                    prop_file,
+                    param_count,
+                    "UNSAT" if "unsat" in prop_file.lower() else "SAT",
+                    "TIMEOUT",
+                    f"{TIMEOUT}s",
+                    "Ultimate",
+                    " ".join(cmd)
+                ])
+            except Exception as e:
+                print(f"Error running {prop_file}: {e}")
+                results.append([
+                    prop_file,
+                    param_count,
+                    "UNSAT" if "unsat" in prop_file.lower() else "SAT",
+                    f"ERROR: {e}",
+                    "ERROR",
+                    "Ultimate",
+                    " ".join(cmd)
+                ])
+    else:
+        flags = [
+            "--float-overflow-check",
+            "--nan-check",
+            "--bounds-check",
+            "--no-pointer-check",
+            "--signed-overflow-check",
+            "--no-div-by-zero-check",
+            # "--unwind 200",
+            "--round-to-nearest",
+            "--fpa",
+            "--trace",
+            f"-I{EXTERN_DIR}"
+        ] if verifier == "cbmc" else [
+            # f"--timeout {TIMEOUT}s",
+            "--floatbv",
+            "--nan-check",
+            "--overflow-check",
+            "--no-bounds-check",
+            # "--unwind 200",
+            "--no-pointer-check",
+            "--no-div-by-zero-check",
+            "--k-induction",
+            "--no-slice",
+            f"-I{EXTERN_DIR}"
+        ]
+        file_list = sort_files_by_v_c(os.listdir(PROP_DIR))
+        for prop_file in file_list:
+            if not prop_file.endswith(".c"):
+                continue
+            base_name = prop_file.replace("prop_", "")
+            net_file = base_name
+            prop_path = PROP_DIR / prop_file
+            net_path = NET_DIR / net_file
+            if not net_path.exists():
+                print(f"Skipping {prop_file}, network file not found.")
+                continue
+            param_count = count_parameters_c(net_path)
+            cmd = [verifier, str(prop_path), "--include", str(net_path)] + flags
+            print(f"Command: {' '.join(cmd)}")
+            print(f"Running {verifier} on: {prop_file} + {net_file}")
+            try:
+                start_time = time.time()
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
+                elapsed_time = time.time() - start_time
+                output = result.stdout + result.stderr
+                print("Output:\n", output)
+                actual_result, runtime, solver = parse_verifier_output(output, verifier)
+                expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
+                results.append([
+                    prop_file,
+                    param_count,
+                    expected_result,
+                    actual_result,
+                    f"{elapsed_time:.4f}s",
+                    solver,
+                    " ".join(flags)
+                ])
+            except subprocess.TimeoutExpired:
+                print(f"Timeout: {prop_file}")
+                results.append([
+                    prop_file,
+                    param_count,
+                    "UNSAT" if "unsat" in prop_file.lower() else "SAT",
+                    "TIMEOUT",
+                    f"{TIMEOUT}s",
+                    "UNKNOWN",
+                    " ".join(flags)
+                ])
+            except Exception as e:
+                print(f"Error running {prop_file}: {e}")
+                results.append([
+                    prop_file,
+                    param_count,
+                    "UNSAT" if "unsat" in prop_file.lower() else "SAT",
+                    f"ERROR: {e}",
+                    "ERROR",
+                    "UNKNOWN",
+                    " ".join(flags)
+                ])
+        verifier_version = get_verifier_version(verifier)
 
-        base_name = prop_file.replace("prop_", "")
-        net_file = base_name
-
-        prop_path = PROP_DIR / prop_file
-        net_path = NET_DIR / net_file
-
-        if not net_path.exists():
-            print(f"Skipping {prop_file}, network file not found.")
-            continue
-
-        param_count = count_parameters_c(net_path)
-
-        cmd = [verifier, str(prop_path), "--include", str(net_path)] + flags
-        print(f"Command: {' '.join(cmd)}")
-        print(f"Running {verifier} on: {prop_file} + {net_file}")
-
-        try:
-            start_time = time.time()
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
-            elapsed_time = time.time() - start_time
-            output = result.stdout + result.stderr
-            print("Output:\n", output)
-            actual_result, runtime, solver = parse_verifier_output(output)
-
-            expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
-
-            results.append([
-                prop_file,
-                param_count,          
-                expected_result,
-                actual_result,
-                f"{elapsed_time:.4f}s",
-                solver,
-                " ".join(flags)
-            ])
-        except subprocess.TimeoutExpired:
-            print(f"Timeout: {prop_file}")
-            results.append([
-                prop_file,
-                param_count,
-                "UNSAT" if "unsat" in prop_file.lower() else "SAT",
-                "TIMEOUT",
-                f"{TIMEOUT}s",
-                "UNKNOWN",
-                " ".join(flags)
-            ])
-        except Exception as e:
-            print(f"Error running {prop_file}: {e}")
-            results.append([
-                prop_file,
-                param_count,
-                "UNSAT" if "unsat" in prop_file.lower() else "SAT",
-                f"ERROR: {e}",
-                "ERROR",
-                "UNKNOWN",
-                " ".join(flags)
-            ])
-
-    verifier_version = get_verifier_version(verifier)
     with open(output_csv, mode="w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([f"Verifier: {verifier}"])
@@ -160,18 +236,17 @@ def run_verifier(verifier):
             "Actual Result",
             "Runtime",
             "Solver Used",
-            "Flags Used"
+            "Flags/Command Used"
         ])
         writer.writerows(results)
-
     print(f"\nSaved to {output_csv}")
 
 if __name__ == "__main__":
     RESULT_DIR.mkdir(exist_ok=True)
     if len(sys.argv) < 2:
-        print("Usage: python run_sv.py <verifier_name>")
+        print("Usage: python run_sv.py <verifier>")
         print("Example: python run_sv.py cbmc")
+        print("Or: python run_sv.py Ultimate")
         sys.exit(1)
-    
     verifier = sys.argv[1]
     run_verifier(verifier)
