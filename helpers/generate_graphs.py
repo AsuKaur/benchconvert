@@ -13,12 +13,12 @@ GRAPHS_DIR = SCRIPT_DIR.parent / "graphs"
 
 # Color mapping for actual results
 RESULT_COLORS = {
-    'SAT': 'green',
-    'UNSAT': 'red',
-    'TIMEOUT': 'orange',
-    'UNKNOWN': 'blue',
-    'VERIFICATION FAILED (SAT)': 'green',
-    'VERIFICATION SUCCESSFUL (UNSAT)': 'red',
+    'SAT': 'yellowgreen',
+    'UNSAT': 'lightcoral',
+    'TIMEOUT': 'sandybrown',
+    'UNKNOWN': 'slateblue',
+    'VERIFICATION FAILED (SAT)': 'yellowgreen',
+    'VERIFICATION SUCCESSFUL (UNSAT)': 'lightcoral',
 }
 
 # Shape mapping for different files/verifiers in comparison plot
@@ -52,7 +52,6 @@ def get_verifier_name(filename: str) -> str:
             name = name_with_extension.split('.')[0]
             return name
     return filename  # Fallback if no prefix matched
-
 
 def read_and_process_data(csv_files, verifier_type=None):
     # Read and process data from CSV files.
@@ -141,7 +140,6 @@ def generate_comparison_plot(data_dict, output_dir, verifier_type):
     plt.close()
     print(f"Saved comparison plot to {output_file}")
 
-    
 def plot_expected_results(data_dict, output_dir, verifier_type, expected_result):
     # Plot graphs for expected SAT or expected UNSAT
     for file_name, df in data_dict.items():
@@ -202,16 +200,12 @@ def plot_runtime_increase(data_dict, output_dir, verifier_type):
         if sorted_df.empty:
             print(f"Skipping plot for {file_name} due to no valid runtime data.")
             continue
-        
         # Add index and cumulative runtime
         sorted_df['Index'] = sorted_df.index
         sorted_df['CumulativeRuntime'] = sorted_df['RuntimeSeconds'].cumsum()
-        
         x = sorted_df['Index'].values
         y = sorted_df['CumulativeRuntime'].values
-        
         plt.figure(figsize=(10, 6))
-        
         if len(sorted_df) < 2:
             print(f"Skipping smoothing for {file_name} due to insufficient data points.")
             # Just plot points if too few for spline
@@ -223,7 +217,6 @@ def plot_runtime_increase(data_dict, output_dir, verifier_type):
             y_smooth = spline(x_smooth)
             plt.plot(x, y, 'o', label='Original Data')  # Original points
             plt.plot(x_smooth, y_smooth, '-', label='Smoothed Curve')  # Smoothed line
-        
         plt.title(f'{verifier_type.upper()} - Cumulative Runtime Increase per Instance Index - {get_verifier_name(file_name)}')
         plt.xlabel('Instance Index (Sorted by Parameter Count)')
         plt.ylabel('Cumulative Runtime (seconds)')
@@ -244,36 +237,29 @@ def plot_combined_results(output_dir):
             continue
         type_data_dict = read_and_process_data(csv_files, verifier_type=v_type)
         all_data_dict.update(type_data_dict)
-    
     if not all_data_dict:
         print("No data available for combined plot.")
         return
-    
     # Generate combined line graph
     plt.figure(figsize=(14, 10))
     colors = plt.cm.tab10(np.linspace(0, 1, len(all_data_dict)))  # Unique colors for each line
     color_idx = 0
-    
     for file_name, df in all_data_dict.items():
-        # Extract verifier name from filename pattern <verifiertype>_*result_*<verifier>.csv
+        # Extract verifier name from filename pattern _*result_*.csv
         # Assuming format like smt_result_z3.csv -> label 'z3'
         if '_result_' in file_name:
             verifier_label = file_name.split('_result_')[1].replace('.csv', '')
         else:
             verifier_label = file_name.replace('.csv', '')  # Fallback
-        
         # Sort by Parameter Count and drop NaN runtimes
         sorted_df = df.dropna(subset=['RuntimeSeconds']).sort_values(by='Parameter Count').reset_index(drop=True)
         if sorted_df.empty:
             continue
-        
         # Add index and cumulative runtime
         sorted_df['Index'] = sorted_df.index
         sorted_df['CumulativeRuntime'] = sorted_df['RuntimeSeconds'].cumsum()
-        
         x = sorted_df['Index'].values
         y = sorted_df['CumulativeRuntime'].values
-        
         if len(sorted_df) < 2:
             plt.plot(x, y, marker='o', linestyle='None', color=colors[color_idx], label=verifier_label)
         else:
@@ -283,9 +269,7 @@ def plot_combined_results(output_dir):
             y_smooth = spline(x_smooth)
             plt.plot(x_smooth, y_smooth, '-', color=colors[color_idx], label=verifier_label)
             plt.plot(x, y, 'o', color=colors[color_idx])  # Original points
-        
         color_idx += 1
-    
     plt.title('Combined Cumulative Runtime Across All Verifiers (smt, sv, vnn)')
     plt.xlabel('Instance Index (Sorted by Parameter Count per Verifier)')
     plt.ylabel('Cumulative Runtime (seconds)')
@@ -297,47 +281,114 @@ def plot_combined_results(output_dir):
     plt.close()
     print(f"Saved combined cumulative plot to {output_file}")
 
+def generate_bar_graph(data_dict, output_dir, verifier_type=None):
+    # Generate bar graph for number of instances per actual result (SAT, UNSAT, UNKNOWN, TIMEOUT)
+    counts = {}
+    for file_name, df in data_dict.items():
+        verifier_name = get_verifier_name(file_name)
+        if verifier_name not in counts:
+            counts[verifier_name] = {'SAT': 0, 'UNSAT': 0, 'UNKNOWN': 0, 'TIMEOUT': 0}
+        if verifier_type == "sv":
+            # For SV, we need to handle the specific result types
+            df['Actual Result'] = df['Actual Result'].replace({
+                'VERIFICATION FAILED (SAT)': 'SAT',
+                'VERIFICATION SUCCESSFUL (UNSAT)': 'UNSAT'
+            })
+        for result in ['SAT', 'UNSAT', 'UNKNOWN', 'TIMEOUT']:
+            count = (df['Actual Result'] == result).sum()
+            counts[verifier_name][result] += count
+
+    if not counts:
+        print("No data available for bar graph.")
+        return
+
+    verifiers = list(counts.keys())
+    sat_counts = [counts[v]['SAT'] for v in verifiers]
+    unsat_counts = [counts[v]['UNSAT'] for v in verifiers]
+    unknown_counts = [counts[v]['UNKNOWN'] for v in verifiers]
+    timeout_counts = [counts[v]['TIMEOUT'] for v in verifiers]
+
+    bar_width = 0.2
+    x = np.arange(len(verifiers))
+
+    plt.figure(figsize=(12, 7))
+    plt.bar(x - 1.5*bar_width, sat_counts, width=bar_width, color=RESULT_COLORS.get('SAT', 'gray'), label='SAT')
+    plt.bar(x - 0.5*bar_width, unsat_counts, width=bar_width, color=RESULT_COLORS.get('UNSAT', 'gray'), label='UNSAT')
+    plt.bar(x + 0.5*bar_width, unknown_counts, width=bar_width, color=RESULT_COLORS.get('UNKNOWN', 'gray'), label='UNKNOWN')
+    plt.bar(x + 1.5*bar_width, timeout_counts, width=bar_width, color=RESULT_COLORS.get('TIMEOUT', 'gray'), label='TIMEOUT')
+
+    plt.xlabel('Verifier')
+    plt.ylabel('Number of Instances')
+    if verifier_type:
+        plt.title(f'{verifier_type.upper()} Verifiers - Number of Instances per Actual Result')
+        output_filename = f"{verifier_type}_bar_graph.png"
+    else:
+        plt.title('Combined Verifiers - Number of Instances per Actual Result')
+        output_filename = "combined_bar_graph.png"
+    plt.xticks(x, verifiers, rotation=45, ha='right')
+    plt.legend()
+    plt.tight_layout()
+
+    output_file = output_dir / output_filename
+    plt.savefig(output_file)
+    plt.close()
+    print(f"Saved bar graph to {output_file}")
+
 def plot_verifier_results_with_extra(verifier_type, combined=False):
     if combined:
         output_dir = setup_directories()  # Use root graphs dir for combined
         print("Generating combined results plot across all verifiers (smt, sv, vnn)")
         plot_combined_results(output_dir)
+        # Generate combined bar graph
+        all_data_dict = {}
+        for v_type in ALL_VERIFIER_TYPES:
+            csv_files = [f for f in os.listdir(RESULTS_DIR) if f.startswith(v_type) and f.endswith('.csv')]
+            if not csv_files:
+                print(f"No CSV files found for {v_type}")
+                continue
+            type_data_dict = read_and_process_data(csv_files, verifier_type=v_type)
+            all_data_dict.update(type_data_dict)
+        generate_bar_graph(all_data_dict, output_dir)
         return  # Skip other operations in combined mode
-    
+
     # Single verifier mode
     csv_files = [f for f in os.listdir(RESULTS_DIR) if f.startswith(verifier_type) and f.endswith('.csv')]
     if not csv_files:
         print(f'No CSV files found for verifier type: {verifier_type}')
         return
+
     data_dict = read_and_process_data(csv_files)
     output_dir = setup_directories(verifier_type)
-    
+
     print("Generating individual plots for all data")
     generate_individual_plots(data_dict, output_dir, verifier_type)
-    
+
     print("Generating comparison plot for all data")
     generate_comparison_plot(data_dict, output_dir, verifier_type)
-    
+
     print(f"Generating expected SAT plots for {verifier_type}")
     plot_expected_results(data_dict, output_dir, verifier_type, 'SAT')
-    
+
     print(f"Generating expected UNSAT plots for {verifier_type}")
     plot_expected_results(data_dict, output_dir, verifier_type, 'UNSAT')
-    
+
     print("Generating runtime increase plots")
     plot_runtime_increase(data_dict, output_dir, verifier_type)
-    
+
     print("Creating summary table for expected and false results")
     summary_df = create_summary_table(data_dict)
     summary_table_path = output_dir / f'{verifier_type}_summary_results.csv'
     summary_df.to_csv(summary_table_path, index=False)
     print(f"Summary table saved to {summary_table_path}")
 
+    print(f"Generating bar graph for {verifier_type}")
+    generate_bar_graph(data_dict, output_dir, verifier_type)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Plot verifier results')
-    parser.add_argument('--verifier', type=str, default='smt', 
+    parser.add_argument('--verifier', type=str, default='smt',
                         help='Verifier type prefix for CSV files (ignored in --combined mode)')
-    parser.add_argument('--combined', action='store_true', 
+    parser.add_argument('--combined', action='store_true',
                         help='Generate combined graph across all verifiers (smt, sv, vnn)')
     args = parser.parse_args()
     plot_verifier_results_with_extra(args.verifier, combined=args.combined)
