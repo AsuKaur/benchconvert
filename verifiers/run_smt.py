@@ -58,7 +58,8 @@ def run_solver_on_smt_files(solver):
             cmd = [solver, f"--tlimit-per={TIMEOUT*1000}", "--rlimit-per=100000000", "--stats", "--verbosity=2", str(smt_path)]
             # cmd = [solver, f"--tlimit-per={TIMEOUT*1000}", "--produce-models", "--fp-exp", "--fp-lazy-wb", "--stats", "--verbosity=2", str(smt_path)]
         elif solver == "bitwuzla":
-            cmd = [solver, f"--time-limit={TIMEOUT * 1000}", "--sat-solver=cadical", "--nthreads=4", "--memory-limit=8192", str(smt_path)]
+            cmd = [solver, str(smt_path)]
+            # cmd = [solver, f"--time-limit={TIMEOUT * 1000}", "--sat-solver=cadical", "--nthreads=4", "--memory-limit=8192", str(smt_path)]
             # cmd = [solver, f"--time-limit={TIMEOUT * 1000}", "--produce-models", "--sat-solver=cadical", "--nthreads=4", "--memory-limit=8192", str(smt_path)]
 
         # cmd = [solver, str(smt_path)]
