@@ -9,3 +9,4 @@ pip install z3-solver
 pip install pyyaml
 pip install pandas 
 pip install matplotlib
+pip install seaborn

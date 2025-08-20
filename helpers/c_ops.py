@@ -11,10 +11,12 @@ C_PROP_DIR = SCRIPT_DIR.parent / 'c_prop'                 # Property files prefi
 EXTERN_DIR = SCRIPT_DIR.parent / 'extern'                 # Headers for preprocessing
 COMBINED_C_DIR = SCRIPT_DIR.parent / 'c'                  # Directory to save combined .c files
 PREPROCESSED_DIR = SCRIPT_DIR.parent / 'c_preprocessed'   # Directory to save preprocessed .i files
+PREPROCESSED_FLOAT_DIR = SCRIPT_DIR.parent / 'c_preprocessed_float32'   # Directory to save preprocessed .i files
 
 # Ensure output directories exist
 COMBINED_C_DIR.mkdir(exist_ok=True)
 PREPROCESSED_DIR.mkdir(exist_ok=True)
+PREPROCESSED_FLOAT_DIR.mkdir(exist_ok=True)
 
 def combine_files():
     # Combine .c files from c_network and c_prop directories.
@@ -87,6 +89,26 @@ def preprocess_combined_files():
             f_out.write(preprocessed_content)
 
         print(f"Preprocessed .i file saved: {output_i_path}")
+
+        output_i_path = PREPROCESSED_FLOAT_DIR / (base_name + '.i')
+
+        print(f"Preprocessing {filename}")
+
+        cmd = ['gcc', '-E', '-D_Float128=double', '-I', str(EXTERN_DIR), str(combined_c_path)]
+
+        try:
+            completed = subprocess.run(cmd, check=True, capture_output=True, text=True)
+            preprocessed_content = completed.stdout
+        except subprocess.CalledProcessError as e:
+            print(f"Error preprocessing '{filename}': {e}")
+            continue
+
+        with open(output_i_path, 'w') as f_out:
+            f_out.write(preprocessed_content)
+
+        print(f"Preprocessed .i file saved: {output_i_path}")
+
+
 
 def main():
     print("Starting combination of c_network and c_prop files")

@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import numpy as np
 from scipy.interpolate import make_interp_spline
+import seaborn as sns  
 
 SCRIPT_DIR = Path(__file__).parent
 RESULTS_DIR = SCRIPT_DIR.parent / "results"
@@ -20,7 +21,6 @@ RESULT_COLORS = {
     'VERIFICATION FAILED (SAT)': 'yellowgreen',
     'VERIFICATION SUCCESSFUL (UNSAT)': 'lightcoral',
 }
-
 # Shape mapping for different files/verifiers in comparison plot
 FILE_SHAPES = ['o', 's', '^', 'D', 'v', '<', '>']
 
@@ -334,12 +334,54 @@ def generate_bar_graph(data_dict, output_dir, verifier_type=None):
     plt.close()
     print(f"Saved bar graph to {output_file}")
 
+def plot_confusion_matrix(data_dict, output_dir, verifier_type=None):
+    # Construct confusion matrix: rows=expected, cols=actual
+    expected_values = ['SAT', 'UNSAT']
+    actual_values = ['SAT', 'UNSAT', 'TIMEOUT', 'UNKNOWN']
+
+    if verifier_type is None:  # Combined mode
+        if not data_dict:
+            print("No data available for combined confusion matrix.")
+            return
+        combined_df = pd.concat(data_dict.values(), ignore_index=True)
+        cmatrix = pd.crosstab(combined_df['Expected Result'], combined_df['Actual Result'], rownames=['Expected'], colnames=['Actual'], dropna=False)
+        cmatrix = cmatrix.reindex(index=expected_values, columns=actual_values, fill_value=0)
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(cmatrix, annot=True, fmt='d', cmap='Blues', cbar=True)
+        plt.title('Combined Confusion Matrix for All Verifiers')
+        plt.tight_layout()
+        output_file = output_dir / 'combined_confusion_matrix.png'
+        plt.savefig(output_file)
+        plt.close()
+        print(f"Saved combined confusion matrix plot to {output_file}")
+    else:  # Per-verifier mode
+        for file_name, df in data_dict.items():
+            if df.empty:
+                print(f"No data for confusion matrix in {file_name}")
+                continue
+            if verifier_type == "sv":
+                # For SV, we need to handle the specific result types
+                df['Actual Result'] = df['Actual Result'].replace({
+                    'VERIFICATION FAILED (SAT)': 'SAT',
+                    'VERIFICATION SUCCESSFUL (UNSAT)': 'UNSAT'
+                })
+            cmatrix = pd.crosstab(df['Expected Result'], df['Actual Result'], rownames=['Expected'], colnames=['Actual'], dropna=False)
+            cmatrix = cmatrix.reindex(index=expected_values, columns=actual_values, fill_value=0)
+            plt.figure(figsize=(8, 6))
+            sns.heatmap(cmatrix, annot=True, fmt='d', cmap='Blues', cbar=True)
+            plt.title(f'Confusion Matrix for {verifier_type.upper()} - {get_verifier_name(file_name)}')
+            plt.tight_layout()
+            output_file = output_dir / f"{verifier_type}_{get_verifier_name(file_name)}_confusion_matrix.png"
+            plt.savefig(output_file)
+            plt.close()
+            print(f"Saved confusion matrix plot to {output_file}")
+
 def plot_verifier_results_with_extra(verifier_type, combined=False):
     if combined:
         output_dir = setup_directories()  # Use root graphs dir for combined
         print("Generating combined results plot across all verifiers (smt, sv, vnn)")
         plot_combined_results(output_dir)
-        # Generate combined bar graph
+        # Generate combined bar graph and confusion matrix
         all_data_dict = {}
         for v_type in ALL_VERIFIER_TYPES:
             csv_files = [f for f in os.listdir(RESULTS_DIR) if f.startswith(v_type) and f.endswith('.csv')]
@@ -349,6 +391,7 @@ def plot_verifier_results_with_extra(verifier_type, combined=False):
             type_data_dict = read_and_process_data(csv_files, verifier_type=v_type)
             all_data_dict.update(type_data_dict)
         generate_bar_graph(all_data_dict, output_dir)
+        plot_confusion_matrix(all_data_dict, output_dir)
         return  # Skip other operations in combined mode
 
     # Single verifier mode
@@ -383,6 +426,9 @@ def plot_verifier_results_with_extra(verifier_type, combined=False):
 
     print(f"Generating bar graph for {verifier_type}")
     generate_bar_graph(data_dict, output_dir, verifier_type)
+
+    print(f"Generating confusion matrices for {verifier_type}")
+    plot_confusion_matrix(data_dict, output_dir, verifier_type)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Plot verifier results')
