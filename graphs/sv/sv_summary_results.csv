@@ -1,3 +1,4 @@
 Verifier File,Total Instances,Expected SAT Count,Correct SAT Results,False SAT Results,Expected UNSAT Count,Correct UNSAT Results,False UNSAT Results,Timeout,Unknown
 sv_result_esbmc.csv,100,50,0,50,50,50,0,0,0
 sv_result_cbmc.csv,100,50,1,4,50,4,1,90,0
+sv_result_cpachecker.csv,100,50,0,50,50,50,0,0,0
