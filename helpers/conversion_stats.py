@@ -98,6 +98,21 @@ def main():
     # Generate and save the plots
     plot_conversion_times(onnx_to_c, onnx_to_smt)
 
+    # Load your conversion data
+    df = pd.read_csv(onnx_to_c_path)
+
+    # Compute Pearson correlation
+    corr = df['Parameter Count'].corr(df['Time Taken (s)'])
+    print(f"Pearson correlation: {corr:.4f}")
+
+    # Load your conversion data
+    df = pd.read_csv(onnx_to_smt_path)
+
+    # Compute Pearson correlation
+    corr = df['Parameter Count'].corr(df['Time Taken (s)'])
+    print(f"Pearson correlation: {corr:.4f}")
+
+
 # Entry point to run the main function when the script is executed
 if __name__ == '__main__':
     main()
