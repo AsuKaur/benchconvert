@@ -19,9 +19,10 @@ RESULT_DIR = ROOT_DIR / "results"
 PROP_DIR = ROOT_DIR / "c_prop"
 NET_DIR = ROOT_DIR / "c_network"
 EXTERN_DIR = ROOT_DIR / "extern"
-PREPROC_FLOAT_DIR = ROOT_DIR / "c_preprocessed_float32"  
+PREPROC_FLOAT_DIR = ROOT_DIR / "c_preprocessed_float32"
+PREPROC_DIR = ROOT_DIR / "c_preprocessed"
 TIMEOUT = 900
-ULTIMATE_TOOLCHAIN_PATH = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/ultimate/ultimate-automizer/UAutomizer-linux/config/AutomizerReach.xml"  # Toolchain path as variable
+ULTIMATE_TOOLCHAIN_PATH = "/mnt/iusers01/fse-ugpgt01/compsci01/e80540ak/software/ultimate/ultimate-automizer/UAutomizer-linux/config/AutomizerReach.xml" # Toolchain path as variable
 
 def get_verifier_version(verifier):
     try:
@@ -34,6 +35,8 @@ def get_verifier_version(verifier):
 def parse_verifier_output(output, verifier):
     if verifier.lower() == "ultimate":
         return parse_ultimate_output(output)
+    elif verifier.lower() == "cpachecker":
+        return parse_cpachecker_output(output)
     # Original parsing for other verifiers
     result = "UNKNOWN"
     solver = "UNKNOWN"
@@ -80,19 +83,37 @@ def parse_ultimate_output(output):
             runtime = runtime_match.group(1) + "s"
     return result, runtime, solver
 
+def parse_cpachecker_output(output):
+    result = "UNKNOWN"
+    runtime = "UNKNOWN"
+    solver = "CPAchecker"
+    for line in output.splitlines():
+        line_lower = line.lower()
+        if "verification successful" in line_lower or "verification result: true" in line_lower:
+            result = "VERIFICATION SUCCESSFUL (UNSAT)"
+        elif "verification failed" in line_lower or "verification result: false" in line_lower:
+            result = "VERIFICATION FAILED (SAT)"
+        elif "timeout" in line_lower:
+            result = "TIMEOUT"
+        elif "verification result:" in line_lower and "unknown" in line_lower:
+            result = "UNKNOWN"
+        # Extract runtime if available (e.g., look for time patterns; adjust as needed)
+        runtime_match = re.search(r'(\d+\.\d+)s', line)
+        if runtime_match:
+            runtime = runtime_match.group(1) + "s"
+    return result, runtime, solver
+
 def run_verifier(verifier):
     results = []
     output_csv = RESULT_DIR / ("sv_result_" + verifier.lower() + ".csv")
+    verifier_version = get_verifier_version(verifier)
 
     if verifier.lower() == "ultimate":
-        verifier_version = get_verifier_version(verifier)
         file_list = sort_files_by_v_c(os.listdir(PREPROC_FLOAT_DIR))
         for prop_file in file_list:
             if not prop_file.endswith(".i"):
                 continue
             prop_path = PREPROC_FLOAT_DIR / prop_file
-            # Assuming parameter count can be derived from corresponding network file
-            # e.g., if prop_file is "prop_v1_c1_unsat.i", base_name = "v1_c1_unsat.c" or adjust accordingly
             base_name = prop_file.replace("prop_", "").replace(".i", ".c")
             net_path = NET_DIR / base_name
             param_count = count_parameters_c(net_path) if net_path.exists() else "N/A"
@@ -106,7 +127,7 @@ def run_verifier(verifier):
             print(f"Running {verifier} on: {prop_file}")
             try:
                 start_time = time.time()
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT + 10)  # Buffer for subprocess
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT + 10)
                 elapsed_time = time.time() - start_time
                 output = result.stdout + result.stderr
                 print("Output:\n", output)
@@ -143,6 +164,61 @@ def run_verifier(verifier):
                     "Ultimate",
                     " ".join(cmd)
                 ])
+    elif verifier.lower() == "cpachecker":
+        file_list = sort_files_by_v_c(os.listdir(PREPROC_DIR))
+        for prop_file in file_list:
+            if not prop_file.endswith(".i"):
+                continue
+            prop_path = PREPROC_DIR / prop_file
+            base_name = prop_file.replace("prop_", "").replace(".i", ".c")
+            net_path = NET_DIR / base_name
+            param_count = count_parameters_c(net_path) if net_path.exists() else "N/A"
+            cmd = [
+                verifier,
+                str(prop_path),
+                "--default"
+            ]
+            print(f"Command: {' '.join(cmd)}")
+            print(f"Running {verifier} on: {prop_file}")
+            try:
+                start_time = time.time()
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT + 10)
+                elapsed_time = time.time() - start_time
+                output = result.stdout + result.stderr
+                print("Output:\n", output)
+                actual_result, runtime, solver = parse_verifier_output(output, verifier)
+                expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
+                results.append([
+                    prop_file,
+                    param_count,
+                    expected_result,
+                    actual_result,
+                    runtime if runtime != "UNKNOWN" else f"{elapsed_time:.4f}s",
+                    solver,
+                    " ".join(cmd)
+                ])
+            except subprocess.TimeoutExpired:
+                print(f"Timeout: {prop_file}")
+                results.append([
+                    prop_file,
+                    param_count,
+                    "UNSAT" if "unsat" in prop_file.lower() else "SAT",
+                    "TIMEOUT",
+                    f"{TIMEOUT}s",
+                    "CPAchecker",
+                    " ".join(cmd)
+                ])
+            except Exception as e:
+                print(f"Error running {prop_file}: {e}")
+                results.append([
+                    prop_file,
+                    param_count,
+                    "UNSAT" if "unsat" in prop_file.lower() else "SAT",
+                    f"ERROR: {e}",
+                    "ERROR",
+                    "CPAchecker",
+                    " ".join(cmd)
+                ])
     else:
         flags = [
             "--float-overflow-check",
@@ -156,7 +232,7 @@ def run_verifier(verifier):
             "--fpa",
             "--trace",
             f"-I{EXTERN_DIR}"
-        ] if verifier == "cbmc" else [
+        ] if verifier.lower() == "cbmc" else [
             # f"--timeout {TIMEOUT}s",
             "--floatbv",
             "--nan-check",
@@ -223,7 +299,6 @@ def run_verifier(verifier):
                     "UNKNOWN",
                     " ".join(flags)
                 ])
-        verifier_version = get_verifier_version(verifier)
 
     with open(output_csv, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -246,7 +321,6 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python run_sv.py <verifier>")
         print("Example: python run_sv.py cbmc")
-        print("Or: python run_sv.py Ultimate")
         sys.exit(1)
     verifier = sys.argv[1]
     run_verifier(verifier)
