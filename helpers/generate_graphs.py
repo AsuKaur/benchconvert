@@ -310,9 +310,7 @@ def generate_bar_graph(data_dict, output_dir, verifier_type=None):
         verifier_name = get_verifier_name(file_name)
         if verifier_name not in counts:
             counts[verifier_name] = {'SAT': 0, 'UNSAT': 0, 'UNKNOWN': 0, 'TIMEOUT': 0}
-        if verifier_type == "sv":
-            # For SV, we need to handle the specific result types
-            df['Actual Result'] = df['Actual Result'].replace({
+        df['Actual Result'] = df['Actual Result'].replace({
                 'VERIFICATION FAILED (SAT)': 'SAT',
                 'VERIFICATION SUCCESSFUL (UNSAT)': 'UNSAT'
             })
