@@ -19,9 +19,14 @@ import subprocess
 from pathlib import Path
 import shutil
 import onnx
+import time
+import csv
+from helpers.sort_files import sort_files_by_v_c
+from helpers.parameter_count import count_parameters_onnx
 
 ONNX_DIR = Path("onnx")
 C_NETWORK_DIR = Path("c_network")
+RESULT_DIR = Path("results")   # Directory for results, including conversion times CSV
 
 
 def check_onnx2c_executable():
@@ -91,19 +96,18 @@ def validate_onnx_model(onnx_path):
         return False
 
 
-def convert_onnx_to_c(onnx_filename, onnx_dir, c_network_dir, onnx2c_path):
+def convert_onnx_to_c(onnx_filename, c_network_dir, onnx2c_path):
     # Convert ONNX model to C source code using onnx2c.
     
     # Args:
-    #     onnx_filename (str): Name of the ONNX file (without path)
-    #     onnx_dir (Path): Path to onnx directory
+    #     onnx_filename (str): Name of the ONNX file
     #     c_network_dir (Path): Path to c_network directory
     #     onnx2c_path (str): Path to onnx2c executable
         
     # Returns:
     #     bool: True if conversion successful, False otherwise
 
-    onnx_path = onnx_dir /  f"{onnx_filename}"
+    onnx_path = onnx_filename
     
     # Validate input file exists
     if not onnx_path.exists():
@@ -171,7 +175,7 @@ def convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path):
     # Returns:
     #     tuple: (success_count, total_count)
 
-    onnx_files = list(onnx_dir.glob("*.onnx"))
+    onnx_files = {p.stem: p for p in ONNX_DIR.glob("*.onnx")}
     
     if not onnx_files:
         print(f"No ONNX files found in {onnx_dir}")
@@ -179,18 +183,37 @@ def convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path):
     
     print(f"Found {len(onnx_files)} ONNX files to convert:")
     for f in onnx_files:
-        print(f"  - {f.name}")
+        print(f"  - {f}")
     print()
     
     success_count = 0
     total_count = len(onnx_files)
-    
-    for onnx_file in onnx_files:
-        print(f"Processing {onnx_file.name}")
-        if convert_onnx_to_c(onnx_file.name, onnx_dir, c_network_dir, onnx2c_path):
+    times = []
+    for name in sort_files_by_v_c(onnx_files):
+        print(f"Processing {onnx_files[name]}")
+        onnx_path = f"{onnx_files[name]}"
+        param_count = count_parameters_onnx(onnx_path)
+        start_time = time.time()
+        if convert_onnx_to_c(onnx_files[name], c_network_dir, onnx2c_path):
             success_count += 1
+        end_time = time.time()
+        duration = end_time - start_time
+        times.append((onnx_files[name], duration, param_count))
     
-    return success_count, total_count
+    return success_count, total_count, times
+
+def write_conversion_times(times):
+    if not times:
+        return
+
+    csv_file = RESULT_DIR / "onnx_to_c.csv"
+    with open(csv_file, mode="w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["File Name", "Parameter Count", "Time Taken (s)"])
+        for name, duration, param_count in times:
+            writer.writerow([name, param_count, round(duration, 4)])
+
+    print(f"\nConversion times saved to: {csv_file}")
 
 
 def main():
@@ -264,18 +287,22 @@ Examples:
     # Convert all files
     if args.all:
         print("Converting all ONNX files")
-        success_count, total_count = convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path)
+        success_count, total_count, times = convert_all_onnx_files(onnx_dir, c_network_dir, onnx2c_path)
         
         print(f"\nConversion Summary:")
         print(f"  Successful: {success_count}")
         print(f"  Failed: {total_count - success_count}")
         print(f"  Total: {total_count}")
+
+
+        # Write conversion times to CSV
+        write_conversion_times(times)
         
         return 0 if success_count == total_count else 1
     
     # Convert single file
     if args.onnx_file:
-        success = convert_onnx_to_c(args.onnx_file, onnx_dir, c_network_dir, onnx2c_path)
+        success = convert_onnx_to_c(onnx_dir / args.onnx_file, c_network_dir, onnx2c_path)
         
         if success:
             print("\nConversion completed successfully!")
