@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=sv_cbmc
-#SBATCH --output=sv_cbmc.out
-#SBATCH --error=sv_cbmc.err
+#SBATCH --job-name=sv_cpachecker
+#SBATCH --output=sv_cpachecker.out
+#SBATCH --error=sv_cpachecker.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=himem  # For symbolic execution memory
 #SBATCH --ntasks=1

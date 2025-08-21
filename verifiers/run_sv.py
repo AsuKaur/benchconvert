@@ -176,7 +176,8 @@ def run_verifier(verifier):
             cmd = [
                 verifier,
                 str(prop_path),
-                "--default"
+                "--default",
+                "--timeout", str(TIMEOUT),
             ]
             print(f"Command: {' '.join(cmd)}")
             print(f"Running {verifier} on: {prop_file}")

@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=sv_cbmc
-#SBATCH --output=sv_cbmc.out
-#SBATCH --error=sv_cbmc.err
+#SBATCH --job-name=sv_ultimate
+#SBATCH --output=sv_ultimate.out
+#SBATCH --error=sv_ultimate.err
 #SBATCH --time=26:00:00       # hh:mm:ss
 #SBATCH --partition=himem  # For symbolic execution memory
 #SBATCH --ntasks=1
