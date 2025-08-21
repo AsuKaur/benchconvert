@@ -66,16 +66,20 @@ def parse_ultimate_output(output):
     result = "UNKNOWN"
     runtime = "UNKNOWN"
     solver = "Ultimate"
-    for line in output.splitlines():
+    match = re.search(r"RESULT:(.*)", output)
+    if match:
+        result_message = match.group(1).strip()
+    print(result_message)
+    for line in result_message.splitlines():
         line_lower = line.lower()
         if "result: ultimate could not prove your program" in line_lower:
             if "timeout" in line_lower:
                 result = "TIMEOUT"
             else:
                 result = "VERIFICATION FAILED (SAT)"
-        elif "verification successful" in line_lower or "true" in line_lower:
+        elif "verification successful" in line_lower or "true" in line_lower or "unsat" in line_lower:
             result = "VERIFICATION SUCCESSFUL (UNSAT)"
-        elif "verification failed" in line_lower or "false" in line_lower:
+        elif "verification failed" in line_lower or "false" in line_lower or "sat" in line_lower:
             result = "VERIFICATION FAILED (SAT)"
         # Extract runtime from statistics (example patterns; adjust based on actual output)
         runtime_match = re.search(r'(\d+\.\d+)s', line)
@@ -130,7 +134,6 @@ def run_verifier(verifier):
                 result = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT + 10)
                 elapsed_time = time.time() - start_time
                 output = result.stdout + result.stderr
-                print("Output:\n", output)
                 actual_result, runtime, solver = parse_verifier_output(output, verifier)
                 expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
                 results.append([

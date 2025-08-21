@@ -168,18 +168,38 @@ def plot_expected_results(data_dict, output_dir, verifier_type, expected_result)
         plt.close()
         print(f"Saved expected {expected_result} plot to {output_file}")
 
-def create_summary_table(data_dict):
-    # Create a table showing count of expected results and false results for each verifier file
+import pandas as pd
+
+def create_summary_table(data_dict,verifier_type=None):
+    # Create summary stats for each verifier file:
+    # - Correct SAT, False SAT
+    # - Correct UNSAT, False UNSAT
+    # - Timeout, Unknown
+
+    sat = 'SAT'
+    unsat = 'UNSAT'
+    if verifier_type == 'sv':
+        # For SV, we need to handle the specific result types
+        sat = 'VERIFICATION FAILED (SAT)'
+        unsat = 'VERIFICATION SUCCESSFUL (UNSAT)'
     table_data = []
     for file_name, df in data_dict.items():
-        expected_sat = df[df['Expected Result'] == 'SAT']
-        expected_unsat = df[df['Expected Result'] == 'UNSAT']
-        # Count how many SAT expected and how many actual results differ (false results)
-        sat_correct = (expected_sat['Actual Result'] == 'SAT').sum()
-        sat_false = (expected_sat['Actual Result'] != 'SAT').sum()
-        unsat_correct = (expected_unsat['Actual Result'] == 'UNSAT').sum()
-        unsat_false = (expected_unsat['Actual Result'] != 'UNSAT').sum()
         total = len(df)
+
+        # Expected SAT
+        expected_sat = df[df['Expected Result'] == 'SAT']
+        sat_correct = ((expected_sat['Actual Result'] == sat)).sum()
+        sat_false   = ((expected_sat['Actual Result'] == unsat)).sum()
+
+        # Expected UNSAT
+        expected_unsat = df[df['Expected Result'] == 'UNSAT']
+        unsat_correct = ((expected_unsat['Actual Result'] == unsat)).sum()
+        unsat_false   = ((expected_unsat['Actual Result'] == sat)).sum()
+
+        # Timeout and Unknown
+        timeout_count = (df['Actual Result'] == 'TIMEOUT').sum()
+        unknown_count = (df['Actual Result'] == 'UNKNOWN').sum()
+
         table_data.append({
             'Verifier File': file_name,
             'Total Instances': total,
@@ -189,9 +209,11 @@ def create_summary_table(data_dict):
             'Expected UNSAT Count': len(expected_unsat),
             'Correct UNSAT Results': unsat_correct,
             'False UNSAT Results': unsat_false,
+            'Timeout': timeout_count,
+            'Unknown': unknown_count
         })
-    summary_df = pd.DataFrame(table_data)
-    return summary_df
+
+    return pd.DataFrame(table_data)
 
 def plot_runtime_increase(data_dict, output_dir, verifier_type):
     for file_name, df in data_dict.items():
@@ -419,7 +441,7 @@ def plot_verifier_results_with_extra(verifier_type, combined=False):
     plot_runtime_increase(data_dict, output_dir, verifier_type)
 
     print("Creating summary table for expected and false results")
-    summary_df = create_summary_table(data_dict)
+    summary_df = create_summary_table(data_dict, verifier_type)
     summary_table_path = output_dir / f'{verifier_type}_summary_results.csv'
     summary_df.to_csv(summary_table_path, index=False)
     print(f"Summary table saved to {summary_table_path}")
