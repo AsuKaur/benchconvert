@@ -1,4 +1,4 @@
 Verifier File,Total Instances,Expected SAT Count,Correct SAT Results,False SAT Results,Expected UNSAT Count,Correct UNSAT Results,False UNSAT Results,Timeout,Unknown
 smt_result_z3.csv,100,50,2,0,50,0,0,18,80
 smt_result_cvc5.csv,100,50,2,0,50,0,0,26,72
-smt_result_bitwuzla.csv,100,50,0,0,50,0,0,100,0
+smt_result_bitwuzla.csv,100,50,23,0,50,3,0,66,8

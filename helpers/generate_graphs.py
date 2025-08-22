@@ -158,7 +158,7 @@ def plot_expected_results(data_dict, output_dir, verifier_type, expected_result)
                 edgecolors='black',
                 s=100
             )
-        plt.title(f'{verifier_type.upper()} - Expected {expected_result} Results with Actual Results')
+        plt.title(f'{get_verifier_name(file_name)} - Expected {expected_result} Results with Actual Results')
         plt.xlabel('Parameter Count')
         plt.ylabel('Runtime (seconds)')
         plt.legend(title='Actual Result')
@@ -292,7 +292,7 @@ def plot_combined_results(output_dir):
             plt.plot(x_smooth, y_smooth, '-', color=colors[color_idx], label=verifier_label)
             plt.plot(x, y, 'o', color=colors[color_idx])  # Original points
         color_idx += 1
-    plt.title('Combined Cumulative Runtime Across All Verifiers (smt, sv, vnn)')
+    plt.title('Cumulative Runtime Across All Verifiers (SV, SMT, VNN)')
     plt.xlabel('Instance Index (Sorted by Parameter Count per Verifier)')
     plt.ylabel('Cumulative Runtime (seconds)')
     plt.legend(title='Verifier', bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -310,9 +310,7 @@ def generate_bar_graph(data_dict, output_dir, verifier_type=None):
         verifier_name = get_verifier_name(file_name)
         if verifier_name not in counts:
             counts[verifier_name] = {'SAT': 0, 'UNSAT': 0, 'UNKNOWN': 0, 'TIMEOUT': 0}
-        if verifier_type == "sv":
-            # For SV, we need to handle the specific result types
-            df['Actual Result'] = df['Actual Result'].replace({
+        df['Actual Result'] = df['Actual Result'].replace({
                 'VERIFICATION FAILED (SAT)': 'SAT',
                 'VERIFICATION SUCCESSFUL (UNSAT)': 'UNSAT'
             })
@@ -345,7 +343,7 @@ def generate_bar_graph(data_dict, output_dir, verifier_type=None):
         plt.title(f'{verifier_type.upper()} Verifiers - Number of Instances per Actual Result')
         output_filename = f"{verifier_type}_bar_graph.png"
     else:
-        plt.title('Combined Verifiers - Number of Instances per Actual Result')
+        plt.title('Number of Instances per Actual Result')
         output_filename = "combined_bar_graph.png"
     plt.xticks(x, verifiers, rotation=45, ha='right')
     plt.legend()

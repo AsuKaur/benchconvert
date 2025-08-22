@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-
 SCRIPT_DIR = Path(__file__).parent
 RESULTS_DIR = SCRIPT_DIR.parent / "results"
 GRAPHS_DIR = SCRIPT_DIR.parent / "graphs"
@@ -11,9 +10,9 @@ GRAPHS_DIR = SCRIPT_DIR.parent / "graphs"
 # Parameters:
 #   onnx_to_c_path: Path to the ONNX to C CSV file.
 #   onnx_to_smt_path: Path to the ONNX to SMT CSV file.
-#   output_csv: Path to save the output summary CSV (default: 'conversion_time_summary_by_size.csv').
+#   output_csv: Path to save the output summary CSV (default: 'conversion_time_summary.csv').
 # Returns: The summary DataFrame.
-def process_conversion_times(onnx_to_c_path, onnx_to_smt_path, output_csv= GRAPHS_DIR / 'conversion_time_summary.csv'):
+def process_conversion_times(onnx_to_c_path, onnx_to_smt_path, output_csv=GRAPHS_DIR / 'conversion_time_summary.csv'):
     # Load the data from the CSV files
     onnx_to_c = pd.read_csv(onnx_to_c_path)
     onnx_to_smt = pd.read_csv(onnx_to_smt_path)
@@ -52,12 +51,11 @@ def process_conversion_times(onnx_to_c_path, onnx_to_smt_path, output_csv= GRAPH
     
     return summary
 
-
 # Function to generate a single linear (line) plot combining both conversion times vs. parameter counts.
 # Parameters:
 #   onnx_to_c: DataFrame containing ONNX to C data.
 #   onnx_to_smt: DataFrame containing ONNX to SMT data.
-# Saves the plot as 'combined_conversion_time_plot.png'.
+# Saves the plot as 'conversion_time_plot.png'.
 def plot_conversion_times(onnx_to_c, onnx_to_smt):
     # Sort data by parameter count for smooth line plots
     onnx_to_c_sorted = onnx_to_c.sort_values('Parameter Count')
@@ -82,6 +80,30 @@ def plot_conversion_times(onnx_to_c, onnx_to_smt):
     plt.tight_layout()
     plt.savefig(GRAPHS_DIR / 'conversion_time_plot.png')  # Save the plot as a PNG image
 
+# Function to generate a box plot for both conversion times in one graph, showing mean, median, and quartile ranges.
+# Parameters:
+#   onnx_to_c: DataFrame containing ONNX to C data.
+#   onnx_to_smt: DataFrame containing ONNX to SMT data.
+# Saves the plot as 'conversion_time_boxplot.png'.
+def plot_box_conversion_times(onnx_to_c, onnx_to_smt):
+    # Prepare data for boxplot
+    data = [onnx_to_c['Time Taken (s)'], onnx_to_smt['Time Taken (s)']]
+    labels = ['ONNX to C', 'ONNX to SMT']
+    
+    # Create the boxplot
+    plt.figure(figsize=(10, 6))
+    box = plt.boxplot(data, labels=labels, patch_artist=True, showmeans=True)
+    
+    # Set colors consistent with the linear plot
+    colors = ['slateblue', 'yellowgreen']
+    for patch, color in zip(box['boxes'], colors):
+        patch.set_facecolor(color)
+    
+    plt.title('Boxplot of Conversion Times (Mean, Median, Quartiles)')
+    plt.ylabel('Time Taken (s)')
+    plt.grid(True, axis='y')
+    plt.tight_layout()
+    plt.savefig(GRAPHS_DIR / 'conversion_time_boxplot.png')  # Save the plot as a PNG image
 
 def main():
     # Define paths to the input CSV files (adjust if needed)
@@ -95,23 +117,18 @@ def main():
     onnx_to_c = pd.read_csv(onnx_to_c_path)
     onnx_to_smt = pd.read_csv(onnx_to_smt_path)
     
-    # Generate and save the plots
+    # Generate and save the linear plot
     plot_conversion_times(onnx_to_c, onnx_to_smt)
-
-    # Load your conversion data
-    df = pd.read_csv(onnx_to_c_path)
-
-    # Compute Pearson correlation
-    corr = df['Parameter Count'].corr(df['Time Taken (s)'])
-    print(f"Pearson correlation: {corr:.4f}")
-
-    # Load your conversion data
-    df = pd.read_csv(onnx_to_smt_path)
-
-    # Compute Pearson correlation
-    corr = df['Parameter Count'].corr(df['Time Taken (s)'])
-    print(f"Pearson correlation: {corr:.4f}")
-
+    
+    # Generate and save the box plot
+    plot_box_conversion_times(onnx_to_c, onnx_to_smt)
+    
+    # Compute and print Pearson correlations
+    corr_c = onnx_to_c['Parameter Count'].corr(onnx_to_c['Time Taken (s)'])
+    print(f"Pearson correlation for ONNX to C: {corr_c:.4f}")
+    
+    corr_smt = onnx_to_smt['Parameter Count'].corr(onnx_to_smt['Time Taken (s)'])
+    print(f"Pearson correlation for ONNX to SMT: {corr_smt:.4f}")
 
 # Entry point to run the main function when the script is executed
 if __name__ == '__main__':
