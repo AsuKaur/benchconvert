@@ -1,4 +1,0 @@
-Size Range,Number_of_Files,Mean_Conversion_Time_ONNX_to_C,Mean_Conversion_Time_ONNX_to_SMT
-Large,38,0.046878947368421055,2.265405263157895
-Medium,32,0.04315,1.0064375
-Small,30,0.04298,0.16505666666666666
