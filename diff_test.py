@@ -136,7 +136,7 @@ def run_smt_model(smt_content, inputs, input_size, output_size):
         
         try:
             fp_str = str(fp_val)
-            print(f"SMT: fp_str={fp_str}")
+            # print(f"SMT: fp_str={fp_str}")
             
             # Handle special floating-point values
             if 'NaN' in fp_str:
@@ -177,7 +177,7 @@ def run_smt_model(smt_content, inputs, input_size, output_size):
         # Constrain each input variable to its concrete value
         for i, val in enumerate(inputs):
             input_real = RealVal(float(val))  # Convert to Z3 real value
-            print(f"SMT: input{i}_real type={type(input_real)}, value={input_real}")
+            # print(f"SMT: input{i}_real type={type(input_real)}, value={input_real}")
             # Convert real to floating-point with round-nearest-even
             solver.add(input_vars[i] == fpRealToFP(RNE(), input_real, Float32()))
     except Exception as e:
@@ -458,6 +458,18 @@ def differential_test_onnx_smt_c(onnx_model_path, smt_file_path, vnnlib_file_pat
             # Overall test passes if outputs match AND constraints are satisfied
             test_result["passed"] = test_result["outputs_match"] and constraints_satisfied
             
+            print(f"\nTest {test_result['test_number']}:")
+            print(f"  Inputs: {test_result['onnx_inputs']}")
+            print(f"  ONNX Outputs: {test_result['onnx_outputs']}")
+            print(f"  SMT Outputs: {test_result.get('smt_outputs', 'Not available (SMT failed)')}")
+            print(f"  C Outputs: {test_result.get('c_outputs', 'Not available (C failed)')}")
+            print(f"  ONNX-SMT Differences: {test_result.get('onnx_smt_diff', 'Not available')}")
+            print(f"  ONNX-C Differences: {test_result.get('onnx_c_diff', 'Not available')}")
+            print(f"  SMT-C Differences: {test_result.get('smt_c_diff', 'Not available')}")
+            print(f"  Outputs Match: {test_result.get('outputs_match', 'Not available')}")
+            print(f"  Constraints Satisfied: {test_result.get('constraints_satisfied', 'Not available')}")
+            print(f"  Test Passed: {test_result.get('passed', 'Not available')}")
+            print("\n")
         else:
             # If any model failed to produce valid outputs, test fails
             test_result["outputs_match"] = False
@@ -489,17 +501,17 @@ if __name__ == "__main__":
     print(f"All Tests Passed: {results['all_passed']}")
     
     # Print detailed results for each individual test
-    for test in results["tests"]:
-        print(f"\nTest {test['test_number']}:")
-        print(f"  Inputs: {test['onnx_inputs']}")
-        print(f"  ONNX Outputs: {test['onnx_outputs']}")
-        print(f"  SMT Outputs: {test.get('smt_outputs', 'Not available (SMT failed)')}")
-        print(f"  C Outputs: {test.get('c_outputs', 'Not available (C failed)')}")
-        print(f"  ONNX-SMT Differences: {test.get('onnx_smt_diff', 'Not available')}")
-        print(f"  ONNX-C Differences: {test.get('onnx_c_diff', 'Not available')}")
-        print(f"  SMT-C Differences: {test.get('smt_c_diff', 'Not available')}")
-        print(f"  Outputs Match: {test.get('outputs_match', 'Not available')}")
-        print(f"  Constraints Satisfied: {test.get('constraints_satisfied', 'Not available')}")
-        print(f"  Test Passed: {test.get('passed', 'Not available')}")
-        if "error" in test:
-            print(f"  Error: {test['error']}")
+    # for test in results["tests"]:
+    #     print(f"\nTest {test['test_number']}:")
+    #     print(f"  Inputs: {test['onnx_inputs']}")
+    #     print(f"  ONNX Outputs: {test['onnx_outputs']}")
+    #     print(f"  SMT Outputs: {test.get('smt_outputs', 'Not available (SMT failed)')}")
+    #     print(f"  C Outputs: {test.get('c_outputs', 'Not available (C failed)')}")
+    #     print(f"  ONNX-SMT Differences: {test.get('onnx_smt_diff', 'Not available')}")
+    #     print(f"  ONNX-C Differences: {test.get('onnx_c_diff', 'Not available')}")
+    #     print(f"  SMT-C Differences: {test.get('smt_c_diff', 'Not available')}")
+    #     print(f"  Outputs Match: {test.get('outputs_match', 'Not available')}")
+    #     print(f"  Constraints Satisfied: {test.get('constraints_satisfied', 'Not available')}")
+    #     print(f"  Test Passed: {test.get('passed', 'Not available')}")
+    #     if "error" in test:
+    #         print(f"  Error: {test['error']}")
