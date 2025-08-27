@@ -577,9 +577,9 @@ def test_all_models_in_folder(onnx_folder, num_tests=100, tolerance=1e-5):
         # Extract model name from file path
         model_name = os.path.splitext(os.path.basename(onnx_file))[0]
         
-        print(f"\n{'='*80}")
+        print(f"\n")
         print(f"Testing model: {model_name}")
-        print(f"{'='*80}")
+        print("\n")
         
         # Construct paths for corresponding files
         onnx_model_path = onnx_file
@@ -631,17 +631,17 @@ def test_all_models_in_folder(onnx_folder, num_tests=100, tolerance=1e-5):
     # Print comprehensive final summary
     print(f"\n{'='*80}")
     print("COMPREHENSIVE RESULTS SUMMARY")
-    print(f"{'='*80}")
+    print("\n")
     print(f"Total ONNX files found: {len(onnx_files)}")
     print(f"Models tested successfully: {tested_models}")
     print(f"Models skipped: {skipped_models}")
     print(f"Overall success: {'PASS' if overall_passed and tested_models > 0 else 'FAIL'}")
-    print(f"{'='*80}")
+    print("\n")
     
     # Detailed results for each tested model
     if all_results:
         print("DETAILED RESULTS:")
-        print(f"{'='*80}")
+        print("\n")
         for model_name, results in all_results.items():
             passed_tests = sum(1 for test in results.get('tests', []) if test.get('passed', False))
             total_tests = len(results.get('tests', []))
@@ -666,7 +666,7 @@ def test_all_models_in_folder(onnx_folder, num_tests=100, tolerance=1e-5):
                             print(f"    Test {test['test_number']}: Constraint violation")
             print()
     
-    print(f"{'='*80}")
+    print("\n")
     
     return all_results
 
