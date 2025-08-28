@@ -15,7 +15,7 @@ def count_parameters_onnx(onnx_path):
             param_count += count
         return param_count
     except Exception as e:
-        print(f"Failed to count parameters for {onnx_path}: {e}")
+        # print(f"Failed to count parameters for {onnx_path}: {e}")
         return "N/A"
 
 # Count the number of parameters of the model in an SMT file
