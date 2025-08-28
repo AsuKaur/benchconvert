@@ -1,5 +1,5 @@
 Verifier: cbmc
 Version: 6.7.1 (cbmc-6.7.1)
 File Name,Parameter Count,Expected Result,Actual Result,Runtime,Solver Used,Flags/Command Used
-prop_sat_v2_c1.c,27,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.7747s,UNKNOWN,--float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -Iextern
-prop_unsat_v2_c3.c,37,UNSAT,VERIFICATION SUCCESSFUL (UNSAT),1.1365s,UNKNOWN,--float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -Iextern
+prop_sat_v2_c1.c,27,SAT,VERIFICATION SUCCESSFUL (UNSAT),0.8041s,UNKNOWN,--float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -Iextern
+prop_unsat_v2_c3.c,37,UNSAT,VERIFICATION SUCCESSFUL (UNSAT),1.0991s,UNKNOWN,--float-overflow-check --nan-check --bounds-check --no-pointer-check --signed-overflow-check --no-div-by-zero-check --round-to-nearest --fpa --trace -Iextern
