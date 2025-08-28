@@ -73,9 +73,9 @@ def run_vnn_verifier(verifier):
                     decision = "UNSAT"
                     break
 
-            print(f"Result: {decision}")
             runtime = round(end - start, 4)
             expected = get_expected_result(base)
+            print(f"Results: {decision}, Time: {runtime}s\n")
 
             results.append([
                 base,

@@ -73,6 +73,7 @@ def run_solver_on_smt_files(solver):
             output = result.stdout + result.stderr
             actual_result = parse_solver_output(output)
             runtime = round(end - start, 4)
+            print(f"Result: {actual_result}, Time: {runtime}s")
             expected = get_expected_result(smt_file)
 
             results.append([

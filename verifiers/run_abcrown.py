@@ -154,7 +154,7 @@ def run_vnn_verifier():
             if runtime_str == "N/A":
                 runtime_str = f"{round(end - start, 4)}s"
 
-            print(f"Result: {decision}")
+            print(f"Result: {decision}, Time: {runtime_str}s")
             expected = get_expected_result(base)
 
             results.append([

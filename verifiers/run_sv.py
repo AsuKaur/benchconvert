@@ -270,6 +270,7 @@ def run_verifier(verifier):
                 elapsed_time = time.time() - start_time
                 output = result.stdout + result.stderr
                 print("Output:\n", output)
+                print(f"Time: {elapsed_time}s")
                 actual_result, runtime, solver = parse_verifier_output(output, verifier)
                 expected_result = "UNSAT" if "unsat" in prop_file.lower() else "SAT"
                 results.append([
