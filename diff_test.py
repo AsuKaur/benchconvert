@@ -461,7 +461,7 @@ def differential_test_onnx_smt_c(onnx_model_path, smt_file_path, vnnlib_file_pat
             test_result["passed"] = test_result["outputs_match"] and constraints_satisfied
             
             print(f"\nTest {test_result['test_number']}:")
-            print(f"  Inputs: {test_result['inputs']}")
+            print(f"  Inputs: {test_result['onnx_inputs']}")
             print(f"  ONNX Outputs: {test_result['onnx_outputs']}")
             print(f"  SMT Outputs: {test_result.get('smt_outputs', 'Not available (SMT failed)')}")
             print(f"  C Outputs: {test_result.get('c_outputs', 'Not available (C failed)')}")
@@ -512,7 +512,7 @@ def save_single_model_results(model_name, results, col_rename_map=None):
     summary_df = pd.DataFrame(summary_data)
     
     # Write to Excel
-    file_name = f"{model_name}_results.xlsx"
+    file_name = f"results/{model_name}_results.xlsx"
     with pd.ExcelWriter(file_name) as writer:
         summary_df.to_excel(writer, sheet_name='Summary', index=False)
         df.to_excel(writer, sheet_name=model_name, index=False)
@@ -758,7 +758,7 @@ Examples:
     # Example column rename map (can be customized or passed via args if needed)
     col_rename_map = {
         'test_number': 'Test Number',
-        'inputs': 'Inputs',
+        'onnx_inputs': 'Inputs',
         'onnx_outputs': 'ONNX Outputs',
         'smt_outputs': 'SMT Outputs',
         'c_outputs': 'C Outputs',
